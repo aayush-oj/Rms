@@ -1,4 +1,5 @@
 import path from 'path';
+import fs from 'node:fs';
 import http from 'http';
 import { createApp } from './app';
 import { allowedOrigins, getEnv } from './config/env';
@@ -18,10 +19,15 @@ export async function startServer(): Promise<{ server: http.Server; port: number
   const app = createApp();
 
   if (env.NODE_ENV !== 'production') {
-    // The editable frontend route source was not recovered. Serve the evidence-backed
-    // Reports hub directly while the frontend source/build is being reconstructed.
+    // The editable frontend route source was not recovered. Resolve the preserved
+    // report asset from either the repository root or the runtime application root.
+    const reportsPagePath = [
+      path.join(process.cwd(), 'runtime', 'dist', 'reports.html'),
+      path.join(process.cwd(), 'dist', 'reports.html'),
+    ].find((candidate) => fs.existsSync(candidate))
+      ?? path.join(process.cwd(), 'runtime', 'dist', 'reports.html');
     app.get(['/en/reports', '/en/reports/'], (_req, res, next) => {
-      res.sendFile(path.join(process.cwd(), 'runtime', 'dist', 'reports.html'), (err) => {
+      res.sendFile(reportsPagePath, (err) => {
         if (err) next(err);
       });
     });
