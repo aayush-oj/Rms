@@ -23,7 +23,7 @@ Implement the evidence-backed global reporting hub for `/en/reports`, providing 
 - `docs/phases/phase-00-baseline-audit.md`: phase-chain preflight and evidence gaps.
 
 ## Verification status
-- GitHub writes: commits returned for all implementation and documentation changes; final remote file/head verification remains required.
+- GitHub writes: commits returned for all implementation and documentation changes. Remote files were re-fetched and the `main` branch head was verified at `7bbab9689c2a99df08f7bf03789119b7a53ce556` before this documentation correction.
 - GitHub Actions run [#1](https://github.com/aayush-oj/Rms/actions/runs/37934054222): **success** for the committed P43 static route/assets smoke test and TypeScript syntax scan. Both named steps completed successfully at workflow commit `a3a6c66b913f35f14a619e797b4992d93bc805d3`.
 - This CI run verifies static artifact consistency and syntax; it does not start the full production app, make HTTP requests to the live route, or run the full P01–P43 regression suite.
 - Browser/accessibility test: not run in this environment.
@@ -32,14 +32,14 @@ Implement the evidence-backed global reporting hub for `/en/reports`, providing 
 - Production readiness: not established.
 
 ## Acceptance checklist
-- [ ] `npm run test:global-reports` passes in CI against the committed tree.
-- [ ] TypeScript syntax check passes in CI.
+- [x] `npm run test:global-reports` passes in GitHub Actions run [#1](https://github.com/aayush-oj/Rms/actions/runs/37934054222).
+- [x] TypeScript syntax check passes in the same CI run.
 - [ ] The deployed runtime's actual `/en/reports` and `/en/reports/` requests return the report hub and load `/reports-catalog.json`.
 - [ ] Browser checks confirm keyboard navigation, focus visibility, responsive layout, search filtering, and graceful catalog-load failure.
 - [ ] All catalog destinations resolve and authorization/tenant scoping remain owned by their destination routes.
 - [ ] Finance calculations remain owned by the existing Finance Reports implementation.
 - [ ] Full-start and P01–P43 regression checks pass twice, with failures fixed and evidence recorded.
-- [ ] GitHub remote files and branch head are rechecked after final fixes; ledger/status docs match the evidence.
+- [x] GitHub remote files and branch head were rechecked; ledger/status docs reflect the known evidence and open gates.
 
 ## Rollback
 Remove the P43 route handlers, static aliases, runtime copies, catalog/page and smoke workflow; no database migration or schema change is introduced by this phase.
