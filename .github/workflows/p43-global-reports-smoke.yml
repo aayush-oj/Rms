@@ -40,3 +40,11 @@ jobs:
         run: npm run test:global-reports
       - name: Verify TypeScript syntax
         run: npm run check:ts-syntax
+      - name: Start runtime and verify route (pass 1)
+        run: npm run test:global-reports:runtime
+        env:
+          P43_SMOKE_PORT: 4317
+      - name: Start runtime and verify route (pass 2)
+        run: npm run test:global-reports:runtime
+        env:
+          P43_SMOKE_PORT: 4318
