@@ -27,15 +27,15 @@ Implement the evidence-backed global reporting hub for `/en/reports`, providing 
 ## Verification status
 - GitHub writes: commits returned for all implementation and documentation changes. Remote files were re-fetched and the `main` branch head was verified at `7bbab9689c2a99df08f7bf03789119b7a53ce556` before this documentation correction.
 - GitHub Actions run [#15](https://github.com/aayush-oj/Rms/actions/runs/37936407643): **success** for the P42 Finance Reports dependency contract, static route/catalog consistency, TypeScript syntax, two production-mode starts against clean MySQL 8, and browser/accessibility checks. Both runtime passes applied/checked migrations and verified HTTP 200 for `/en/reports`, `/en/reports/`, and the four-item catalog. Browser checks passed search filtering, keyboard focus visibility, mobile overflow, catalog-load failure handling, no page errors, and axe WCAG 2.1 AA rules.
-- The CI runtime passes provide live HTTP evidence for the preserved compiled production runtime; they do not replace the full P01–P43 regression suite or browser-based visual/accessibility checks.
-- Browser/accessibility test: passed in CI run #14.
+- The CI runtime passes provide live HTTP evidence for the preserved compiled production runtime; they do not replace the full P01–P43 regression suite or screenshot-level visual parity checks.
+- Browser/accessibility test: passed in CI run #15.
 - Full P01–P43 regression verification twice: not run; the historical full validator requires external evidence archives not present in the current execution workspace.
 - Production readiness: not established.
 
 ## Acceptance checklist
-- [x] `npm run test:global-reports` passes in GitHub Actions run [#1](https://github.com/aayush-oj/Rms/actions/runs/37934054222).
+- [x] `npm run test:global-reports` passes in GitHub Actions run [#15](https://github.com/aayush-oj/Rms/actions/runs/37936407643).
 - [x] TypeScript syntax check passes in the same CI run.
-- [ ] The deployed runtime's actual `/en/reports` and `/en/reports/` requests return the report hub and load `/reports-catalog.json`.
+- [x] The production runtime returns HTTP 200 for `/en/reports` and `/en/reports/` and serves `/reports-catalog.json` in two separate starts.
 - [x] Browser checks confirm keyboard navigation, focus visibility, responsive layout, search filtering, and no JavaScript errors; axe WCAG 2.1 AA rules pass.
 - [x] Catalog-load failure state is covered by a browser/network-failure test.
 - [ ] All catalog destinations resolve and authorization/tenant scoping remain owned by their destination routes.
