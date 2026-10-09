@@ -76,3 +76,12 @@ The P01–P49 chain records:
 The source archives are recovered and inspectable in the working container, but they have **not yet been pushed as application source** to `aayush-oj/Rms`. The repository currently contains only README and project-status/ledger docs. Do not describe the source package as pushed until the remote tree is verified to contain it.
 
 The available GitHub write actions accept text contents/Git objects, but no binary archive upload or local Git push handoff is available in this execution. The source archive therefore remains the next transfer blocker; the phase metadata and this inventory can be committed independently.
+
+
+## Fresh checks performed during recovery
+
+- P01–P42 TypeScript syntax scan: PASS, 287 files.
+- P01–P49 TypeScript syntax scan: PASS, 293 files.
+- P01–P42 full validation script: BLOCKED, because the expected external evidence file `/mnt/data/ALL_AI_SCREENSHOTS.zip` was not present in the execution environment.
+- P01–P49 full validation script: BLOCKED for the same missing evidence file.
+- These are syntax-only checks plus an environment-blocked validation attempt; they do not certify full application behavior or production readiness.
