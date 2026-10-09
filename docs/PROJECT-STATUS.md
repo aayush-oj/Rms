@@ -13,6 +13,12 @@ See [Phase 0 baseline audit](phases/phase-00-baseline-audit.md). The canonical m
 - Editable original frontend route/component source is incomplete; the compiled frontend runtime remains a preserved artifact.
 - Restored `runtime/.env.example` with placeholder-only values for safe deployment setup; no production secrets are included.
 
+## Phase 0–43 audit register
+
+- Added [Phase 0–43 audit register](analysis/phase-00-to-43-audit.md), covering the P00 control audit and all 43 numbered product phases P01–P43 with historical status and current evidence gates.
+- Added `scripts/audit-phase-chain.cjs` to check canonical phase continuity, required phase records, phase reports, route/API/SQL/report catalog counts, recovered API source/migrations, placeholder-only secrets, and the P43 in-progress gate.
+- The audit intentionally reports missing supplied archives instead of claiming their hashes are verified. The full validator and full P01–P43 regression remain separate required gates.
+
 ## Phase 43 checkpoint — Global Reports
 
 Committed implementation files:
@@ -30,7 +36,7 @@ P43 remains **in progress**. GitHub Actions run [#15](https://github.com/aayush-
 
 1. Keep the passing static/runtime CI checks as regression gates for subsequent code changes.
 2. Run keyboard/accessibility and responsive browser checks, and verify child-route navigation in a browser.
-4. Revalidate P01 through P43 twice, fix regressions, and retain test logs/evidence.
+3. Revalidate P01 through P43 twice, fix regressions, and retain test logs/evidence.
 5. Update the phase ledger and status only to reflect verified results; proceed to P44 only after P43 acceptance.
 
 See [Phase Ledger](PHASE-LEDGER.md), [Recovered Artifact Inventory](RECOVERED-ARTIFACT-INVENTORY.md), and [P43 Phase Report](phases/phase-43-global-reports.md).
