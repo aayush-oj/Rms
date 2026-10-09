@@ -17,7 +17,7 @@
 3. The historical TypeScript syntax scan passed for 287 files in the recovered P01–P42 workspace.
 4. The historical full validator did not pass: it was blocked because `/mnt/data/ALL_AI_SCREENSHOTS.zip` was unavailable in the validation environment. Do not represent that run as a pass.
 5. Phase 43's original standalone HTML/catalog did not by itself prove that `/en/reports` was connected to the app.
-6. The later P43 CI workflow now passes two production-mode runtime starts against a clean MySQL 8 test database and verifies the report route/catalog. Browser/accessibility testing and the full twice-repeated P01–P43 regression run are still outstanding.
+6. The later P43 CI workflow now passes two production-mode runtime starts against a clean MySQL 8 test database and verifies the report route/catalog. Browser/accessibility smoke checks now pass in CI; the full twice-repeated P01–P43 regression run remains outstanding.
 
 ## Phase 43 work initiated from this baseline
 
