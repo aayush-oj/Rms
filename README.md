@@ -8,6 +8,7 @@ Version-controlled rebuild and controlled recovery of the RestroX / RMS project.
 - [Recovered source artifact inventory](docs/RECOVERED-ARTIFACT-INVENTORY.md)
 - [Recovered Phase 01–42 validation chain](docs/phases/phase-01-42-chain.json)
 - [Phase 0 — Baseline audit](docs/phases/phase-00-baseline-audit.md)
+- [Phase 0–43 audit register](docs/analysis/phase-00-to-43-audit.md)
 - [Phase 43 — Global Reports](docs/phases/phase-43-global-reports.md)
 
 ## Canonical recovery scope
@@ -24,6 +25,7 @@ Run from the repository root with the required evidence inputs available:
 ```bash
 node scripts/validate-rebuild.cjs
 node scripts/check-ts-syntax.cjs
+node scripts/audit-phase-chain.cjs
 node tests/unit/finance-reports-smoke.cjs
 node scripts/package-release.cjs
 ```
