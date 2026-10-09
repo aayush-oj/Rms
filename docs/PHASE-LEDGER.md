@@ -12,7 +12,7 @@ This is the canonical phase index derived from `docs/analysis/master-plan.json`.
 
 ## Phase 0 — baseline control step (not counted in P01–P64)
 
-See [Phase 0 baseline audit](phases/phase-00-baseline-audit.md). It records repository/source provenance, historical validation limitations, and the gates required before accepting P43.
+See [Phase 0 baseline audit](phases/phase-00-baseline-audit.md) and [Phase 0–43 audit register](analysis/phase-00-to-43-audit.md). The audit register maps each canonical phase to its scope and evidence posture; its structural check is automated, but it does not replace the twice-repeated full regression gate.
 
 ## Canonical phase-by-phase register
 
