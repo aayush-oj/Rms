@@ -14,13 +14,19 @@ This ledger separates historical validation records from current source and inte
 | P49 | Cross-domain financial & inventory reconciliation | Historical checkpoint says validated in workspace with mocked database; production build/runtime gaps remain | Historical code exists in current source tree; fresh full validation not established |
 | Recovery documentation | Artifact inventory, phase chain, project status | Recovered and reviewed | Documentation and source files are present on `main` |
 
+## P00 — Baseline control step (not counted in the 64-phase plan)
+
+- Baseline report: `docs/phases/phase-00-baseline-audit.md`.
+- P01–P42 are historical recovery/validation records; the chain itself documents source gaps and the prior full validator was blocked by a missing screenshot archive.
+- P00 defines the baseline evidence and gates for the fresh P43 implementation. It does not rewrite historical validation claims.
+
 ## P43 — Global reports
 
-- **Objective:** Implement the `/en/reports` hub, evidence-backed navigation and summary/navigation cards, without duplicating Finance report logic.
+- **Objective:** Implement the `/en/reports` hub and evidence-backed navigation without duplicating Finance report logic.
 - **Dependencies:** P26 Analytics and P42 Finance Reports.
-- **Evidence:** PAGE-024 from `restrox-route-phase-map.csv`; Analytics routes `/en/analytics`, `/en/analytics/finance`, `/en/analytics/order`; Finance Reports catalog `/en/finance/reports`.
-- **Current checkpoint:** `apps/web/public/reports.html` and `apps/web/public/reports-catalog.json` have been committed. They provide a searchable accessible directory and link only to route-map-backed report destinations.
-- **Open acceptance gates:** Integrate the page with the actual `/en/reports` application route; run browser smoke/visual/accessibility tests; run full-start and P01–P43 regression verification twice before sign-off; record results. Until then P43 is **in progress**, not complete.
+- **Evidence:** PAGE-024 in `docs/analysis/route-phase-map.csv`; canonical destination references in `validation/reference/routes.json`.
+- **Current checkpoint:** Public page/catalog, explicit editable server route, public/runtime directory-index aliases, preserved runtime copies, smoke test, package command and CI workflow committed.
+- **Open acceptance gates:** Smoke/syntax CI results, live runtime route, browser/accessibility checks, and two full-start P01–P43 regression passes. Until these gates are evidenced, P43 remains **in progress**, not complete.
 
 ## P44–P48 recovered scope
 
