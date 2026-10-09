@@ -18,17 +18,16 @@ Implement the evidence-backed global reporting hub for `/en/reports`, providing 
 - `runtime/dist/reports.html` and `runtime/dist/reports-catalog.json`: preserved runtime copies of the page and catalog.
 - `runtime/dist/en/reports/index.html`: static directory-index alias so a static server rooted at `runtime/dist` can resolve `/en/reports/`.
 - `tests/unit/global-reports-smoke.cjs`: consistency checks for source/runtime copies, canonical destination routes, safe rendering and route wiring.
-- `package.json`: `test:global-reports` command.
-- `.github/workflows/p43-global-reports-smoke.yml`: CI workflow for the P43 smoke check and TypeScript syntax scan.
+- `package.json`: `test:global-reports`, `test:global-reports:runtime`, and `test:finance-reports` commands.
+- `.github/workflows/p43-global-reports-smoke.yml`: CI workflow for P42 dependency checks, P43 static consistency, TypeScript syntax, and two production-mode starts against an isolated MySQL 8 service.
 - `docs/phases/phase-00-baseline-audit.md`: phase-chain preflight and evidence gaps.
 
 ## Verification status
 - GitHub writes: commits returned for all implementation and documentation changes. Remote files were re-fetched and the `main` branch head was verified at `7bbab9689c2a99df08f7bf03789119b7a53ce556` before this documentation correction.
-- GitHub Actions run [#1](https://github.com/aayush-oj/Rms/actions/runs/37934054222): **success** for the committed P43 static route/assets smoke test and TypeScript syntax scan. Both named steps completed successfully at workflow commit `a3a6c66b913f35f14a619e797b4992d93bc805d3`.
-- This CI run verifies static artifact consistency and syntax; it does not start the full production app, make HTTP requests to the live route, or run the full P01–P43 regression suite.
-- Browser/accessibility test: not run in this environment.
-- Live application start and actual `/en/reports` HTTP response: not verified.
-- Full P01–P43 regression verification twice: not run.
+- GitHub Actions run [#6](https://github.com/aayush-oj/Rms/actions/runs/37935486307): **success** for static route/catalog consistency, TypeScript syntax, and two production-mode starts against a clean MySQL 8 test database. Both runtime passes applied/checked migrations and verified HTTP 200 for `/en/reports`, `/en/reports/`, and the four-item catalog.
+- The CI runtime passes provide live HTTP evidence for the preserved compiled production runtime; they do not replace the full P01–P43 regression suite or browser-based visual/accessibility checks.
+- Browser/accessibility test: not run.
+- Full P01–P43 regression verification twice: not run; the historical full validator requires external evidence archives not present in the current execution workspace.
 - Production readiness: not established.
 
 ## Acceptance checklist
