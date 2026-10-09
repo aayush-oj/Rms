@@ -23,6 +23,8 @@ Implement the evidence-backed global reporting hub for `/en/reports`, providing 
 - `package.json`: `test:global-reports`, `test:global-reports:runtime`, and `test:finance-reports` commands.
 - `.github/workflows/p43-global-reports-smoke.yml`: CI workflow for P42 dependency checks, P43 static consistency, TypeScript syntax, and two production-mode starts against an isolated MySQL 8 service.
 - `docs/phases/phase-00-baseline-audit.md`: phase-chain preflight and evidence gaps.
+- `docs/analysis/phase-00-to-43-audit.md`: numbered P00–P43 scope/evidence audit.
+- `scripts/audit-phase-chain.cjs` / `npm run audit:phase-chain`: structural phase-chain and manifest audit; it reports missing external evidence without treating it as verified.
 
 ## Verification status
 - GitHub writes: commits returned for all implementation and documentation changes. Remote files were re-fetched and the `main` branch head was verified at `7bbab9689c2a99df08f7bf03789119b7a53ce556` before this documentation correction.
