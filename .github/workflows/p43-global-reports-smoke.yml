@@ -81,3 +81,16 @@ jobs:
           P43_DB_NAME: restrox_test
           P43_DB_USER: rms
           P43_DB_PASSWORD: p43-ci-db-password
+      - name: Install browser test tools
+        run: npm install --no-save --package-lock=false playwright axe-core
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Verify browser behavior and accessibility
+        run: npm run test:global-reports:browser
+        env:
+          P43_BROWSER_PORT: 4319
+          P43_DB_HOST: 127.0.0.1
+          P43_DB_PORT: 3306
+          P43_DB_NAME: restrox_test
+          P43_DB_USER: rms
+          P43_DB_PASSWORD: p43-ci-db-password
