@@ -57,6 +57,8 @@ jobs:
           container_id="$(docker ps --filter 'ancestor=mysql:8.0' --format '{{.ID}}' | head -n 1)"
           test -n "$container_id"
           docker exec "$container_id" mysql -uroot -prootpassword -e "SET GLOBAL log_bin_trust_function_creators = 1"
+      - name: Verify P42 Finance Reports dependency contract
+        run: npm run test:finance-reports
       - name: Verify global reports route and assets
         run: npm run test:global-reports
       - name: Verify TypeScript syntax
