@@ -1,39 +1,36 @@
 # RestroX / RMS — Phase Ledger
 
-This ledger distinguishes user-reported historical status from implementation status verified in GitHub. A phase must not be marked technically complete until its implementation, documentation, regression checks, and remote commit are verified.
+This ledger records the phase status from recovered Library artifacts separately from whether the source has been pushed to GitHub.
 
-| Phase / range | Scope | Status | Evidence / blocker |
+| Phase / range | Phase name or scope | Recovered status | GitHub status |
 |---|---|---|---|
-| Phases 1–42 | Historical implementation phases | User-reported complete; not independently verified in this repository | Prior “Aanalyatic report” chat and old source code are unavailable; no phase reports/source files exist in inspected Git history |
-| Phase 43 | Next phase to resume | Not started — blocked | User reports Phases 43–48 are renaming work; exact Phase 43 scope and rename mapping are unavailable |
-| Phases 44–48 | Remaining renaming work | Pending — blocked | Need original phase instructions, rename mapping, and source tree to avoid guessing |
-| Repository workflow baseline | Status, ledger, and README links | Documentation committed | Remote commits verified; documentation-only work |
+| P01–P42 | Evidence and requirements through Finance reports suite | The recovered P01–P42 phase-chain file marks all 42 phases VALIDATED; chain status is `VALIDATED_WITH_SOURCE_GAPS_EXPLICIT` | Source archive not yet pushed; phase status evidence and inventory documented |
+| P43–P45 | Historical continuation / renaming workstream per user | Not fully rehydrated in the P01–P49 chain; a P01–P45 archive exists in Library but raw-byte materialization was denied in this session | Not pushed |
+| P46 | Historical continuation / renaming workstream per user | Not fully rehydrated in the P01–P49 chain; a P01–P46 archive exists in Library but raw-byte materialization was denied in this session | Not pushed |
+| P47 | Historical continuation / renaming workstream per user | Historical source not rehydrated in the P01–P49 chain | Not pushed |
+| P48 | Historical continuation / renaming workstream per user | Purchasing router/types/contracts reconstructed; full historical source not rehydrated | Not pushed |
+| P49 | Cross-domain financial and inventory reconciliation | Current-workspace source/contract checks recorded as passing with mocked database; production build/runtime gaps remain | Not pushed |
+| Recovery documentation | Source archive inventory, phase chain, status and ledger | Updated from recovered artifacts | Committed separately; does not include application source |
 
-## Recovery requirements before Phase 43
+## Recovered evidence
 
-- Restore/push the original application source and its relevant history/artifacts.
-- Recover the exact Phase 43–48 names, rename mapping, acceptance criteria, and prior decisions.
-- Preserve the existing Git history; do not force-push or replace old history.
-- After source recovery, audit the code against the reported Phase 1–42 baseline before changing names.
+- `restrox-rebuild-01-42.tar.gz` is available in Library and has SHA-256 `1f9ab29af3df90c384abfe4b280322d1e24b7d7f0c4200370de92923e1d29786`, matching its release manifest.
+- The archive contains source/runtime files, migrations, validation scripts, and reports for all phases P01–P42.
+- `restrox-rebuild-01-49.tar.gz` is also available; its phase-chain report explicitly records P43–P47 source gaps and P48 partial reconstruction.
+- Full production readiness is **not** established by these archives.
 
-## Rules
+## Mandatory workflow
 
-- Add a row for each real phase in chronological order.
-- Link each report under `docs/phases/`.
-- Record only test results actually observed.
-- Record the exact commit SHA and link for every completed phase.
-- If a phase is blocked, document the blocker rather than claiming completion.
-- Keep historical user reports clearly labeled until independently verified.
+For each subsequent phase:
+1. Recover exact scope and prior decisions.
+2. Inspect source and baseline.
+3. Implement only the phase scope.
+4. Run relevant tests and record real results.
+5. Revalidate from P01 through the current phase and repair regressions.
+6. Add a phase report under `docs/phases/`.
+7. Review changes and secrets.
+8. Commit and push without rewriting history.
+9. Verify the remote branch and files.
+10. Report the exact phase(s) and artifacts actually pushed.
 
-## Phase report template
-
-Create `docs/phases/PHASE-XX-short-name.md` with:
-1. Objective and acceptance criteria
-2. Scope and implementation summary
-3. Files/modules changed
-4. Architecture, schema, API, and configuration decisions
-5. Security and compatibility review
-6. Tests and exact results
-7. Phase 1-to-current regression review
-8. Known issues and follow-ups
-9. Commit SHA and remote verification
+See [recovered artifact inventory](RECOVERED-ARTIFACT-INVENTORY.md) for package details and limitations.
