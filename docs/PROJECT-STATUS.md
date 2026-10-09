@@ -23,13 +23,12 @@ Committed implementation files:
 - `.github/workflows/p43-global-reports-smoke.yml`
 - Phase ledger, P00 audit and P43 phase report
 
-P43 remains **in progress**. GitHub Actions run [#1](https://github.com/aayush-oj/Rms/actions/runs/37934054222) passed the P43 static route/assets smoke test and TypeScript syntax scan. Live HTTP/browser testing and the twice-repeated full-start/P01–P43 regression process are still required. Do not treat static route files as proof that the deployed app works.
+P43 remains **in progress**. GitHub Actions run [#6](https://github.com/aayush-oj/Rms/actions/runs/37935486307) passed static route/catalog consistency, TypeScript syntax, and two production-mode starts against a clean MySQL 8 test database; both starts verified `/en/reports`, `/en/reports/`, and `/reports-catalog.json`. Browser/accessibility testing and full P01–P43 regression verification twice remain required. Do not treat static route files as proof that the deployed app works.
 
 ## Required next steps
 
-1. GitHub Actions smoke/syntax checks are confirmed passing; keep the workflow as a regression gate for subsequent code changes.
-2. Exercise `/en/reports` and `/en/reports/` against the actual running runtime; verify catalog loading and child-route navigation.
-3. Run keyboard/accessibility and responsive browser checks.
+1. Keep the passing static/runtime CI checks as regression gates for subsequent code changes.
+2. Run keyboard/accessibility and responsive browser checks, and verify child-route navigation in a browser.
 4. Revalidate P01 through P43 twice, fix regressions, and retain test logs/evidence.
 5. Update the phase ledger and status only to reflect verified results; proceed to P44 only after P43 acceptance.
 
