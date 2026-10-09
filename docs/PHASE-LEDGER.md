@@ -5,7 +5,7 @@ This is the canonical phase index derived from `docs/analysis/master-plan.json`.
 ## Current state
 
 - **Current implementation phase:** P43 — Global reports.
-- **P43 status:** In progress. Static checks, TypeScript syntax, two production-mode starts against clean MySQL, and browser/accessibility checks passed in [CI run #15](https://github.com/aayush-oj/Rms/actions/runs/37936407643). Browser/accessibility checks and full P01–P43 regression passes remain open.
+- **P43 status:** In progress. Static checks, TypeScript syntax, two production-mode starts against clean MySQL, and browser/accessibility checks passed in [CI run #15](https://github.com/aayush-oj/Rms/actions/runs/37936407643). Full P01–P43 regression and screenshot-level visual parity checks remain open.
 - **P01–P42:** The recovered historical chain marks them validated with overall status `VALIDATED_WITH_SOURCE_GAPS_EXPLICIT`; that history is not a substitute for a fresh full regression run.
 - **P49:** Historical checkpoint only, with mocked-database and production/runtime gaps. It is not proof that P43–P49 are accepted as a continuous production-ready build.
 - **Production readiness:** Not established.
