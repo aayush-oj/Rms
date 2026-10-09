@@ -27,7 +27,7 @@ P43 remains **in progress**. GitHub Actions run [#1](https://github.com/aayush-o
 
 ## Required next steps
 
-1. Confirm the GitHub Actions run and fix any failing smoke/syntax checks.
+1. GitHub Actions smoke/syntax checks are confirmed passing; keep the workflow as a regression gate for subsequent code changes.
 2. Exercise `/en/reports` and `/en/reports/` against the actual running runtime; verify catalog loading and child-route navigation.
 3. Run keyboard/accessibility and responsive browser checks.
 4. Revalidate P01 through P43 twice, fix regressions, and retain test logs/evidence.
