@@ -1,0 +1,57 @@
+[
+  {
+    "id": "analytics-overview",
+    "category": "Analytics",
+    "title": "Analytics overview",
+    "path": "/en/analytics",
+    "description": "Review high-level operational metrics and reporting entry points.",
+    "keywords": [
+      "overview",
+      "dashboard",
+      "operations",
+      "summary"
+    ]
+  },
+  {
+    "id": "analytics-finance",
+    "category": "Analytics",
+    "title": "Finance analytics",
+    "path": "/en/analytics/finance",
+    "description": "Explore finance analytics using the existing analytics data product.",
+    "keywords": [
+      "finance",
+      "income",
+      "payments",
+      "money"
+    ]
+  },
+  {
+    "id": "analytics-orders",
+    "category": "Analytics",
+    "title": "Order analytics",
+    "path": "/en/analytics/order",
+    "description": "Explore order trends and operational order data.",
+    "keywords": [
+      "orders",
+      "sales",
+      "trends"
+    ]
+  },
+  {
+    "id": "finance-report-catalog",
+    "category": "Detailed reports",
+    "title": "Finance reports",
+    "path": "/en/finance/reports",
+    "description": "Open the established finance report suite, including its detailed report catalog.",
+    "keywords": [
+      "finance",
+      "sales",
+      "purchases",
+      "tax",
+      "ledger",
+      "stock",
+      "payments",
+      "reports"
+    ]
+  }
+]
