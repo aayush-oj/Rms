@@ -82,6 +82,9 @@ async function main() {
       return result.violations.map(v => ({ id: v.id, impact: v.impact, description: v.description, nodes: v.nodes.length }));
     });
     assert.deepEqual(accessibility, [], `axe accessibility violations: ${JSON.stringify(accessibility)}`);
+    await page.route('**/reports-catalog.json', route => route.abort());
+    await page.reload({ waitUntil: 'networkidle' });
+    await page.getByText('The report directory could not be loaded. Please use the application navigation or contact your administrator.').waitFor();
     assert.deepEqual(pageErrors, [], `browser JavaScript errors: ${pageErrors.join('; ')}`);
     console.log('P43 browser/accessibility smoke PASS (search, keyboard focus, mobile layout, axe WCAG 2.1 AA, no page errors)');
   } finally {
