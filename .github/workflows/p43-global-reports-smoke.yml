@@ -13,6 +13,8 @@ on:
       - 'tests/unit/global-reports-smoke.cjs'
       - 'tests/unit/global-reports-runtime-smoke.cjs'
       - 'tests/unit/global-reports-browser-smoke.cjs'
+      - 'scripts/audit-phase-chain.cjs'
+      - 'docs/analysis/phase-00-to-43-audit.md'
       - 'package.json'
       - '.github/workflows/p43-global-reports-smoke.yml'
   pull_request:
@@ -58,6 +60,8 @@ jobs:
           container_id="$(docker ps --filter 'ancestor=mysql:8.0' --format '{{.ID}}' | head -n 1)"
           test -n "$container_id"
           docker exec "$container_id" mysql -uroot -prootpassword -e "SET GLOBAL log_bin_trust_function_creators = 1"
+      - name: Audit phase chain and evidence manifest
+        run: node scripts/audit-phase-chain.cjs
       - name: Verify P42 Finance Reports dependency contract
         run: npm run test:finance-reports
       - name: Verify global reports route and assets
