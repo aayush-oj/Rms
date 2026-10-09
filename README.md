@@ -7,6 +7,7 @@ Version-controlled rebuild and controlled recovery of the RestroX / RMS project.
 - [Phase ledger and acceptance workflow](docs/PHASE-LEDGER.md)
 - [Recovered source artifact inventory](docs/RECOVERED-ARTIFACT-INVENTORY.md)
 - [Recovered Phase 01–42 validation chain](docs/phases/phase-01-42-chain.json)
+- [Phase 0 — Baseline audit](docs/phases/phase-00-baseline-audit.md)
 - [Phase 43 — Global Reports](docs/phases/phase-43-global-reports.md)
 
 ## Canonical recovery scope
