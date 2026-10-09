@@ -9,6 +9,7 @@
   "scripts": {
     "validate": "node scripts/validate-rebuild.cjs",
     "pack": "node scripts/package-release.cjs",
-    "check:ts-syntax": "node scripts/check-ts-syntax.cjs"
+    "check:ts-syntax": "node scripts/check-ts-syntax.cjs",
+    "test:global-reports": "node tests/unit/global-reports-smoke.cjs"
   }
 }
