@@ -1,46 +1,47 @@
 # RestroX / RMS — Phase Ledger
 
-This ledger separates historical validation records from source currently committed to GitHub.
+This ledger separates historical validation records from current source and integration status. Historical validation is evidence, not a claim of current production readiness.
 
 | Phase / range | Canonical phase name from recovered master plan | Recovered status | GitHub status |
 |---|---|---|---|
-| P01–P42 | Evidence/requirements, platform, product domains, Finance reports | The recovered P01–P42 chain marks every phase VALIDATED; overall chain status is `VALIDATED_WITH_SOURCE_GAPS_EXPLICIT` | Phase chain and inventory documentation committed; application source archive not yet pushed |
-| P43 | Global reports | Original phase plan exists; P01–P49 chain says historical source not rehydrated | Not pushed |
-| P44 | Inventory base & stock item/group | Original phase plan exists; P01–P49 chain says historical source not rehydrated | Not pushed |
-| P45 | Consumption, recipes & costing | Original phase plan exists; P01–P49 chain says historical source not rehydrated | Not pushed |
-| P46 | Stock history, adjustments, transfer & counts | Original phase plan exists; P01–P49 chain says historical source not rehydrated | Not pushed |
-| P47 | Batch production & BOM | Original phase plan exists; P01–P49 chain says historical source not rehydrated | Not pushed |
-| P48 | Purchasing, suppliers & purchase bills | Router/types/contracts reconstructed, but full historical source not rehydrated | Not pushed |
-| P49 | Cross-domain financial & inventory reconciliation | Current-workspace source/contract checks recorded as passing with mocked database; production build/runtime gaps remain | Not pushed |
-| Recovery documentation | Artifact inventory, phase chain, project status | Committed from recovered files and checks | Pushed and remotely verified |
+| P01–P42 | Evidence/requirements, platform, product domains, Finance reports | The recovered P01–P42 chain marks every phase VALIDATED; overall chain status is `VALIDATED_WITH_SOURCE_GAPS_EXPLICIT` | Source folders and runtime artifacts are present on `main`; historical syntax-only check passed, full validator was blocked by missing `ALL_AI_SCREENSHOTS.zip` |
+| P43 | Global reports | Implementation checkpoint exists; not complete because actual `/en/reports` route integration and full-start/regression verification are still open | Hub HTML, catalog, and phase report committed; see [P43 report](phases/phase-43-global-reports.md) |
+| P44 | Inventory base & stock item/group | Not started | Not started |
+| P45 | Consumption, recipes & costing | Not started | Not started |
+| P46 | Stock history, adjustments, transfer & counts | Not started | Not started |
+| P47 | Batch production & BOM | Not started | Not started |
+| P48 | Purchasing, suppliers & purchase bills | Partial historical reconstruction only; not accepted as phase completion | Not started for new phase work |
+| P49 | Cross-domain financial & inventory reconciliation | Historical checkpoint says validated in workspace with mocked database; production build/runtime gaps remain | Historical code exists in current source tree; fresh full validation not established |
+| Recovery documentation | Artifact inventory, phase chain, project status | Recovered and reviewed | Documentation and source files are present on `main` |
 
-## Phase requirements recovered for P43–P48
+## P43 — Global reports
 
-- **P43 — Global reports:** Implement the `/en/reports` hub, evidence-backed navigation and summary cards, without duplicating Finance report logic.
+- **Objective:** Implement the `/en/reports` hub, evidence-backed navigation and summary/navigation cards, without duplicating Finance report logic.
+- **Dependencies:** P26 Analytics and P42 Finance Reports.
+- **Evidence:** PAGE-024 from `restrox-route-phase-map.csv`; Analytics routes `/en/analytics`, `/en/analytics/finance`, `/en/analytics/order`; Finance Reports catalog `/en/finance/reports`.
+- **Current checkpoint:** `apps/web/public/reports.html` and `apps/web/public/reports-catalog.json` have been committed. They provide a searchable accessible directory and link only to route-map-backed report destinations.
+- **Open acceptance gates:** Integrate the page with the actual `/en/reports` application route; run browser smoke/visual/accessibility tests; run full-start and P01–P43 regression verification twice before sign-off; record results. Until then P43 is **in progress**, not complete.
+
+## P44–P48 recovered scope
+
 - **P44 — Inventory base & stock item/group:** Stock items, groups, measuring units, supplier-facing item links and opening stock.
 - **P45 — Consumption, recipes & costing:** Consumption editor, recipe versions, ingredient impacts and costing.
 - **P46 — Stock history, adjustments, transfer & counts:** Movement history, adjustments, stock transfer, counts/confirmation and audit.
 - **P47 — Batch production & BOM:** Production workflow, BOM, byproducts, overhead/loss/salvage and stock movements.
 - **P48 — Purchasing, suppliers & purchase bills:** Supplier CRUD, purchase orders/receipts, Finance purchase bills and return registers.
 
-These names and objectives come from the recovered master production-readiness plan. They are not a claim that the phase implementations were successfully pushed or fully revalidated.
+These names/objectives come from the recovered master production-readiness plan. Historical checkpoints explicitly note source gaps for P43–P47 and partial reconstruction for P48.
 
-## Recovered evidence
-
-- `restrox-rebuild-01-42.tar.gz` is available in the Library and its SHA-256 matches the release manifest.
-- The P01–P42 archive contains source/runtime files, migrations, validation scripts, and reports for all 42 phases.
-- `restrox-rebuild-01-49.tar.gz` contains the P01–P42 baseline plus a P49 checkpoint; its chain explicitly records P43–P47 source gaps and P48 partial reconstruction.
-- Production readiness is not established. See [Recovered Artifact Inventory](RECOVERED-ARTIFACT-INVENTORY.md).
-
-## Required workflow for every next phase
+## Required workflow for every phase
 
 1. Recover exact scope and prior decisions.
-2. Inspect source and baseline.
+2. Inspect source and baseline; record the pre-change audit.
 3. Implement only the phase scope.
-4. Run relevant tests and record actual results.
-5. Revalidate from P01 through the current phase and repair regressions.
-6. Add a phase report under `docs/phases/`.
-7. Review changes and secrets.
-8. Commit and push without rewriting history.
-9. Verify the remote branch and files.
-10. Report exact phase(s) and artifacts actually pushed.
+4. Run targeted tests and record actual results.
+5. Revalidate P01 through the current phase; fix regressions.
+6. Repeat the full-start and P01-through-current verification before sign-off.
+7. Add a phase report under `docs/phases/`.
+8. Review changes and secrets.
+9. Commit and push without rewriting history.
+10. Verify the remote branch and files after push.
+11. Report only completion when every acceptance gate passes; otherwise report the exact blocker.
