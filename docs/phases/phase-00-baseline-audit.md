@@ -12,7 +12,7 @@
 
 ## Preflight findings
 
-1. The source archive, API source, migrations, validation references, runtime bundle and project documents exist on GitHub.
+1. The source archive, API source, migrations, validation references, runtime bundle and project documents exist on GitHub. A sanitized `runtime/.env.example` template was restored because the baseline validator and deployment handoff require it.
 2. Editable frontend source is incomplete; the original frontend route/component source was not supplied. The compiled frontend bundle is preserved as a runtime artifact.
 3. The historical TypeScript syntax scan passed for 287 files in the recovered P01–P42 workspace.
 4. The historical full validator did not pass: it was blocked because `/mnt/data/ALL_AI_SCREENSHOTS.zip` was unavailable in the validation environment. Do not represent that run as a pass.
