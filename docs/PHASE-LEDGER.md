@@ -5,7 +5,7 @@ This is the canonical phase index derived from `docs/analysis/master-plan.json`.
 ## Current state
 
 - **Current implementation phase:** P43 — Global reports.
-- **P43 status:** In progress. The GitHub Actions smoke test and TypeScript syntax scan passed in [run #1](https://github.com/aayush-oj/Rms/actions/runs/37934054222). Live application/browser checks and two full-start P01–P43 regression passes remain open.
+- **P43 status:** In progress. Static checks, TypeScript syntax, and two production-mode starts against clean MySQL passed in [CI run #6](https://github.com/aayush-oj/Rms/actions/runs/37935486307). Browser/accessibility checks and full P01–P43 regression passes remain open.
 - **P01–P42:** The recovered historical chain marks them validated with overall status `VALIDATED_WITH_SOURCE_GAPS_EXPLICIT`; that history is not a substitute for a fresh full regression run.
 - **P49:** Historical checkpoint only, with mocked-database and production/runtime gaps. It is not proof that P43–P49 are accepted as a continuous production-ready build.
 - **Production readiness:** Not established.
@@ -60,7 +60,7 @@ See [Phase 0 baseline audit](phases/phase-00-baseline-audit.md). It records repo
 | P40 | Finance transactions & day book | Implement transaction list/day book and observed finance read workflows. | Historical recovery chain marks validated; source gaps explicit; fresh full regression not certified |
 | P41 | Finance setup & accounting masters | Implement journal/account heads/payment/tax/banks/expense setup. | Historical recovery chain marks validated; source gaps explicit; fresh full regression not certified |
 | P42 | Finance reports suite | Implement the 50+ finance report routes with shared report engine and query limits. | Historical recovery chain marks validated; source gaps explicit; fresh full regression not certified |
-| P43 | Global reports | Implement `/en/reports` and any evidence-backed global report navigation/summary. | IN PROGRESS — CI smoke/syntax passed; live app/browser and two full regression passes open |
+| P43 | Global reports | Implement `/en/reports` and any evidence-backed global report navigation/summary. | IN PROGRESS — static/production runtime checks passed twice; browser/accessibility and full P01–P43 regression open |
 | P44 | Inventory base & stock item/group | Implement stock items, groups, units, suppliers-facing item links and opening stock. | Not started — blocked on P43 acceptance |
 | P45 | Consumption, recipes & costing | Implement menu stock consumption and recipe/BOM cost logic. | Not started — blocked on P44 |
 | P46 | Stock history, adjustments, transfer & counts | Implement movement history, adjustment, stock transfer, counts. | Not started — blocked on P45 |
@@ -88,7 +88,7 @@ See [Phase 0 baseline audit](phases/phase-00-baseline-audit.md). It records repo
 - Canonical route: `PAGE-024`, `/en/reports`, from `docs/analysis/route-phase-map.csv`.
 - Dependencies: P26 Analytics and P42 Finance Reports.
 - Source/runtime artifacts, explicit editable server handlers, public/runtime static aliases, report catalog, smoke test, and CI workflow are recorded in [P43 phase report](phases/phase-43-global-reports.md).
-- The static route/assets and TypeScript syntax CI checks passed. No live browser or full application start has been verified.
+- The static route/assets and TypeScript syntax checks passed; two production-mode full runtime starts on clean MySQL returned HTTP 200 for the canonical route and catalog. Browser/accessibility and full P01–P43 regression checks remain open.
 - P43 must not be marked complete until the actual route and catalog are exercised in a running app, accessibility/browser checks pass, and full-start plus P01–P43 regression verification passes twice.
 
 ## Required lifecycle for each phase
