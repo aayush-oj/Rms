@@ -2,31 +2,35 @@
 
 Last reviewed: 2026-10-09
 
-## Current source/recovery finding
+## Baseline audit (Phase 0 control step)
 
-The GitHub repository contains application source folders, database migrations, validation assets, runtime build artifacts, and the uploaded P01–P42 ZIP. This differs from the earlier documentation-only recovery checkpoint; the remote tree has since been rechecked.
+See [Phase 0 baseline audit](phases/phase-00-baseline-audit.md). The canonical master plan remains 64 product phases. P00 is a control/audit step, not a new product phase.
 
 - Repository: https://github.com/aayush-oj/Rms
-- Source directories include `apps/api`, `apps/web`, `database`, `packages`, `runtime`, `scripts`, `tests`, and `validation`.
-- The P01–P42 archive SHA-256 matches its stored release manifest.
-- The recovered P01–P42 chain marks phases P01–P42 as historically validated, with overall status `VALIDATED_WITH_SOURCE_GAPS_EXPLICIT`.
-- Historical syntax scans passed, but the full validator was blocked because `ALL_AI_SCREENSHOTS.zip` was not present in the validation environment. This is not production certification.
+- The plan declares 142 canonical routes, 253 API methods and 103 SQL entities.
+- The recovered P01–P42 chain is historically marked validated with explicit source gaps; this is not a fresh production-readiness certification.
+- A historical TypeScript syntax scan passed, but the historical full validator was blocked by the missing `ALL_AI_SCREENSHOTS.zip` input.
+- Editable original frontend route/component source is incomplete; the compiled frontend runtime remains a preserved artifact.
 
-## Phase 43 checkpoint — Global reports
+## Phase 43 checkpoint — Global Reports
 
-Committed to `main`:
-- `apps/web/public/reports.html` — accessible searchable global report directory.
-- `apps/web/public/reports-catalog.json` — route-map-backed Analytics and Finance Reports links.
-- `docs/phases/phase-43-global-reports.md` — scope, evidence, acceptance checklist, rollback, and explicit verification status.
+Committed implementation files:
+- `apps/web/public/reports.html` and `apps/web/public/reports-catalog.json`
+- `apps/api/src/server/server.ts` route handlers for `/en/reports`
+- `apps/web/public/en/reports/index.html` and `runtime/dist/en/reports/index.html` static directory-index aliases
+- `runtime/dist/reports.html` and `runtime/dist/reports-catalog.json`
+- `tests/unit/global-reports-smoke.cjs` and the `test:global-reports` package command
+- `.github/workflows/p43-global-reports-smoke.yml`
+- Phase ledger, P00 audit and P43 phase report
 
-P43 remains **in progress**. The repository has compiled frontend assets but the editable frontend route/component source needed to verify integration of `/en/reports` is not present in the recovered editable source. The standalone hub artifacts are not proof that the app's actual route resolves to them. Browser testing, full-start validation, and the required P01–P43 regression pass twice remain open.
+P43 remains **in progress**. A workflow was committed, but a passing CI run has not yet been confirmed. Live HTTP/browser testing and the twice-repeated full-start/P01–P43 regression process are still required. Do not treat static route files as proof that the deployed app works.
 
-## Current blockers / next actions
+## Required next steps
 
-1. Restore or identify the authoritative editable frontend routing/build source so the P43 page can be integrated at `/en/reports` instead of existing only as a standalone public artifact.
-2. Run the actual application build/start and browser checks, including keyboard/accessibility and link resolution.
-3. Revalidate P01 through P43 twice (pre-sign-off and post-fix), fixing regressions and recording results.
-4. Update the phase ledger only after the evidence gates pass.
-5. Continue to P44 only after P43 is accepted.
+1. Confirm the GitHub Actions run and fix any failing smoke/syntax checks.
+2. Exercise `/en/reports` and `/en/reports/` against the actual running runtime; verify catalog loading and child-route navigation.
+3. Run keyboard/accessibility and responsive browser checks.
+4. Revalidate P01 through P43 twice, fix regressions, and retain test logs/evidence.
+5. Update the phase ledger and status only to reflect verified results; proceed to P44 only after P43 acceptance.
 
 See [Phase Ledger](PHASE-LEDGER.md), [Recovered Artifact Inventory](RECOVERED-ARTIFACT-INVENTORY.md), and [P43 Phase Report](phases/phase-43-global-reports.md).
