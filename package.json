@@ -12,6 +12,7 @@
     "check:ts-syntax": "node scripts/check-ts-syntax.cjs",
     "test:global-reports": "node tests/unit/global-reports-smoke.cjs",
     "test:global-reports:runtime": "node tests/unit/global-reports-runtime-smoke.cjs",
-    "test:finance-reports": "node tests/unit/finance-reports-smoke.cjs"
+    "test:finance-reports": "node tests/unit/finance-reports-smoke.cjs",
+    "test:global-reports:browser": "node tests/unit/global-reports-browser-smoke.cjs"
   }
 }
