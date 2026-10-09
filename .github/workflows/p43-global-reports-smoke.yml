@@ -27,6 +27,8 @@ on:
       - 'runtime/dist/reports-catalog.json'
       - 'runtime/dist/en/reports/index.html'
       - 'tests/unit/global-reports-smoke.cjs'
+      - 'scripts/audit-phase-chain.cjs'
+      - 'docs/analysis/phase-00-to-43-audit.md'
       - 'package.json'
       - '.github/workflows/p43-global-reports-smoke.yml'
   workflow_dispatch:
