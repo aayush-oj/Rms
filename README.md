@@ -25,7 +25,7 @@ Run from the repository root with the required evidence inputs available:
 ```bash
 node scripts/validate-rebuild.cjs
 node scripts/check-ts-syntax.cjs
-node scripts/audit-phase-chain.cjs
+npm run audit:phase-chain
 node tests/unit/finance-reports-smoke.cjs
 node scripts/package-release.cjs
 ```
