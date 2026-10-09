@@ -8,7 +8,7 @@ The original phase artifacts were present in the ChatGPT Library/project files, 
 
 - P01–P42 source package: `restrox-rebuild-01-42.tar.gz`
 - P01–P49 checkpoint: `restrox-rebuild-01-49.tar.gz`
-- Intermediate Library checkpoints P01–P45 and P01–P46 also exist, but raw-byte materialization was denied for those two files in this session.
+- Intermediate Library checkpoints P01–P45 and P01–P46 also exist, but raw-byte materialization was denied for those two files in this session. The recovered master plan identifies P43–P48 as Global reports; Inventory base; Consumption/recipes/costing; Stock history/adjustments/transfers/counts; Batch production/BOM; and Purchasing/suppliers/purchase bills—not a single renaming phase.
 - The P01–P42 archive includes 42 phase reports and a phase chain that marks P01–P42 VALIDATED, with overall status `VALIDATED_WITH_SOURCE_GAPS_EXPLICIT`.
 - The P01–P49 phase chain records P43–P47 source as not rehydrated, P48 as partially reconstructed, and P49 as validated in the current workspace with a mocked database.
 
