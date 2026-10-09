@@ -5,7 +5,7 @@ This is the canonical phase index derived from `docs/analysis/master-plan.json`.
 ## Current state
 
 - **Current implementation phase:** P43 — Global reports.
-- **P43 status:** In progress. Static checks, TypeScript syntax, and two production-mode starts against clean MySQL passed in [CI run #12](https://github.com/aayush-oj/Rms/actions/runs/37935693711). Browser/accessibility checks and full P01–P43 regression passes remain open.
+- **P43 status:** In progress. Static checks, TypeScript syntax, two production-mode starts against clean MySQL, and browser/accessibility checks passed in [CI run #14](https://github.com/aayush-oj/Rms/actions/runs/37936045626). Browser/accessibility checks and full P01–P43 regression passes remain open.
 - **P01–P42:** The recovered historical chain marks them validated with overall status `VALIDATED_WITH_SOURCE_GAPS_EXPLICIT`; that history is not a substitute for a fresh full regression run.
 - **P49:** Historical checkpoint only, with mocked-database and production/runtime gaps. It is not proof that P43–P49 are accepted as a continuous production-ready build.
 - **Production readiness:** Not established.
@@ -88,7 +88,7 @@ See [Phase 0 baseline audit](phases/phase-00-baseline-audit.md). It records repo
 - Canonical route: `PAGE-024`, `/en/reports`, from `docs/analysis/route-phase-map.csv`.
 - Dependencies: P26 Analytics and P42 Finance Reports.
 - Source/runtime artifacts, explicit editable server handlers, public/runtime static aliases, report catalog, smoke test, and CI workflow are recorded in [P43 phase report](phases/phase-43-global-reports.md).
-- The static route/assets and TypeScript syntax checks passed; two production-mode full runtime starts on clean MySQL returned HTTP 200 for the canonical route and catalog. Browser/accessibility and full P01–P43 regression checks remain open.
+- The static route/assets and TypeScript syntax checks passed; two production-mode runtime starts on clean MySQL returned HTTP 200 for the canonical route and catalog, and browser/accessibility checks passed. Full P01–P43 regression checks remain open.
 - P43 must not be marked complete until the actual route and catalog are exercised in a running app, accessibility/browser checks pass, and full-start plus P01–P43 regression verification passes twice.
 
 ## Required lifecycle for each phase
