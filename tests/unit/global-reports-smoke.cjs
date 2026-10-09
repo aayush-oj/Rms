@@ -18,10 +18,10 @@ assert.deepEqual(catalog, publicCatalog, 'runtime catalog must match source cata
 assert.equal(page, publicPage, 'runtime page must match source page');
 assert.equal(deployedRoutePage, page, 'production /en/reports directory index must match report hub');
 assert.equal(publicRoutePage, publicPage, 'development /en/reports directory index must match report hub');
-assert.match(source, /app\\.get\\(\\['\\/en\\/reports', '\\/en\\/reports\\/'\\]/, 'editable server source must explicitly register /en/reports');
-assert.match(source, /path\\.join\\(distPath, 'reports\\.html'\\)/, 'editable production route must target the report page');
-assert.match(source, /path\\.join\\(process\\.cwd\\(\\), 'runtime', 'dist', 'reports\\.html'\\)/, 'development route must target preserved report page');
-assert.match(compiledServer, /express3\\.static\\(distPath\\)/, 'compiled production server must serve static files');
+assert.ok(source.includes("app.get(['/en/reports', '/en/reports/']"), 'editable server source must explicitly register /en/reports');
+assert.ok(source.includes("path.join(distPath, 'reports.html')"), 'editable production route must target the report page');
+assert.ok(source.includes("path.join(process.cwd(), 'runtime', 'dist', 'reports.html')"), 'development route must target preserved report page');
+assert.ok(compiledServer.includes('express3.static(distPath)'), 'compiled production server must serve static files');
 assert.ok(compiledServer.indexOf('express3.static(distPath)') < compiledServer.indexOf('app.get("*"'), 'static serving must precede compiled SPA fallback');
 assert.ok(page.includes("fetch('/reports-catalog.json'"), 'page must load the deployed catalog');
 assert.ok(page.includes('link.href = item.path'), 'links must be created through DOM APIs');
