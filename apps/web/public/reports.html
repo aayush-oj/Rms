@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Reports | RestroX</title>
+  <style>
+    :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f5f7fb}
+    *{box-sizing:border-box}body{margin:0}main{max-width:1180px;margin:0 auto;padding:clamp(20px,4vw,44px)}
+    .eyebrow{font-size:.78rem;font-weight:750;letter-spacing:.1em;text-transform:uppercase;color:#52627a}
+    h1{font-size:clamp(2rem,4vw,3rem);letter-spacing:-.04em;margin:.45rem 0}
+    .intro{max-width:680px;color:#536176;line-height:1.65}
+    .toolbar{display:flex;gap:12px;flex-wrap:wrap;margin:28px 0 18px}
+    input{font:inherit;min-width:min(100%,280px);flex:1;padding:12px 14px;border:1px solid #cbd5e1;border-radius:10px;background:#fff}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
+    .card{display:flex;flex-direction:column;gap:10px;min-height:205px;padding:22px;background:#fff;border:1px solid #dce3ed;border-radius:16px;text-decoration:none;color:inherit;box-shadow:0 3px 14px #17203308;transition:transform .15s,border-color .15s}
+    .card:hover{transform:translateY(-2px);border-color:#8798b3}.card:focus-visible,input:focus-visible{outline:3px solid #3569d4;outline-offset:3px}
+    .tag{font-size:.75rem;font-weight:700;color:#34548b}.card h2{font-size:1.18rem;margin:0}.card p{color:#59677b;line-height:1.55;margin:0}
+    .action{margin-top:auto;padding-top:8px;font-weight:700;color:#244f9e}.status{color:#5a687c;font-size:.9rem;margin:18px 0}
+    @media(prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
+  </style>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">RestroX · Reporting</p>
+    <h1>Reports</h1>
+    <p class="intro">A single starting point for operational analytics and detailed reports. Each destination uses its own authorized report view; this hub does not calculate or duplicate financial totals.</p>
+    <div class="toolbar">
+      <label for="report-search" class="eyebrow" style="align-self:center">Find a report</label>
+      <input id="report-search" type="search" autocomplete="off" placeholder="Search analytics, sales, finance…" aria-describedby="search-help">
+    </div>
+    <p id="search-help" class="status">Choose a report family to continue. Access to report data remains controlled by the destination.</p>
+    <section id="report-cards" class="grid" aria-label="Report categories" aria-live="polite"></section>
+    <p id="empty-state" class="status" hidden>No report categories match your search.</p>
+    <noscript><p class="status">Enable JavaScript to load the report directory.</p></noscript>
+  </main>
+  <script>
+    const root = document.getElementById('report-cards');
+    const search = document.getElementById('report-search');
+    const empty = document.getElementById('empty-state');
+    let reports = [];
+    function render() {
+      const term = search.value.trim().toLocaleLowerCase();
+      const filtered = reports.filter(item => [item.title, item.description, ...(item.keywords || [])].join(' ').toLocaleLowerCase().includes(term));
+      root.replaceChildren();
+      for (const item of filtered) {
+        const link = document.createElement('a');
+        link.className = 'card';
+        link.href = item.path;
+        const tag = document.createElement('span'); tag.className = 'tag'; tag.textContent = item.category;
+        const title = document.createElement('h2'); title.textContent = item.title;
+        const description = document.createElement('p'); description.textContent = item.description;
+        const action = document.createElement('span'); action.className = 'action'; action.textContent = 'Open reports →';
+        link.append(tag, title, description, action);
+        root.append(link);
+      }
+      empty.hidden = filtered.length !== 0;
+    }
+    search.addEventListener('input', render);
+    fetch('/reports-catalog.json', {headers:{Accept:'application/json'}, cache:'no-store'})
+      .then(response => { if (!response.ok) throw new Error('Catalog unavailable'); return response.json(); })
+      .then(data => { if (!Array.isArray(data)) throw new Error('Invalid catalog'); reports = data; render(); })
+      .catch(() => {
+        root.replaceChildren();
+        const message = document.createElement('p');
+        message.className = 'status';
+        message.textContent = 'The report directory could not be loaded. Please use the application navigation or contact your administrator.';
+        root.append(message);
+      });
+  </script>
+</body>
+</html>
