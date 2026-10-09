@@ -1,0 +1,42 @@
+name: P43 Global Reports smoke
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/api/src/server/server.ts'
+      - 'apps/web/public/reports.html'
+      - 'apps/web/public/reports-catalog.json'
+      - 'apps/web/public/en/reports/index.html'
+      - 'runtime/dist/reports.html'
+      - 'runtime/dist/reports-catalog.json'
+      - 'runtime/dist/en/reports/index.html'
+      - 'tests/unit/global-reports-smoke.cjs'
+      - 'package.json'
+      - '.github/workflows/p43-global-reports-smoke.yml'
+  pull_request:
+    paths:
+      - 'apps/api/src/server/server.ts'
+      - 'apps/web/public/reports.html'
+      - 'apps/web/public/reports-catalog.json'
+      - 'apps/web/public/en/reports/index.html'
+      - 'runtime/dist/reports.html'
+      - 'runtime/dist/reports-catalog.json'
+      - 'runtime/dist/en/reports/index.html'
+      - 'tests/unit/global-reports-smoke.cjs'
+      - 'package.json'
+      - '.github/workflows/p43-global-reports-smoke.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify global reports route and assets
+        run: npm run test:global-reports
+      - name: Verify TypeScript syntax
+        run: npm run check:ts-syntax
