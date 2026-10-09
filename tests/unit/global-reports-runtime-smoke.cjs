@@ -55,7 +55,7 @@ async function main() {
     }
     assert.ok(response && response.status === 200, `/en/reports did not return HTTP 200: ${lastError}\n${logs}`);
     const html = await response.text();
-    assert.match(html, /<title>Reports \\| RestroX<\\/title>/, 'route must serve the Reports page');
+    assert.ok(html.includes('<title>Reports | RestroX</title>'), 'route must serve the Reports page');
     const trailingSlash = await fetch(`${base}/en/reports/`, { redirect: 'follow', signal: AbortSignal.timeout(3000) });
     assert.equal(trailingSlash.status, 200, '/en/reports/ must return HTTP 200');
     const catalogResponse = await fetch(`${base}/reports-catalog.json`, { signal: AbortSignal.timeout(3000) });
