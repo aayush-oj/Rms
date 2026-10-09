@@ -11,6 +11,7 @@ See [Phase 0 baseline audit](phases/phase-00-baseline-audit.md). The canonical m
 - The recovered P01–P42 chain is historically marked validated with explicit source gaps; this is not a fresh production-readiness certification.
 - A historical TypeScript syntax scan passed, but the historical full validator was blocked by the missing `ALL_AI_SCREENSHOTS.zip` input.
 - Editable original frontend route/component source is incomplete; the compiled frontend runtime remains a preserved artifact.
+- Restored `runtime/.env.example` with placeholder-only values for safe deployment setup; no production secrets are included.
 
 ## Phase 43 checkpoint — Global Reports
 
