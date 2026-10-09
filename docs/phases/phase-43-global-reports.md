@@ -24,8 +24,8 @@ Implement the evidence-backed global reporting hub for `/en/reports`, providing 
 
 ## Verification status
 - GitHub writes: commits returned for all implementation and documentation changes; final remote file/head verification remains required.
-- Static consistency smoke test: added but not yet executed in a verified runtime/CI result.
-- TypeScript syntax check: workflow added; current run result not yet confirmed.
+- GitHub Actions run [#1](https://github.com/aayush-oj/Rms/actions/runs/37934054222): **success** for the committed P43 static route/assets smoke test and TypeScript syntax scan. Both named steps completed successfully at workflow commit `a3a6c66b913f35f14a619e797b4992d93bc805d3`.
+- This CI run verifies static artifact consistency and syntax; it does not start the full production app, make HTTP requests to the live route, or run the full P01–P43 regression suite.
 - Browser/accessibility test: not run in this environment.
 - Live application start and actual `/en/reports` HTTP response: not verified.
 - Full P01–P43 regression verification twice: not run.
