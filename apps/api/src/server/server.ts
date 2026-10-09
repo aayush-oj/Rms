@@ -18,6 +18,13 @@ export async function startServer(): Promise<{ server: http.Server; port: number
   const app = createApp();
 
   if (env.NODE_ENV !== 'production') {
+    // The editable frontend route source was not recovered. Serve the evidence-backed
+    // Reports hub directly while the frontend source/build is being reconstructed.
+    app.get(['/en/reports', '/en/reports/'], (_req, res, next) => {
+      res.sendFile(path.join(process.cwd(), 'runtime', 'dist', 'reports.html'), (err) => {
+        if (err) next(err);
+      });
+    });
     try {
       const { createServer: createViteServer } = await import('vite');
       const vite = await createViteServer({ server: { middlewareMode: true }, appType: 'spa' });
@@ -30,6 +37,12 @@ export async function startServer(): Promise<{ server: http.Server; port: number
     const distPath = path.join(process.cwd(), 'dist');
     const express = (await import('express')).default;
     app.use(express.static(distPath));
+    // Explicit route precedes the SPA fallback when this editable server source is rebuilt.
+    app.get(['/en/reports', '/en/reports/'], (_req, res, next) => {
+      res.sendFile(path.join(distPath, 'reports.html'), (err) => {
+        if (err) next(err);
+      });
+    });
     app.get('*', (_req, res) => { res.sendFile(path.join(distPath, 'index.html')); });
     logger.info(`Static production assets served from ${distPath}`);
   }
