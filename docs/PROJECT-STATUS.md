@@ -2,72 +2,46 @@
 
 Last reviewed: 2026-10-09
 
-## Purpose
-
-This repository is the version-controlled source of truth for the RestroX / RMS rebuild. Every implementation phase must have a traceable code change, documentation, validation evidence, and GitHub commit.
-
-## Verified repository baseline
+## Source of truth
 
 - Repository: https://github.com/aayush-oj/Rms
 - Default branch: `main`
-- Repository visibility: public
-- Baseline observed on 2026-10-09: repository size reported as 0; the only retrievable file was a minimal `README.md` containing `# Rms`.
-- Visible commit history retrieved during this review: `9e1313daa2eed4ad80efc365f7522b6db7c3d371` — `Initial commit`.
-- No phase documents or implementation source files were discoverable in the repository during this review.
+- Phase workflow: each phase needs its own implementation/report, validation, regression review from Phase 1 through the current phase, commit/push, and remote verification.
 
-## Historical phase reconciliation
+## User-reported historical checkpoint
 
-The user identified a prior ChatGPT conversation titled **“Aanalyatic report”** as the source for previous implementation decisions and phase history. That conversation was not available through the history lookup during this session.
+The user reports that the earlier ChatGPT conversation showed **Phases 1–42 completed** and **Phases 43–48 in a renaming workstream**. This is a user-provided checkpoint, not independently verified against the unavailable earlier conversation or source code. Preserve this distinction until original records are recovered.
 
-Therefore:
-- Historical phase numbers, features, and completion claims remain **unverified** until reconciled with the source conversation or artifacts.
-- Do not fabricate retrospective phase reports.
-- When historical records are recovered, add one document per actual phase under `docs/phases/`, clearly distinguishing verified facts from reconstructed notes.
-- Preserve existing repository content and history; do not force-push or rewrite history.
+- Reported completed range: Phases 1–42.
+- Next phase to resume: Phase 43.
+- Reported remaining work: Phases 43–48, described as renaming.
+- Exact phase titles, rename mapping, affected files, and acceptance criteria: not yet recoverable from the current repository or accessible conversation history.
 
-## Mandatory workflow for every future phase
+## Git history and source recovery audit
 
-1. **Recover context:** review the phase plan, previous decisions, requirements, and known constraints.
-2. **Inspect baseline:** read relevant code and configuration; identify dependencies and existing behavior before editing.
-3. **Implement narrowly:** make the smallest coherent changes for the phase and avoid unrelated regressions.
-4. **Validate:** run applicable tests, linting, type checks, builds, and targeted manual checks where available. Record commands and actual results; never claim an unrun check passed.
-5. **Regression review:** re-read and revalidate from Phase 1 through the current phase. Check integration points and repair regressions before completion.
-6. **Document:** create or update the phase report with scope, files changed, decisions, migration/configuration notes, test evidence, known limitations, and follow-up work.
-7. **Review the diff:** inspect the complete change set for secrets, accidental deletions, unrelated changes, and generated files.
-8. **Commit and push:** commit the completed, documented phase to GitHub. Prefer a descriptive phase-specific commit. Never overwrite remote work blindly; inspect and reconcile divergence first.
-9. **Verify remote state:** confirm the commit exists on the intended branch and that the expected files are present.
-10. **Report concisely:** after a phase is fully complete, report only that it is complete, including the commit/link and any necessary blocker or intervention. Do not call a phase complete if implementation, validation, documentation, or push verification is outstanding.
+Inspected the complete visible commit list and the recursive repository tree for the initial commit and current `main`.
 
-## Documentation structure
+- Initial commit: `9e1313daa2eed4ad80efc365f7522b6db7c3d371` — contains only the 5-byte `README.md`.
+- Subsequent commits on `main` are documentation-only setup commits created on 2026-10-09.
+- Current tree contains `README.md`, `docs/PHASE-LEDGER.md`, and `docs/PROJECT-STATUS.md`.
+- No application source, old implementation, phase 1–42 reports, rename mapping, tags, or alternate branches were found in the inspected repository history.
+- The earlier conversation titled “Aanalyatic report” could not be retrieved by the available conversation-history lookup.
 
-Use the following structure as the project grows:
+**Do not claim old code was pushed or restored:** the code is not present in the inspected Git history. Do not invent a replacement implementation or rename targets. Once original files/artifacts are available, preserve them in Git and resume Phase 43.
 
-- `README.md` — project overview and entry point.
-- `docs/PROJECT-STATUS.md` — current phase, verified baseline, blockers, and next actions.
-- `docs/PHASE-LEDGER.md` — chronological index of phases and their commit/test status.
-- `docs/architecture/` — architecture and system design decisions.
-- `docs/setup/` — local setup, environment variables, and deployment instructions.
-- `docs/phases/PHASE-XX-<short-name>.md` — detailed report for each actual phase.
-- `CHANGELOG.md` — user-visible changes across releases.
+## Mandatory workflow for every phase
 
-## Phase completion record
-
-A phase is complete only when all applicable fields below are recorded:
-
-- Phase ID and title
-- Objective and acceptance criteria
-- Implementation summary
-- Files/modules changed
-- Data model/API/configuration changes
-- Security and compatibility considerations
-- Validation commands and truthful outcomes
-- Regression review from Phase 1 through the current phase
-- Known limitations and follow-ups
-- Git commit SHA and GitHub URL
-- Remote branch verification
+1. Recover the exact phase requirements and previous decisions.
+2. Inspect the current code, configuration, and behavior before editing.
+3. Implement only the scoped phase changes.
+4. Run applicable tests, lint, type checks, build, and targeted checks; record actual outcomes.
+5. Re-read and revalidate from Phase 1 through the current phase; fix regressions before completion.
+6. Add `docs/phases/PHASE-XX-<short-name>.md` with objective, scope, files, decisions, tests, regression review, known issues, and commit details.
+7. Review the full diff for secrets, accidental deletions, and unrelated changes.
+8. Commit and push without rewriting history.
+9. Verify the remote branch and committed files.
+10. Report only completion, or the specific blocker requiring intervention.
 
 ## Current status
 
-**Status: baseline inspection started; historical phase reconciliation blocked.**
-
-The repository baseline has been checked. The previous “Aanalyatic report” conversation and prior phase artifacts still need to be recovered to continue the implementation in the correct sequence. No feature implementation or phase completion is claimed by this status document.
+**Historical checkpoint recorded; Phase 43 is not started.** The user-reported phase numbering is preserved, but execution is blocked because the current GitHub repository contains no old application code or phase details needed to safely perform the renaming work. Recover the original code and the Phase 43–48 rename instructions before implementation.
