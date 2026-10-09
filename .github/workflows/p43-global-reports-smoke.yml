@@ -11,6 +11,7 @@ on:
       - 'runtime/dist/reports-catalog.json'
       - 'runtime/dist/en/reports/index.html'
       - 'tests/unit/global-reports-smoke.cjs'
+      - 'tests/unit/global-reports-runtime-smoke.cjs'
       - 'package.json'
       - '.github/workflows/p43-global-reports-smoke.yml'
   pull_request:
