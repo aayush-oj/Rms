@@ -71,6 +71,17 @@ The P01–P49 chain records:
 41. P41 — Finance setup & accounting masters
 42. P42 — Finance reports suite
 
+## Canonical P43–P48 names recovered from the master plan
+
+- P43 — Global reports
+- P44 — Inventory base & stock item/group
+- P45 — Consumption, recipes & costing
+- P46 — Stock history, adjustments, transfer & counts
+- P47 — Batch production & BOM
+- P48 — Purchasing, suppliers & purchase bills
+
+The P01–P49 chain still marks the historical implementation source for P43–P47 as not rehydrated and P48 as only partially reconstructed.
+
 ## GitHub transfer status
 
 The source archives are recovered and inspectable in the working container, but they have **not yet been pushed as application source** to `aayush-oj/Rms`. The repository currently contains only README and project-status/ledger docs. Do not describe the source package as pushed until the remote tree is verified to contain it.
