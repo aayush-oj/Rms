@@ -2,28 +2,31 @@
 
 Last reviewed: 2026-10-09
 
-## Current recovery finding
+## Current source/recovery finding
 
-The original phase artifacts were present in the ChatGPT Library/project files, not in the newly created GitHub repository. The source has now been located and extracted for inspection.
+The GitHub repository contains application source folders, database migrations, validation assets, runtime build artifacts, and the uploaded P01–P42 ZIP. This differs from the earlier documentation-only recovery checkpoint; the remote tree has since been rechecked.
 
-- P01–P42 source package: `restrox-rebuild-01-42.tar.gz`
-- P01–P49 checkpoint: `restrox-rebuild-01-49.tar.gz`
-- Intermediate Library checkpoints P01–P45 and P01–P46 also exist, but raw-byte materialization was denied for those two files in this session. The recovered master plan identifies P43–P48 as Global reports; Inventory base; Consumption/recipes/costing; Stock history/adjustments/transfers/counts; Batch production/BOM; and Purchasing/suppliers/purchase bills—not a single renaming phase.
-- The P01–P42 archive includes 42 phase reports and a phase chain that marks P01–P42 VALIDATED, with overall status `VALIDATED_WITH_SOURCE_GAPS_EXPLICIT`.
-- The P01–P49 phase chain records P43–P47 source as not rehydrated, P48 as partially reconstructed, and P49 as validated in the current workspace with a mocked database.
+- Repository: https://github.com/aayush-oj/Rms
+- Source directories include `apps/api`, `apps/web`, `database`, `packages`, `runtime`, `scripts`, `tests`, and `validation`.
+- The P01–P42 archive SHA-256 matches its stored release manifest.
+- The recovered P01–P42 chain marks phases P01–P42 as historically validated, with overall status `VALIDATED_WITH_SOURCE_GAPS_EXPLICIT`.
+- Historical syntax scans passed, but the full validator was blocked because `ALL_AI_SCREENSHOTS.zip` was not present in the validation environment. This is not production certification.
 
-## GitHub status
+## Phase 43 checkpoint — Global reports
 
-Repository: https://github.com/aayush-oj/Rms
+Committed to `main`:
+- `apps/web/public/reports.html` — accessible searchable global report directory.
+- `apps/web/public/reports-catalog.json` — route-map-backed Analytics and Finance Reports links.
+- `docs/phases/phase-43-global-reports.md` — scope, evidence, acceptance checklist, rollback, and explicit verification status.
 
-The remote `main` tree was rechecked. It contains README and documentation only; application source has **not yet been pushed**. The recovered source archives remain available in the Library/working environment. The current GitHub write integration does not provide a binary archive/local-Git upload handoff, so source transfer is still outstanding. Do not claim the old code is on GitHub until the remote tree confirms it.
+P43 remains **in progress**. The repository has compiled frontend assets but the editable frontend route/component source needed to verify integration of `/en/reports` is not present in the recovered editable source. The standalone hub artifacts are not proof that the app's actual route resolves to them. Browser testing, full-start validation, and the required P01–P43 regression pass twice remain open.
 
-## Next actions
+## Current blockers / next actions
 
-1. Transfer the recovered P01–P42 application source and validation assets into GitHub while preserving existing history.
-2. Compare the P01–P45/P01–P46/P01–P49 checkpoints and recover the missing P43–P48 source, especially the reported renaming changes.
-3. Preserve phase reports and exact rename mapping.
-4. Run the complete P01-to-current regression suite; do not infer production readiness from historical validation records.
-5. Commit/push each verified phase and check the remote after every phase.
+1. Restore or identify the authoritative editable frontend routing/build source so the P43 page can be integrated at `/en/reports` instead of existing only as a standalone public artifact.
+2. Run the actual application build/start and browser checks, including keyboard/accessibility and link resolution.
+3. Revalidate P01 through P43 twice (pre-sign-off and post-fix), fixing regressions and recording results.
+4. Update the phase ledger only after the evidence gates pass.
+5. Continue to P44 only after P43 is accepted.
 
-See [Phase Ledger](PHASE-LEDGER.md) and [Recovered Artifact Inventory](RECOVERED-ARTIFACT-INVENTORY.md).
+See [Phase Ledger](PHASE-LEDGER.md), [Recovered Artifact Inventory](RECOVERED-ARTIFACT-INVENTORY.md), and [P43 Phase Report](phases/phase-43-global-reports.md).
