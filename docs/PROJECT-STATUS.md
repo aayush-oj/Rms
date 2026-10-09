@@ -23,7 +23,7 @@ Committed implementation files:
 - `.github/workflows/p43-global-reports-smoke.yml`
 - Phase ledger, P00 audit and P43 phase report
 
-P43 remains **in progress**. A workflow was committed, but a passing CI run has not yet been confirmed. Live HTTP/browser testing and the twice-repeated full-start/P01–P43 regression process are still required. Do not treat static route files as proof that the deployed app works.
+P43 remains **in progress**. GitHub Actions run [#1](https://github.com/aayush-oj/Rms/actions/runs/37934054222) passed the P43 static route/assets smoke test and TypeScript syntax scan. Live HTTP/browser testing and the twice-repeated full-start/P01–P43 regression process are still required. Do not treat static route files as proof that the deployed app works.
 
 ## Required next steps
 
