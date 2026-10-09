@@ -1,0 +1,17 @@
+{
+  "phase": "P01",
+  "name": "Evidence provenance & checksums",
+  "objective": "Freeze the evidence corpus and create immutable hashes, manifests and provenance records.",
+  "dependencies": "Source archive files; prior inspection bundle.",
+  "evidence": "All",
+  "routeSurface": "Repo: /validation/reference and /docs/analysis.",
+  "apiImpact": "N/A",
+  "sqlImpact": "No DB.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": null,
+  "notes": "Analysis/provenance phase.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": null
+}

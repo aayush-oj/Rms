@@ -1,0 +1,17 @@
+import { Router } from 'express';
+import { authenticate,requirePermission } from '../identity/middleware';
+import { validateRequest } from '../../middleware/validate';
+import { expenseController } from './controller';
+import { createExpenseCategorySchema,createExpenseSchema,listExpenseQuerySchema,updateExpenseCategorySchema,updateExpenseSchema,voidExpenseSchema } from './validation';
+export const expenseRouter=Router();
+expenseRouter.use(authenticate());
+expenseRouter.get('/categories',requirePermission('expenses:view','expenses:category:manage'),expenseController.listCategories);
+expenseRouter.post('/categories',requirePermission('expenses:category:manage'),validateRequest({body:createExpenseCategorySchema}),expenseController.createCategory);
+expenseRouter.patch('/categories/:id',requirePermission('expenses:category:manage'),validateRequest({body:updateExpenseCategorySchema}),expenseController.updateCategory);
+expenseRouter.get('/summary',requirePermission('expenses:view'),expenseController.summary);
+expenseRouter.get('/',requirePermission('expenses:view'),validateRequest({query:listExpenseQuerySchema}),expenseController.list);
+expenseRouter.post('/',requirePermission('expenses:create'),validateRequest({body:createExpenseSchema}),expenseController.create);
+expenseRouter.get('/:id',requirePermission('expenses:view'),expenseController.get);
+expenseRouter.patch('/:id',requirePermission('expenses:update'),validateRequest({body:updateExpenseSchema}),expenseController.update);
+expenseRouter.post('/:id/post',requirePermission('expenses:post'),expenseController.post);
+expenseRouter.post('/:id/void',requirePermission('expenses:void'),validateRequest({body:voidExpenseSchema}),expenseController.void);

@@ -1,0 +1,143 @@
+route_id,reference_path,title,evidence_status,phase,candidate_exact_route_proven
+PAGE-001,/en/analytics,Overview - Analytics,observed,P26,NO
+PAGE-002,/en/analytics/finance,Finance - Analytics,observed,P26,NO
+PAGE-003,/en/analytics/order,Order - Analytics,observed,P26,NO
+PAGE-004,/en/settings,Setting | RestroX,observed,P27,NO
+PAGE-005,/en/settings/notification,Notifications - Settings | RestroX,observed,P27,NO
+PAGE-006,/en/settings/activity-log,Activity Log - Settings | RestroX,route-observed,P27,NO
+PAGE-007,/en/settings/billing-and-subscription,Billing and Subscription - Settings | RestroX,read-only-observed,P53,NO
+PAGE-008,/en/settings/user-role,Users Role - Settings | RestroX,interactive-ui-observed,P27,NO
+PAGE-009,/en/settings/trash,Trash - Settings | RestroX,read-only-observed,P53,NO
+PAGE-010,/en/settings/migrated-data,Migrated Data - Settings | RestroX,interactive-ui-observed,P53,NO
+PAGE-011,/en/settings/integrations,Setting | RestroX,read-only-observed,P27,NO
+PAGE-012,/en/settings/invoice,Invoice Settings | RestroX,interactive-ui-observed,P27,NO
+PAGE-013,/en/settings/kot-setting,KOT Setting | RestroX,interactive-ui-observed,P27,NO
+PAGE-014,/en/settings/order-slip-setting,Order Slip Setting | RestroX,interactive-ui-observed,P27,NO
+PAGE-015,/en/settings/printer,Printer - Settings | RestroX,interactive-ui-observed,P50,NO
+PAGE-016,/en/settings/support-and-feedback,Support and Feedbacks | RestroX,interactive-ui-observed,P53,NO
+PAGE-017,/en/settings/release-notes,Release Notes | RestroX,interactive-ui-observed,P53,NO
+PAGE-018,/en/orders,Orders | RestroX,observed,P31,NO
+PAGE-019,/en/orders/table,Table - Order | RestroX,observed,P31,NO
+PAGE-020,/en/orders/kot,KOT - Order | RestroX,observed,P34,NO
+PAGE-021,/en/orders/:orderId,Orders | RestroX,interactive-ui-observed,P31,NO
+PAGE-022,/en/notification,Notification | RestroX,title-observed,P35,NO
+PAGE-023,/en/finance/transactions,Finance - Transactions | RestroX,title-observed,P40,NO
+PAGE-024,/en/reports,Reports | RestroX,title-observed,P43,NO
+PAGE-025,/en/services/restrolink,RestroLink - Services | RestroX,interactive-ui-observed,P52,NO
+PAGE-026,/en/customer,Customers | RestroX,title-observed,P28,NO
+PAGE-027,/en/staff,Staff | RestroX,interactive-ui-observed,P28,NO
+PAGE-028,/en/menu/dish-setup,Dishes - Menu | RestroX,interactive-ui-observed,P29,NO
+PAGE-029,/en/menu/dish-setup/category,Categories - Menu | RestroX,interactive-ui-observed,P29,NO
+PAGE-030,/en/menu/dish-setup/add-ons,Add Ons - Menu | RestroX,interactive-ui-observed,P29,NO
+PAGE-031,/en/menu/menu-setup/menu-set,MenuSet - Menu | RestroX,interactive-ui-observed,P29,NO
+PAGE-032,/en/menu/menu-setup/sub-menu,SubMenu - Menu | RestroX,interactive-ui-observed,P29,NO
+PAGE-033,/en/menu/combo-offer,Combo Offer | RestroX,interactive-ui-observed,P29,NO
+PAGE-034,/en/services/dine-in,Dine in - Services | RestroX,interactive-ui-observed,P52,NO
+PAGE-035,/en/services/delivery,Delivery - Services | RestroX,interactive-ui-observed,P52,NO
+PAGE-036,/en/services/sms,SMS - Services | RestroX,interactive-ui-observed,P52,NO
+PAGE-037,/en/services/loyalty-and-rewards,Stamp Programs - Services | RestroX,interactive-ui-observed,P52,NO
+PAGE-038,/en/services/connect,Connect Settings - Services | RestroX,interactive-ui-observed,P52,NO
+PAGE-039,/en/services/setting,Settings - Services | RestroX,interactive-ui-observed,P52,NO
+PAGE-040,/en/table-and-space/table,Table | RestroX,interactive-ui-observed,P30,NO
+PAGE-041,/en/table-and-space/space,Space | RestroX,interactive-ui-observed,P30,NO
+PAGE-042,/en/table-and-space/qr-codes,QR Codes | RestroX,interactive-ui-observed,P30,NO
+PAGE-043,/en/inventory/stock-item,Inventory - Stock Item | RestroX,synthetic-crud-observed,P44,NO
+PAGE-044,/en/inventory/consumption,Inventory - Consumption | RestroX,read-only-ui-observed-backend-unverified,P45,NO
+PAGE-045,/en/inventory/suppliers,Inventory - Suppliers | RestroX,workflow-observed,P44,NO
+PAGE-046,/en/inventory/measuring-unit,Inventory - Measuring Unit | RestroX,synthetic-crud-observed-backend-unverified,P44,NO
+PAGE-047,/en/inventory/stock-group,Inventory - Stock Group | RestroX,synthetic-crud-observed-backend-unverified,P44,NO
+PAGE-048,/en/inventory/stock-history,Inventory - Stock History | RestroX,read-only-ui-observed-backend-unverified,P46,NO
+PAGE-049,/en/inventory/batch-production,Inventory - Stock Batch Production | RestroX,interactive-ui-observed-backend-unverified,P47,NO
+PAGE-050,/en/restrox,Home | RestroX,observed,P18,NO
+PAGE-051,/en/orders/kot-history,KOT History,interactive-ui-observed,P34,NO
+PAGE-052,/en/settings/kot-setting/setting,Kitchen Settings,interactive-ui-observed,P27,NO
+PAGE-053,/en/orders/cancelled-history,Cancelled History,interactive-ui-observed,P39,NO
+PAGE-054,/en/orders/cancellation-reasons,Cancellation Reasons,interactive-ui-observed,P39,NO
+PAGE-055,/en/reservations,Reservation,interactive-ui-observed,P32,NO
+PAGE-056,/en/orders/pos-mode,POS Mode | RestroX,workflow-observed,P33,NO
+PAGE-057,/en/orders/kds-mode,KDS Mode | RestroX,workflow-observed-with-possible-status-transition,P34,NO
+PAGE-059,/en/notification/activity,Activity | RestroX,workflow-observed,P35,NO
+PAGE-060,/en/menu/dish-setup/add-dish,Create Dish | RestroX,interactive-ui-observed,P29,NO
+PAGE-061,/en/services/connect/connect-banner,Connect Settings - Services | RestroX,empty-state-observed,P52,NO
+PAGE-062,/en/finance/day-book,Finance - Day Book | RestroX,workflow-observed,P40,NO
+PAGE-063,/en/finance/journal-voucher,Finance - Journal Voucher | RestroX,empty-state-observed,P41,NO
+PAGE-064,/en/finance/sales-and-purchase,Finance - Sales & Purchases | RestroX,workflow-observed,P41,NO
+PAGE-065,/en/finance/sales-and-purchase/purchase-bills,Finance - Sales & Purchases | RestroX,workflow-observed,P41,NO
+PAGE-066,/en/finance/income,Finance - Income | RestroX,empty-state-observed,P41,NO
+PAGE-067,/en/finance/expenses,Finance - Expenses | RestroX,empty-state-observed,P41,NO
+PAGE-068,/en/finance/payments,Finance - Payments | RestroX,empty-state-observed,P41,NO
+PAGE-069,/en/finance/cash-and-banks,Finance - Cash & Banks | RestroX,workflow-observed,P41,NO
+PAGE-070,/en/finance/tax-and-rates,Tax and Rates - Settings | RestroX,workflow-observed,P41,NO
+PAGE-071,/en/finance/balance-transfer,Finance - Cash & Banks | RestroX,empty-state-observed,P41,NO
+PAGE-072,/en/finance/reports/account-heads,Finance - Reports | RestroX,workflow-observed,P42,NO
+PAGE-073,/en/finance/reports,Finance - Reports | RestroX,workflow-observed,P42,NO
+PAGE-074,/en/finance/reports/general-ledger,Account Summary,report-ui-observed,P42,NO
+PAGE-075,/en/finance/reports/trial-balance,Trial Balance,report-ui-observed,P42,NO
+PAGE-076,/en/finance/reports/income-statement,Profit Or Loss Statement,report-ui-observed,P42,NO
+PAGE-077,/en/finance/reports/balance-sheet,Balance Sheet,report-ui-observed,P42,NO
+PAGE-078,/en/finance/reports/general-ledger-master,General Ledger Master,report-ui-observed,P42,NO
+PAGE-079,/en/finance/reports/payment-mode-summary,Payment Mode Summary,report-ui-observed,P42,NO
+PAGE-080,/en/finance/reports/tax-report/sales-register,Sales Register,report-ui-observed,P42,NO
+PAGE-081,/en/finance/reports/tax-report/sales-return-register,Sales Return Register,report-ui-observed,P42,NO
+PAGE-082,/en/finance/reports/tax-report/purchase-register,Purchase Register,report-ui-observed,P42,NO
+PAGE-083,/en/finance/reports/tax-report/purchase-return-register,Purchase Return Register,report-ui-observed,P42,NO
+PAGE-084,/en/finance/reports/tax-report/vat-summary-report,VAT Summary Report,report-ui-observed,P42,NO
+PAGE-085,/en/finance/reports/tax-report/annex-13-report,Annex 13 Report,report-ui-observed,P42,NO
+PAGE-086,/en/finance/reports/tax-report/annex-5-materialized-view-report,Annex 5 Materialized View Report,report-ui-observed,P42,NO
+PAGE-087,/en/finance/reports/sales-master-report,Sales Master Report,report-ui-observed,P42,NO
+PAGE-088,/en/finance/reports/customerwise-monthly-sales,Customer Monthly Sales,report-ui-observed,P42,NO
+PAGE-089,/en/finance/reports/invoicewise-complimentary-discount-report,Invoice-wise Complimentary Discount Report,report-ui-observed,P42,NO
+PAGE-090,/en/finance/reports/sales-collection-report,Sales Collection Report,report-ui-observed,P42,NO
+PAGE-091,/en/finance/reports/daily-sales-summary,Daily Sales Summary Report,report-ui-observed,P42,NO
+PAGE-092,/en/finance/reports/party-balance-report,Party Balance Report,report-ui-observed,P42,NO
+PAGE-093,/en/finance/reports/party-receivable-report,Party Receivable Report,report-ui-observed,P42,NO
+PAGE-094,/en/finance/reports/party-payable-report,Party Payable Report,report-ui-observed,P42,NO
+PAGE-095,/en/finance/reports/balance-confirmation-report,Balance Confirmation Report,report-ui-observed,P42,NO
+PAGE-096,/en/finance/reports/purchase-vat-reconciliation,Purchase VAT Reconciliation,report-ui-observed,P42,NO
+PAGE-097,/en/finance/reports/purchase-by-supplier,Purchase By Supplier,report-ui-observed,P42,NO
+PAGE-098,/en/finance/reports/purchase-return-by-supplier,Purchase Return By Supplier,report-ui-observed,P42,NO
+PAGE-099,/en/finance/reports/purchase-by-item,Purchase By Item,report-ui-observed,P42,NO
+PAGE-100,/en/finance/reports/purchase-return-by-item,Purchase Return By Item,report-ui-observed,P42,NO
+PAGE-101,/en/finance/reports/purchase-by-supplier-monthly,Purchase By Supplier (Monthly),report-ui-observed,P42,NO
+PAGE-102,/en/finance/reports/purchase-return-by-supplier-monthly,Purchase Return By Supplier (Monthly),report-ui-observed,P42,NO
+PAGE-103,/en/finance/reports/purchase-by-item-monthly,Purchase By Item (Monthly),report-ui-observed,P42,NO
+PAGE-104,/en/finance/reports/purchase-return-by-item-monthly,Purchase Return By Item (Monthly),report-ui-observed,P42,NO
+PAGE-105,/en/user/restaurants,RestroX,interactive-ui-observed,P21,NO
+PAGE-106,/en/staff/pending,Staff | RestroX,empty-state-observed,P28,NO
+PAGE-107,/en/staff/removed,Staff | RestroX,empty-state-observed,P28,NO
+PAGE-108,/en/settings/kot-setting/setting,KOT Setting | RestroX,interactive-ui-observed,P27,NO
+PAGE-109,/en/settings/kot-setting/kitchen-assignment,KOT Setting | RestroX,interactive-ui-observed,P27,NO
+PAGE-110,/en/services/delivery/:platformId,Delivery Platform Detail | Services,interactive-ui-observed,P52,NO
+PAGE-111,/en/orders/cancelled-history/kot,Orders | RestroX,interactive-ui-observed,P39,NO
+PAGE-112,/en/orders/cancelled-history/dish,Orders | RestroX,interactive-ui-observed,P39,NO
+PAGE-113,/en/reservations/booking,Reservation - Booking | RestroX,empty-state-observed,P32,NO
+PAGE-114,/en/reservations/completed,Reservation - Completed | RestroX,empty-state-observed,P32,NO
+PAGE-115,/en/reservations/cancelled,Reservation - Cancelled | RestroX,empty-state-observed,P32,NO
+PAGE-116,/en/finance/reports/complimentary-items-report,Finance - Reports | RestroX,report-ui-observed,P42,NO
+PAGE-117,/en/finance/reports/complimentary-addon-report,Finance - Reports | RestroX,report-ui-observed,P42,NO
+PAGE-118,/en/finance/reports/salesby-submenu,Finance - Reports | RestroX,report-ui-observed,P42,NO
+PAGE-119,/en/finance/reports/submenuwise-monthly-sales-report,Finance - Submenu-wise Monthly Sales Report | RestroX,report-ui-observed,P42,NO
+PAGE-120,/en/finance/reports/category-quantity-sales,Finance - Reports | RestroX,report-ui-observed,P42,NO
+PAGE-121,/en/finance/reports/categorywise-monthly-sales,Finance - Category-wise Monthly Sales Report | RestroX,report-ui-observed,P42,NO
+PAGE-122,/en/finance/reports/dish-monthly-sales,Finance - Reports | RestroX,report-ui-observed,P42,NO
+PAGE-123,/en/finance/reports/dish-quantity-sales,Finance - Reports | RestroX,report-ui-observed,P42,NO
+PAGE-124,/en/finance/reports/kot-type-wise-sales,Finance - KOT Type-wise Sales Report | RestroX,report-ui-observed,P42,NO
+PAGE-125,/en/finance/reports/food-cost-report,Finance - Food Cost Report | RestroX,report-ui-observed,P42,NO
+PAGE-126,/en/finance/reports/menuset-wise-sales,Finance - Menuset-wise Sales Report | RestroX,report-ui-observed,P42,NO
+PAGE-127,/en/finance/reports/stock-item-ledger-summary,Finance - Finance Stock Item Ledger Summary | RestroX,report-ui-observed,P42,NO
+PAGE-128,/en/finance/reports/stock-reconciliation-report,Finance - Stock Reconciliation Report | RestroX,report-ui-observed,P42,NO
+PAGE-129,/en/finance/reports/stock-ageing-report,Finance - Stock Ageing Report | RestroX,report-ui-observed,P42,NO
+PAGE-130,/en/finance/reports/stock-movement-report,Finance - Stock Movement Report | RestroX,report-ui-observed,P42,NO
+PAGE-131,/en/finance/reports/stock-position-report,Finance - Stock Position Report | RestroX,report-ui-observed,P42,NO
+PAGE-132,/en/services/restrolink/share-my-menu,RestroLink - Services | RestroX,interactive-ui-observed,P52,NO
+PAGE-133,/en/services/restrolink/appearance,RestroLink - Services | RestroX,interactive-ui-observed,P52,NO
+PAGE-134,/en/customer/groups,Customer Groups | RestroX,interactive-ui-observed,P28,NO
+PAGE-135,/en/settings/migrated-data/sales-register,Migrated Data - Settings | RestroX,interactive-ui-observed,P53,NO
+PAGE-136,/en/settings/migrated-data/sales-return-register,Migrated Data - Settings | RestroX,interactive-ui-observed,P53,NO
+PAGE-137,/en/settings/migrated-data/purchase-register,Migrated Data - Settings | RestroX,interactive-ui-observed,P53,NO
+PAGE-138,/en/settings/migrated-data/purchase-return-register,Migrated Data - Settings | RestroX,interactive-ui-observed,P53,NO
+PAGE-139,/en/orders/pos-mode/active-orders,Active Orders - POS Mode | RestroX,read-only-ui-observed,P33,NO
+PAGE-140,/en/orders/pos-mode/table,Table - Order | RestroX,read-only-ui-observed,P33,NO
+PAGE-141,/en/orders/pos-mode/kot,KOT - Order | RestroX,read-only-ui-observed,P33,NO
+PAGE-142,/en/finance/reports/sales-ledger/:accountId,Sales Ledger — Account Statement,report-ui-observed,P42,NO
+PAGE-143,/en/inventory/stock-transfer,Inventory - Stock Transfer | RestroX,read-only-ui-observed-no-eligible-destination,P46,NO

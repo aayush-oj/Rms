@@ -1,0 +1,854 @@
+[
+  {
+    "id": "PAGE-001",
+    "path": "/en/analytics",
+    "title": "Overview - Analytics",
+    "status": "observed"
+  },
+  {
+    "id": "PAGE-002",
+    "path": "/en/analytics/finance",
+    "title": "Finance - Analytics",
+    "status": "observed"
+  },
+  {
+    "id": "PAGE-003",
+    "path": "/en/analytics/order",
+    "title": "Order - Analytics",
+    "status": "observed"
+  },
+  {
+    "id": "PAGE-004",
+    "path": "/en/settings",
+    "title": "Setting | RestroX",
+    "status": "observed"
+  },
+  {
+    "id": "PAGE-005",
+    "path": "/en/settings/notification",
+    "title": "Notifications - Settings | RestroX",
+    "status": "observed"
+  },
+  {
+    "id": "PAGE-006",
+    "path": "/en/settings/activity-log",
+    "title": "Activity Log - Settings | RestroX",
+    "status": "route-observed"
+  },
+  {
+    "id": "PAGE-007",
+    "path": "/en/settings/billing-and-subscription",
+    "title": "Billing and Subscription - Settings | RestroX",
+    "status": "read-only-observed"
+  },
+  {
+    "id": "PAGE-008",
+    "path": "/en/settings/user-role",
+    "title": "Users Role - Settings | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-009",
+    "path": "/en/settings/trash",
+    "title": "Trash - Settings | RestroX",
+    "status": "read-only-observed"
+  },
+  {
+    "id": "PAGE-010",
+    "path": "/en/settings/migrated-data",
+    "title": "Migrated Data - Settings | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-011",
+    "path": "/en/settings/integrations",
+    "title": "Setting | RestroX",
+    "status": "read-only-observed"
+  },
+  {
+    "id": "PAGE-012",
+    "path": "/en/settings/invoice",
+    "title": "Invoice Settings | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-013",
+    "path": "/en/settings/kot-setting",
+    "title": "KOT Setting | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-014",
+    "path": "/en/settings/order-slip-setting",
+    "title": "Order Slip Setting | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-015",
+    "path": "/en/settings/printer",
+    "title": "Printer - Settings | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-016",
+    "path": "/en/settings/support-and-feedback",
+    "title": "Support and Feedbacks | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-017",
+    "path": "/en/settings/release-notes",
+    "title": "Release Notes | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-018",
+    "path": "/en/orders",
+    "title": "Orders | RestroX",
+    "status": "observed"
+  },
+  {
+    "id": "PAGE-019",
+    "path": "/en/orders/table",
+    "title": "Table - Order | RestroX",
+    "status": "observed"
+  },
+  {
+    "id": "PAGE-020",
+    "path": "/en/orders/kot",
+    "title": "KOT - Order | RestroX",
+    "status": "observed"
+  },
+  {
+    "id": "PAGE-021",
+    "path": "/en/orders/:orderId",
+    "title": "Orders | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-022",
+    "path": "/en/notification",
+    "title": "Notification | RestroX",
+    "status": "title-observed"
+  },
+  {
+    "id": "PAGE-023",
+    "path": "/en/finance/transactions",
+    "title": "Finance - Transactions | RestroX",
+    "status": "title-observed"
+  },
+  {
+    "id": "PAGE-024",
+    "path": "/en/reports",
+    "title": "Reports | RestroX",
+    "status": "title-observed"
+  },
+  {
+    "id": "PAGE-025",
+    "path": "/en/services/restrolink",
+    "title": "RestroLink - Services | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-026",
+    "path": "/en/customer",
+    "title": "Customers | RestroX",
+    "status": "title-observed"
+  },
+  {
+    "id": "PAGE-027",
+    "path": "/en/staff",
+    "title": "Staff | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-028",
+    "path": "/en/menu/dish-setup",
+    "title": "Dishes - Menu | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-029",
+    "path": "/en/menu/dish-setup/category",
+    "title": "Categories - Menu | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-030",
+    "path": "/en/menu/dish-setup/add-ons",
+    "title": "Add Ons - Menu | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-031",
+    "path": "/en/menu/menu-setup/menu-set",
+    "title": "MenuSet - Menu | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-032",
+    "path": "/en/menu/menu-setup/sub-menu",
+    "title": "SubMenu - Menu | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-033",
+    "path": "/en/menu/combo-offer",
+    "title": "Combo Offer | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-034",
+    "path": "/en/services/dine-in",
+    "title": "Dine in - Services | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-035",
+    "path": "/en/services/delivery",
+    "title": "Delivery - Services | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-036",
+    "path": "/en/services/sms",
+    "title": "SMS - Services | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-037",
+    "path": "/en/services/loyalty-and-rewards",
+    "title": "Stamp Programs - Services | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-038",
+    "path": "/en/services/connect",
+    "title": "Connect Settings - Services | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-039",
+    "path": "/en/services/setting",
+    "title": "Settings - Services | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-040",
+    "path": "/en/table-and-space/table",
+    "title": "Table | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-041",
+    "path": "/en/table-and-space/space",
+    "title": "Space | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-042",
+    "path": "/en/table-and-space/qr-codes",
+    "title": "QR Codes | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-043",
+    "path": "/en/inventory/stock-item",
+    "title": "Inventory - Stock Item | RestroX",
+    "status": "synthetic-crud-observed"
+  },
+  {
+    "id": "PAGE-044",
+    "path": "/en/inventory/consumption",
+    "title": "Inventory - Consumption | RestroX",
+    "status": "read-only-ui-observed-backend-unverified"
+  },
+  {
+    "id": "PAGE-045",
+    "path": "/en/inventory/suppliers",
+    "title": "Inventory - Suppliers | RestroX",
+    "status": "workflow-observed"
+  },
+  {
+    "id": "PAGE-046",
+    "path": "/en/inventory/measuring-unit",
+    "title": "Inventory - Measuring Unit | RestroX",
+    "status": "synthetic-crud-observed-backend-unverified"
+  },
+  {
+    "id": "PAGE-047",
+    "path": "/en/inventory/stock-group",
+    "title": "Inventory - Stock Group | RestroX",
+    "status": "synthetic-crud-observed-backend-unverified"
+  },
+  {
+    "id": "PAGE-048",
+    "path": "/en/inventory/stock-history",
+    "title": "Inventory - Stock History | RestroX",
+    "status": "read-only-ui-observed-backend-unverified"
+  },
+  {
+    "id": "PAGE-049",
+    "path": "/en/inventory/batch-production",
+    "title": "Inventory - Stock Batch Production | RestroX",
+    "status": "interactive-ui-observed-backend-unverified"
+  },
+  {
+    "id": "PAGE-050",
+    "path": "/en/restrox",
+    "title": "Home | RestroX",
+    "status": "observed"
+  },
+  {
+    "id": "PAGE-051",
+    "path": "/en/orders/kot-history",
+    "title": "KOT History",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-052",
+    "path": "/en/settings/kot-setting/setting",
+    "title": "Kitchen Settings",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-053",
+    "path": "/en/orders/cancelled-history",
+    "title": "Cancelled History",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-054",
+    "path": "/en/orders/cancellation-reasons",
+    "title": "Cancellation Reasons",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-055",
+    "path": "/en/reservations",
+    "title": "Reservation",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-056",
+    "path": "/en/orders/pos-mode",
+    "title": "POS Mode | RestroX",
+    "status": "workflow-observed"
+  },
+  {
+    "id": "PAGE-057",
+    "path": "/en/orders/kds-mode",
+    "title": "KDS Mode | RestroX",
+    "status": "workflow-observed-with-possible-status-transition"
+  },
+  {
+    "id": "PAGE-059",
+    "path": "/en/notification/activity",
+    "title": "Activity | RestroX",
+    "status": "workflow-observed"
+  },
+  {
+    "id": "PAGE-060",
+    "path": "/en/menu/dish-setup/add-dish",
+    "title": "Create Dish | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-061",
+    "path": "/en/services/connect/connect-banner",
+    "title": "Connect Settings - Services | RestroX",
+    "status": "empty-state-observed"
+  },
+  {
+    "id": "PAGE-062",
+    "path": "/en/finance/day-book",
+    "title": "Finance - Day Book | RestroX",
+    "status": "workflow-observed"
+  },
+  {
+    "id": "PAGE-063",
+    "path": "/en/finance/journal-voucher",
+    "title": "Finance - Journal Voucher | RestroX",
+    "status": "empty-state-observed"
+  },
+  {
+    "id": "PAGE-064",
+    "path": "/en/finance/sales-and-purchase",
+    "title": "Finance - Sales & Purchases | RestroX",
+    "status": "workflow-observed"
+  },
+  {
+    "id": "PAGE-065",
+    "path": "/en/finance/sales-and-purchase/purchase-bills",
+    "title": "Finance - Sales & Purchases | RestroX",
+    "status": "workflow-observed"
+  },
+  {
+    "id": "PAGE-066",
+    "path": "/en/finance/income",
+    "title": "Finance - Income | RestroX",
+    "status": "empty-state-observed"
+  },
+  {
+    "id": "PAGE-067",
+    "path": "/en/finance/expenses",
+    "title": "Finance - Expenses | RestroX",
+    "status": "empty-state-observed"
+  },
+  {
+    "id": "PAGE-068",
+    "path": "/en/finance/payments",
+    "title": "Finance - Payments | RestroX",
+    "status": "empty-state-observed"
+  },
+  {
+    "id": "PAGE-069",
+    "path": "/en/finance/cash-and-banks",
+    "title": "Finance - Cash & Banks | RestroX",
+    "status": "workflow-observed"
+  },
+  {
+    "id": "PAGE-070",
+    "path": "/en/finance/tax-and-rates",
+    "title": "Tax and Rates - Settings | RestroX",
+    "status": "workflow-observed"
+  },
+  {
+    "id": "PAGE-071",
+    "path": "/en/finance/balance-transfer",
+    "title": "Finance - Cash & Banks | RestroX",
+    "status": "empty-state-observed"
+  },
+  {
+    "id": "PAGE-072",
+    "path": "/en/finance/reports/account-heads",
+    "title": "Finance - Reports | RestroX",
+    "status": "workflow-observed"
+  },
+  {
+    "id": "PAGE-073",
+    "path": "/en/finance/reports",
+    "title": "Finance - Reports | RestroX",
+    "status": "workflow-observed"
+  },
+  {
+    "id": "PAGE-074",
+    "path": "/en/finance/reports/general-ledger",
+    "title": "Account Summary",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-075",
+    "path": "/en/finance/reports/trial-balance",
+    "title": "Trial Balance",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-076",
+    "path": "/en/finance/reports/income-statement",
+    "title": "Profit Or Loss Statement",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-077",
+    "path": "/en/finance/reports/balance-sheet",
+    "title": "Balance Sheet",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-078",
+    "path": "/en/finance/reports/general-ledger-master",
+    "title": "General Ledger Master",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-079",
+    "path": "/en/finance/reports/payment-mode-summary",
+    "title": "Payment Mode Summary",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-080",
+    "path": "/en/finance/reports/tax-report/sales-register",
+    "title": "Sales Register",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-081",
+    "path": "/en/finance/reports/tax-report/sales-return-register",
+    "title": "Sales Return Register",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-082",
+    "path": "/en/finance/reports/tax-report/purchase-register",
+    "title": "Purchase Register",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-083",
+    "path": "/en/finance/reports/tax-report/purchase-return-register",
+    "title": "Purchase Return Register",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-084",
+    "path": "/en/finance/reports/tax-report/vat-summary-report",
+    "title": "VAT Summary Report",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-085",
+    "path": "/en/finance/reports/tax-report/annex-13-report",
+    "title": "Annex 13 Report",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-086",
+    "path": "/en/finance/reports/tax-report/annex-5-materialized-view-report",
+    "title": "Annex 5 Materialized View Report",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-087",
+    "path": "/en/finance/reports/sales-master-report",
+    "title": "Sales Master Report",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-088",
+    "path": "/en/finance/reports/customerwise-monthly-sales",
+    "title": "Customer Monthly Sales",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-089",
+    "path": "/en/finance/reports/invoicewise-complimentary-discount-report",
+    "title": "Invoice-wise Complimentary Discount Report",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-090",
+    "path": "/en/finance/reports/sales-collection-report",
+    "title": "Sales Collection Report",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-091",
+    "path": "/en/finance/reports/daily-sales-summary",
+    "title": "Daily Sales Summary Report",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-092",
+    "path": "/en/finance/reports/party-balance-report",
+    "title": "Party Balance Report",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-093",
+    "path": "/en/finance/reports/party-receivable-report",
+    "title": "Party Receivable Report",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-094",
+    "path": "/en/finance/reports/party-payable-report",
+    "title": "Party Payable Report",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-095",
+    "path": "/en/finance/reports/balance-confirmation-report",
+    "title": "Balance Confirmation Report",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-096",
+    "path": "/en/finance/reports/purchase-vat-reconciliation",
+    "title": "Purchase VAT Reconciliation",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-097",
+    "path": "/en/finance/reports/purchase-by-supplier",
+    "title": "Purchase By Supplier",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-098",
+    "path": "/en/finance/reports/purchase-return-by-supplier",
+    "title": "Purchase Return By Supplier",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-099",
+    "path": "/en/finance/reports/purchase-by-item",
+    "title": "Purchase By Item",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-100",
+    "path": "/en/finance/reports/purchase-return-by-item",
+    "title": "Purchase Return By Item",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-101",
+    "path": "/en/finance/reports/purchase-by-supplier-monthly",
+    "title": "Purchase By Supplier (Monthly)",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-102",
+    "path": "/en/finance/reports/purchase-return-by-supplier-monthly",
+    "title": "Purchase Return By Supplier (Monthly)",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-103",
+    "path": "/en/finance/reports/purchase-by-item-monthly",
+    "title": "Purchase By Item (Monthly)",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-104",
+    "path": "/en/finance/reports/purchase-return-by-item-monthly",
+    "title": "Purchase Return By Item (Monthly)",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-105",
+    "path": "/en/user/restaurants",
+    "title": "RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-106",
+    "path": "/en/staff/pending",
+    "title": "Staff | RestroX",
+    "status": "empty-state-observed"
+  },
+  {
+    "id": "PAGE-107",
+    "path": "/en/staff/removed",
+    "title": "Staff | RestroX",
+    "status": "empty-state-observed"
+  },
+  {
+    "id": "PAGE-108",
+    "path": "/en/settings/kot-setting/setting",
+    "title": "KOT Setting | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-109",
+    "path": "/en/settings/kot-setting/kitchen-assignment",
+    "title": "KOT Setting | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-110",
+    "path": "/en/services/delivery/:platformId",
+    "title": "Delivery Platform Detail | Services",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-111",
+    "path": "/en/orders/cancelled-history/kot",
+    "title": "Orders | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-112",
+    "path": "/en/orders/cancelled-history/dish",
+    "title": "Orders | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-113",
+    "path": "/en/reservations/booking",
+    "title": "Reservation - Booking | RestroX",
+    "status": "empty-state-observed"
+  },
+  {
+    "id": "PAGE-114",
+    "path": "/en/reservations/completed",
+    "title": "Reservation - Completed | RestroX",
+    "status": "empty-state-observed"
+  },
+  {
+    "id": "PAGE-115",
+    "path": "/en/reservations/cancelled",
+    "title": "Reservation - Cancelled | RestroX",
+    "status": "empty-state-observed"
+  },
+  {
+    "id": "PAGE-116",
+    "path": "/en/finance/reports/complimentary-items-report",
+    "title": "Finance - Reports | RestroX",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-117",
+    "path": "/en/finance/reports/complimentary-addon-report",
+    "title": "Finance - Reports | RestroX",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-118",
+    "path": "/en/finance/reports/salesby-submenu",
+    "title": "Finance - Reports | RestroX",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-119",
+    "path": "/en/finance/reports/submenuwise-monthly-sales-report",
+    "title": "Finance - Submenu-wise Monthly Sales Report | RestroX",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-120",
+    "path": "/en/finance/reports/category-quantity-sales",
+    "title": "Finance - Reports | RestroX",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-121",
+    "path": "/en/finance/reports/categorywise-monthly-sales",
+    "title": "Finance - Category-wise Monthly Sales Report | RestroX",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-122",
+    "path": "/en/finance/reports/dish-monthly-sales",
+    "title": "Finance - Reports | RestroX",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-123",
+    "path": "/en/finance/reports/dish-quantity-sales",
+    "title": "Finance - Reports | RestroX",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-124",
+    "path": "/en/finance/reports/kot-type-wise-sales",
+    "title": "Finance - KOT Type-wise Sales Report | RestroX",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-125",
+    "path": "/en/finance/reports/food-cost-report",
+    "title": "Finance - Food Cost Report | RestroX",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-126",
+    "path": "/en/finance/reports/menuset-wise-sales",
+    "title": "Finance - Menuset-wise Sales Report | RestroX",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-127",
+    "path": "/en/finance/reports/stock-item-ledger-summary",
+    "title": "Finance - Finance Stock Item Ledger Summary | RestroX",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-128",
+    "path": "/en/finance/reports/stock-reconciliation-report",
+    "title": "Finance - Stock Reconciliation Report | RestroX",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-129",
+    "path": "/en/finance/reports/stock-ageing-report",
+    "title": "Finance - Stock Ageing Report | RestroX",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-130",
+    "path": "/en/finance/reports/stock-movement-report",
+    "title": "Finance - Stock Movement Report | RestroX",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-131",
+    "path": "/en/finance/reports/stock-position-report",
+    "title": "Finance - Stock Position Report | RestroX",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-132",
+    "path": "/en/services/restrolink/share-my-menu",
+    "title": "RestroLink - Services | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-133",
+    "path": "/en/services/restrolink/appearance",
+    "title": "RestroLink - Services | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-134",
+    "path": "/en/customer/groups",
+    "title": "Customer Groups | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-135",
+    "path": "/en/settings/migrated-data/sales-register",
+    "title": "Migrated Data - Settings | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-136",
+    "path": "/en/settings/migrated-data/sales-return-register",
+    "title": "Migrated Data - Settings | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-137",
+    "path": "/en/settings/migrated-data/purchase-register",
+    "title": "Migrated Data - Settings | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-138",
+    "path": "/en/settings/migrated-data/purchase-return-register",
+    "title": "Migrated Data - Settings | RestroX",
+    "status": "interactive-ui-observed"
+  },
+  {
+    "id": "PAGE-139",
+    "path": "/en/orders/pos-mode/active-orders",
+    "title": "Active Orders - POS Mode | RestroX",
+    "status": "read-only-ui-observed"
+  },
+  {
+    "id": "PAGE-140",
+    "path": "/en/orders/pos-mode/table",
+    "title": "Table - Order | RestroX",
+    "status": "read-only-ui-observed"
+  },
+  {
+    "id": "PAGE-141",
+    "path": "/en/orders/pos-mode/kot",
+    "title": "KOT - Order | RestroX",
+    "status": "read-only-ui-observed"
+  },
+  {
+    "id": "PAGE-142",
+    "path": "/en/finance/reports/sales-ledger/:accountId",
+    "title": "Sales Ledger \u2014 Account Statement",
+    "status": "report-ui-observed"
+  },
+  {
+    "id": "PAGE-143",
+    "path": "/en/inventory/stock-transfer",
+    "title": "Inventory - Stock Transfer | RestroX",
+    "status": "read-only-ui-observed-no-eligible-destination"
+  }
+]

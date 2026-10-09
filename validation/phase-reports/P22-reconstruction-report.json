@@ -1,0 +1,17 @@
+{
+  "phase": "P22",
+  "name": "RBAC & permission UX",
+  "objective": "Implement server-enforced permissions plus accessible permission-denied UI.",
+  "dependencies": "P11,P20,P21",
+  "evidence": "Current permission strings/source + reference user-role/staff routes.",
+  "routeSurface": "apps/web/features/auth/permissions; apps/api identity/management",
+  "apiImpact": "/roles /staff-permissions /management roles",
+  "sqlImpact": "roles/permissions/user_permissions constraints.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}

@@ -1,0 +1,17 @@
+{
+  "phase": "P24",
+  "name": "Observability, audit & telemetry",
+  "objective": "Standardize logs, request IDs, domain audit, metrics and health/readiness.",
+  "dependencies": "P11,P23",
+  "evidence": "Current app/logger/audit middleware + audit routes.",
+  "routeSurface": "apps/api telemetry/audit",
+  "apiImpact": "/health /ready /activity-logs /audit",
+  "sqlImpact": "domain_audit_events/activity_logs indexes.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}

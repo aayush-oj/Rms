@@ -1,0 +1,17 @@
+{
+  "phase": "P12",
+  "name": "Print/payment/tax policy closure",
+  "objective": "Close receipt vs invoice vs estimate semantics and print/reprint/audit requirements.",
+  "dependencies": "P6-P11",
+  "evidence": "Reference receipt evidence + current printing implementation.",
+  "routeSurface": "/docs/finance/printing-policy",
+  "apiImpact": "Billing/printing contracts.",
+  "sqlImpact": "Bills/payments/print_jobs migrations.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": null,
+  "notes": "Analysis/provenance phase.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": null
+}

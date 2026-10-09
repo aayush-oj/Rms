@@ -1,0 +1,17 @@
+{
+  "phase": "P42",
+  "name": "Finance reports suite",
+  "objective": "Implement the 50+ finance report routes with shared report engine and query limits.",
+  "dependencies": "P8,P40-P41,P49",
+  "evidence": "PAGE-072-104,116-131,142.",
+  "routeSurface": "apps/web/features/finance-reports; apps/api/reports",
+  "apiImpact": "/reports/*",
+  "sqlImpact": "Views/indexes/materialized results only if measured; no speculative entities.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}

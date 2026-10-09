@@ -1,0 +1,17 @@
+{
+  "phase": "P13",
+  "name": "Canonical source checkout/recovery",
+  "objective": "Establish editable source tree; recover backend source from source map where necessary and identify missing frontend source.",
+  "dependencies": "P7-P12",
+  "evidence": "796-source backend map; 116 frontend debug refs; compiled bundles.",
+  "routeSurface": "Entire repo",
+  "apiImpact": "None",
+  "sqlImpact": "None",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}

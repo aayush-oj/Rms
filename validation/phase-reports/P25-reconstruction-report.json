@@ -1,0 +1,17 @@
+{
+  "phase": "P25",
+  "name": "Migration, seed & fixture harness",
+  "objective": "Formalize empty-db bootstrap, migration integrity, deterministic fixtures and test database reset.",
+  "dependencies": "P10,P24",
+  "evidence": "70 runtime migrations, current runner and deployment README.",
+  "routeSurface": "database/migrations,seeds,fixtures,tests",
+  "apiImpact": "/system/migrations/status admin-only.",
+  "sqlImpact": "All schema migrations.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}

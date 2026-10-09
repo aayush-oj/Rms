@@ -1,0 +1,3705 @@
+{
+  "revision": "2026-10-07",
+  "status": "NOT READY",
+  "phaseCount": 64,
+  "phases": [
+    {
+      "id": "P01",
+      "name": "Evidence provenance & checksums",
+      "objective": "Freeze the evidence corpus and create immutable hashes, manifests and provenance records.",
+      "businessCapability": "Evidence governance",
+      "included": "No product-code changes; includes archive hashes, extraction logs and manifest generation.",
+      "dependencies": "Source archive files; prior inspection bundle.",
+      "evidence": "All",
+      "routesOrSurface": "Repo: /validation/reference and /docs/analysis.",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "No DB.",
+      "apiImpact": "N/A",
+      "securityImpact": "N/A",
+      "accessibilityImpact": "Prevent evidence contamination; redact secrets in derivative artifacts.",
+      "testPlan": "Automated hash/count verification.",
+      "acceptanceCriteria": "Create machine-readable manifest; no unresolved path/hash mismatch.",
+      "rollbackPlan": "Rollback by restoring prior manifest snapshot.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P02",
+      "name": "Canonical requirement model",
+      "objective": "Normalize observed, confirmed, inferred, proposed, unknown and conflicting behavior into a requirements ledger.",
+      "businessCapability": "Requirements governance",
+      "included": "Requirements matrix, conflict registry, evidence-confidence rules.",
+      "dependencies": "P1",
+      "evidence": "All",
+      "routesOrSurface": "/docs/analysis/requirements",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "None",
+      "apiImpact": "None",
+      "securityImpact": "N/A",
+      "accessibilityImpact": "Protect against untracked assumptions.",
+      "testPlan": "Schema validation for requirements JSON.",
+      "acceptanceCriteria": "Every requirement has provenance/status.",
+      "rollbackPlan": "Restore prior ledger version.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P03",
+      "name": "Route canon & compatibility map",
+      "objective": "Create the canonical 142-route reference model and map every route to implementation ownership plus aliases.",
+      "businessCapability": "Navigation architecture",
+      "included": "Exact /en routes, duplicate/missing-ID handling, alias policy.",
+      "dependencies": "P1-P2",
+      "evidence": "142 reference routes",
+      "routesOrSurface": "apps/web routing + /validation/reference/routes",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "No required schema change.",
+      "apiImpact": "Route resolution/alias APIs if needed.",
+      "securityImpact": "Auth-gated routes follow evidence.",
+      "accessibilityImpact": "Keyboard/404/focus management.",
+      "testPlan": "Route smoke suite.",
+      "acceptanceCriteria": "142 route IDs represented; no silent collisions.",
+      "rollbackPlan": "Revert route table/alias registry.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P04",
+      "name": "Workflow canonicalization",
+      "objective": "Turn 98 documented workflows and cross-module journeys into executable workflow definitions.",
+      "businessCapability": "Workflow model",
+      "included": "Given-state/action/expected-state model, data fixtures, blockers and confidence.",
+      "dependencies": "P1-P3",
+      "evidence": "98 workflows",
+      "routesOrSurface": "/tests/e2e /validation/reference/workflows",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "Fixture seed entities where required.",
+      "apiImpact": "Test-only endpoints prohibited.",
+      "securityImpact": "Per-workflow permission preconditions.",
+      "accessibilityImpact": "Keyboard/pointer fidelity.",
+      "testPlan": "Workflow schema + dry-run validator.",
+      "acceptanceCriteria": "Every critical workflow has an executable skeleton.",
+      "rollbackPlan": "Disable failing workflow spec, not production behavior.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P05",
+      "name": "Screenshot baseline & viewport matrix",
+      "objective": "Build the visual evidence index from all 834 captures and define comparison cohorts.",
+      "businessCapability": "Visual validation",
+      "included": "Dimensions, module/state tags, duplicates, nearest matches, visual regions.",
+      "dependencies": "P1-P4",
+      "evidence": "All 834 screenshots",
+      "routesOrSurface": "/validation/reference/screenshots",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "None",
+      "apiImpact": "None",
+      "securityImpact": "Exclude secret/user-specific data.",
+      "accessibilityImpact": "Pixel diff + responsive cohorts.",
+      "testPlan": "Baseline image manifest and golden set.",
+      "acceptanceCriteria": "Golden set reproducible from source archive.",
+      "rollbackPlan": "Version golden-set manifest.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P06",
+      "name": "Video timeline & motion canon",
+      "objective": "Analyze the 8s product film and establish what it can and cannot validate; keep missing trace evidence explicit.",
+      "businessCapability": "Motion validation",
+      "included": "Frame timing, transition windows, film storyboard, missing interaction traces.",
+      "dependencies": "P1-P5",
+      "evidence": "New 8s MP4; historical video manifest.",
+      "routesOrSurface": "/validation/reference/video",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "None",
+      "apiImpact": "None",
+      "securityImpact": "No user data in derivative recordings.",
+      "accessibilityImpact": "Reduced-motion coverage.",
+      "testPlan": "Frame extraction, metadata report.",
+      "acceptanceCriteria": "Timeline report reproducible.",
+      "rollbackPlan": "Remove derived frames without affecting app.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P07",
+      "name": "Current code artifact reconciliation",
+      "objective": "Compare active frontend bundles, server bundle, source map, build metadata and deployment docs; establish source-of-truth gaps.",
+      "businessCapability": "Engineering provenance",
+      "included": "B6/BT/Cz bundle comparison; server.cjs vs server.cjs.map; source restoration inventory.",
+      "dependencies": "P1",
+      "evidence": "Current dist artifact",
+      "routesOrSurface": "/docs/analysis/source-reconciliation",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "None",
+      "apiImpact": "None",
+      "securityImpact": "Do not edit minified bundles as source.",
+      "accessibilityImpact": "N/A",
+      "testPlan": "Artifact manifest and discrepancy report.",
+      "acceptanceCriteria": "No stale map/bundle ambiguity remains before production build.",
+      "rollbackPlan": "Discard reconstructed source tree if superseded by canonical repo.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P08",
+      "name": "API contract reconciliation",
+      "objective": "Convert observed and implemented API surfaces into canonical OpenAPI-like contracts, including errors/auth/idempotency.",
+      "businessCapability": "API governance",
+      "included": "At least 253 explicit methods from current artifact; 5 historically observed finance APIs; printing endpoints.",
+      "dependencies": "P1-P7",
+      "evidence": "API observations + current source map",
+      "routesOrSurface": "apps/api/contracts /docs/api",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "No immediate schema change.",
+      "apiImpact": "Versioned API contracts.",
+      "securityImpact": "Require server-side authorization matrix.",
+      "accessibilityImpact": "Accessible client error states.",
+      "testPlan": "Contract tests generated per endpoint.",
+      "acceptanceCriteria": "100% critical endpoint contract coverage.",
+      "rollbackPlan": "Version old API version; do not mutate old contract.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P09",
+      "name": "Domain state-machine closure",
+      "objective": "Resolve authoritative states and transitions for orders, KOT/KDS, bills, payments, voids, inventory and reservations.",
+      "businessCapability": "Business correctness",
+      "included": "State transitions, allowed commands, terminal states, audit semantics.",
+      "dependencies": "P2-P8",
+      "evidence": "Conflicting workflows and source implementation.",
+      "routesOrSurface": "/docs/workflows/state-machines",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "Potential status constraints/checks.",
+      "apiImpact": "Transition endpoints.",
+      "securityImpact": "Server rejects invalid transitions.",
+      "accessibilityImpact": "Focus/announcements for status changes.",
+      "testPlan": "State transition property tests.",
+      "acceptanceCriteria": "No unresolved critical transition in production scope.",
+      "rollbackPlan": "Rollback feature flag to previous transition set.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P10",
+      "name": "Database authority & engine decision",
+      "objective": "Decide and freeze the production relational engine; reconcile current MySQL implementation with the PostgreSQL-or-approved requirement.",
+      "businessCapability": "Data architecture",
+      "included": "Approve MySQL 8.0 for continuity or isolate a PostgreSQL port as a separate program.",
+      "dependencies": "P1-P9",
+      "evidence": "Current migrations/config + project brief",
+      "routesOrSurface": "/docs/database/engine-decision",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "All 70 migrations impacted if porting.",
+      "apiImpact": "DB adapter stable.",
+      "securityImpact": "Least privilege DB user.",
+      "accessibilityImpact": "N/A",
+      "testPlan": "Empty-db rebuild test.",
+      "acceptanceCriteria": "Written owner decision before production schema freeze.",
+      "rollbackPlan": "No mixed-engine deployment.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P11",
+      "name": "Security/tenant/RBAC authority",
+      "objective": "Freeze organization, branch, user, role, permission and session boundaries.",
+      "businessCapability": "Security architecture",
+      "included": "Authentication realms, workspace isolation, staff access, platform admin, rate limits.",
+      "dependencies": "P1-P10",
+      "evidence": "Current identity source + reference Settings/Staff.",
+      "routesOrSurface": "apps/api/modules/identity and authorization",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "Existing identity tables; possible constraint/index fixes.",
+      "apiImpact": "Auth/RBAC APIs.",
+      "securityImpact": "Critical server-side authorization.",
+      "accessibilityImpact": "Accessible permission-denied states.",
+      "testPlan": "Authz matrix tests + tenant breakout tests.",
+      "acceptanceCriteria": "No endpoint is exposed without policy.",
+      "rollbackPlan": "Revert permission matrix with migration-safe versioning.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P12",
+      "name": "Print/payment/tax policy closure",
+      "objective": "Close receipt vs invoice vs estimate semantics and print/reprint/audit requirements.",
+      "businessCapability": "Financial & print governance",
+      "included": "Tax document terminology, invoice numbering, copies, void/reprint reason, printer failover.",
+      "dependencies": "P6-P11",
+      "evidence": "Reference receipt evidence + current printing implementation.",
+      "routesOrSurface": "/docs/finance/printing-policy",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "Bills/payments/print_jobs migrations.",
+      "apiImpact": "Billing/printing contracts.",
+      "securityImpact": "Fraud/audit controls.",
+      "accessibilityImpact": "Accessible receipt preview/print controls.",
+      "testPlan": "Document policy tests.",
+      "acceptanceCriteria": "Tax-document state and audit trail unambiguous.",
+      "rollbackPlan": "Feature-flag any new document type.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P13",
+      "name": "Canonical source checkout/recovery",
+      "objective": "Establish editable source tree; recover backend source from source map where necessary and identify missing frontend source.",
+      "businessCapability": "Build foundation",
+      "included": "Create clean source tree, preserve original paths, annotate recovered files as recovered-not-authoritative.",
+      "dependencies": "P7-P12",
+      "evidence": "796-source backend map; 116 frontend debug refs; compiled bundles.",
+      "routesOrSurface": "Entire repo",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "None",
+      "apiImpact": "None",
+      "securityImpact": "No secrets in reconstructed tree.",
+      "accessibilityImpact": "N/A",
+      "testPlan": "Source restoration checksum/diff tests.",
+      "acceptanceCriteria": "Build from source, not ad hoc bundle edits.",
+      "rollbackPlan": "Retain original artifact as rollback source.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P14",
+      "name": "Monorepo/tooling scaffold",
+      "objective": "Create maintainable React/TS + Node/TS + relational DB workspace with packages and validation folders.",
+      "businessCapability": "Engineering platform",
+      "included": "/apps/web /apps/api /packages /database /docs /tests /validation.",
+      "dependencies": "P13",
+      "evidence": "Architecture brief.",
+      "routesOrSurface": "Repo root",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "None",
+      "apiImpact": "Tooling only.",
+      "securityImpact": "Centralized config/validation.",
+      "accessibilityImpact": "Shared a11y test utilities.",
+      "testPlan": "Typecheck/lint/build on clean checkout.",
+      "acceptanceCriteria": "Clean checkout builds consistently.",
+      "rollbackPlan": "Revert scaffold commit.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P15",
+      "name": "Reproducible build & release pipeline",
+      "objective": "Make frontend/backend/package artifacts reproducible with checksums and provenance.",
+      "businessCapability": "CI/CD",
+      "included": "Build manifests, release SHA, artifact packing, dependency locking, SBOM.",
+      "dependencies": "P14",
+      "evidence": "Current package/readme + build metadata.",
+      "routesOrSurface": "scripts, .github/workflows, release-packages",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "None",
+      "apiImpact": "Build outputs versioned.",
+      "securityImpact": "Secret scanning/SBOM.",
+      "accessibilityImpact": "N/A",
+      "testPlan": "Repeat-build diff and artifact manifest.",
+      "acceptanceCriteria": "Clean build matches release manifest.",
+      "rollbackPlan": "Keep previous artifact for rollback.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P16",
+      "name": "Design tokens & typography",
+      "objective": "Extract and codify shared visual tokens from screenshot/code evidence.",
+      "businessCapability": "Design system",
+      "included": "Color roles, type scale, spacing, radii, shadows, states, surfaces, icon strategy.",
+      "dependencies": "P5-P7,P14",
+      "evidence": "834 screenshots + CSS bundles.",
+      "routesOrSurface": "packages/ui/styles",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "None",
+      "apiImpact": "None",
+      "securityImpact": "N/A",
+      "accessibilityImpact": "Contrast/focus tokens.",
+      "testPlan": "Token snapshot tests.",
+      "acceptanceCriteria": "Major visual anchors use tokens, no uncontrolled magic values.",
+      "rollbackPlan": "Version token package.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P17",
+      "name": "Shared UI primitives",
+      "objective": "Build the reusable component foundation.",
+      "businessCapability": "Design system",
+      "included": "Buttons, fields, tabs, cards, tables, badges, drawers, modals, toasts, dropdowns, charts primitives.",
+      "dependencies": "P16",
+      "evidence": "Reference screenshots and source bundle components.",
+      "routesOrSurface": "packages/ui",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "None",
+      "apiImpact": "None",
+      "securityImpact": "Permission/disabled states represented.",
+      "accessibilityImpact": "Keyboard/focus behavior.",
+      "testPlan": "Component tests + a11y.",
+      "acceptanceCriteria": "All core primitives have state matrix coverage.",
+      "rollbackPlan": "Component package version rollback.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P18",
+      "name": "Application shell & navigation",
+      "objective": "Rebuild header/sidebar/breadcrumb/notification/profile/workspace shell.",
+      "businessCapability": "Frontend foundation",
+      "included": "RestroX visual shell, navigation state, responsive shell.",
+      "dependencies": "P16-P17",
+      "evidence": "Reference screenshots; current AppShell candidate.",
+      "routesOrSurface": "apps/web/src/app and navigation",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "None",
+      "apiImpact": "Route gateway hooks.",
+      "securityImpact": "Nav visibility by permissions.",
+      "accessibilityImpact": "Skip links, focus trap, landmarks.",
+      "testPlan": "Shell visual regression.",
+      "acceptanceCriteria": "Shell parity at all golden viewports.",
+      "rollbackPlan": "Rollback shell package.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P19",
+      "name": "Route gateway & locale aliases",
+      "objective": "Replace manual pathname switching with deterministic route matching; expose canonical /en routes.",
+      "businessCapability": "Routing",
+      "included": "React Router route table, locale prefix, dynamic params/query preservation, legacy alias table.",
+      "dependencies": "P3,P18",
+      "evidence": "142 route inventory; current 40 candidate path strings.",
+      "routesOrSurface": "apps/web/src/app/routes",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "Optional route registry table if persisted.",
+      "apiImpact": "None",
+      "securityImpact": "Authorization guards at route boundary.",
+      "accessibilityImpact": "404/access unavailable states.",
+      "testPlan": "Route resolution E2E across 142 routes.",
+      "acceptanceCriteria": "No duplicate route targets; all canonical routes resolve.",
+      "rollbackPlan": "Revert route registry.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P20",
+      "name": "Auth, session & recovery",
+      "objective": "Implement secure authentication UX and server flow.",
+      "businessCapability": "Identity",
+      "included": "Login/logout/me/change password/forgot/reset/lockout/session expiry.",
+      "dependencies": "P11,P19",
+      "evidence": "Current auth implementation + Settings/Staff evidence.",
+      "routesOrSurface": "apps/web/features/auth; apps/api/modules/identity",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "Use existing identity tables after audit.",
+      "apiImpact": "/api/v1/auth/*",
+      "securityImpact": "Cookies/session JWT controls and throttling.",
+      "accessibilityImpact": "Form errors, focus, recovery messaging.",
+      "testPlan": "Auth unit/integration/E2E/security tests.",
+      "acceptanceCriteria": "All auth flows pass policy.",
+      "rollbackPlan": "Disable new auth flow behind feature flag.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P21",
+      "name": "Workspace & branch context",
+      "objective": "Implement organization/branch selection and isolation in UI and API.",
+      "businessCapability": "Multi-tenancy",
+      "included": "Current organization, branch switch, user restaurants, branch-scoped queries.",
+      "dependencies": "P11,P19,P20",
+      "evidence": "PAGE-105 and current organizations/branches APIs.",
+      "routesOrSurface": "apps/web context; apps/api org scope",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "organizations, branches, user_branches constraints/indexes.",
+      "apiImpact": "/organizations /branches /auth/switch-branch",
+      "securityImpact": "Tenant boundary enforced server-side.",
+      "accessibilityImpact": "Keyboard-selectable context.",
+      "testPlan": "Breakout tests and cache-key tests.",
+      "acceptanceCriteria": "No cross-tenant reads/writes.",
+      "rollbackPlan": "Disable branch switching if regressions, retain session scope.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P22",
+      "name": "RBAC & permission UX",
+      "objective": "Implement server-enforced permissions plus accessible permission-denied UI.",
+      "businessCapability": "Authorization",
+      "included": "Roles, role permissions, staff permissions, page/action visibility.",
+      "dependencies": "P11,P20,P21",
+      "evidence": "Current permission strings/source + reference user-role/staff routes.",
+      "routesOrSurface": "apps/web/features/auth/permissions; apps/api identity/management",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "roles/permissions/user_permissions constraints.",
+      "apiImpact": "/roles /staff-permissions /management roles",
+      "securityImpact": "Deny-by-default.",
+      "accessibilityImpact": "Accessible disabled/hidden/denied patterns.",
+      "testPlan": "Permission matrix exhaustive tests.",
+      "acceptanceCriteria": "100% API method coverage mapped to permission.",
+      "rollbackPlan": "Permission matrix rollback.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P23",
+      "name": "API client, schemas & state framework",
+      "objective": "Create typed API client with validation, caching, retry and error boundaries.",
+      "businessCapability": "Frontend/backend contract layer",
+      "included": "Request IDs, structured errors, stale/loading states, query invalidation.",
+      "dependencies": "P8,P19-P22",
+      "evidence": "Current app API calls and server middleware.",
+      "routesOrSurface": "apps/web/lib/api; packages/validation",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "None",
+      "apiImpact": "All versioned APIs.",
+      "securityImpact": "Retry only idempotent operations.",
+      "accessibilityImpact": "Announcements/inline errors.",
+      "testPlan": "Contract/component/integration tests.",
+      "acceptanceCriteria": "No raw fetch scattered across views.",
+      "rollbackPlan": "Revert client package version.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P24",
+      "name": "Observability, audit & telemetry",
+      "objective": "Standardize logs, request IDs, domain audit, metrics and health/readiness.",
+      "businessCapability": "Operations",
+      "included": "Structured redacted logs, correlation IDs, audit events, metrics.",
+      "dependencies": "P11,P23",
+      "evidence": "Current app/logger/audit middleware + audit routes.",
+      "routesOrSurface": "apps/api telemetry/audit",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "domain_audit_events/activity_logs indexes.",
+      "apiImpact": "/health /ready /activity-logs /audit",
+      "securityImpact": "PII/secret redaction.",
+      "accessibilityImpact": "N/A",
+      "testPlan": "Log schema tests, redaction tests.",
+      "acceptanceCriteria": "Health/readiness and audit trail deterministic.",
+      "rollbackPlan": "Disable optional telemetry exporter, retain core logs.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P25",
+      "name": "Migration, seed & fixture harness",
+      "objective": "Formalize empty-db bootstrap, migration integrity, deterministic fixtures and test database reset.",
+      "businessCapability": "Database lifecycle",
+      "included": "Migration lock/checksum, seed packs, fixture loaders, rollback guidance.",
+      "dependencies": "P10,P24",
+      "evidence": "70 runtime migrations, current runner and deployment README.",
+      "routesOrSurface": "database/migrations,seeds,fixtures,tests",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "All schema migrations.",
+      "apiImpact": "/system/migrations/status admin-only.",
+      "securityImpact": "Migration privilege separation.",
+      "accessibilityImpact": "N/A",
+      "testPlan": "Fresh DB, rerun, rollback and concurrency tests.",
+      "acceptanceCriteria": "Empty database reaches expected schema; deterministic seeds.",
+      "rollbackPlan": "Snapshot/restore test DB.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P26",
+      "name": "Analytics routes & data product",
+      "objective": "Implement exact analytics pages, filters, charts, KPI cards, Top Selling Dishes and export.",
+      "businessCapability": "Analytics",
+      "included": "/en/analytics, finance, order plus query-state/date filters.",
+      "dependencies": "P19,P23-P25,P42-P49",
+      "evidence": "PAGE-001-003 and analytics docs/screens.",
+      "routesOrSurface": "apps/web/features/analytics; reports query layer",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "Report indexes/views/materialized summaries only where measured.",
+      "apiImpact": "Analytics/report endpoints",
+      "securityImpact": "Permission-gated analytics.",
+      "accessibilityImpact": "Chart keyboard summaries, reduced motion.",
+      "testPlan": "E2E, visual, query performance.",
+      "acceptanceCriteria": "Reference workflows and screenshots match.",
+      "rollbackPlan": "Revert report UI/API independently.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P27",
+      "name": "Settings core & restaurant configuration",
+      "objective": "Implement settings routes except dedicated printing/migrated/support surfaces.",
+      "businessCapability": "Configuration",
+      "included": "Restaurant details, notifications, activity, roles, integrations, invoice/KOT/order-slip settings.",
+      "dependencies": "P18-P25",
+      "evidence": "PAGE-004-014, PAGE-052, docs.",
+      "routesOrSurface": "apps/web/features/settings; apps/api admin modules",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "operational_settings, branch_tax_configs, role data.",
+      "apiImpact": "settings APIs",
+      "securityImpact": "Admin permissions server-side.",
+      "accessibilityImpact": "Forms/keyboard/validation.",
+      "testPlan": "CRUD + visual tests.",
+      "acceptanceCriteria": "Settings persist and reflect in downstream features.",
+      "rollbackPlan": "Rollback individual setting migrations.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P28",
+      "name": "People, staff & customer surfaces",
+      "objective": "Implement staff lifecycle, pending/removed, customers and groups.",
+      "businessCapability": "People",
+      "included": "Staff list/access lifecycle; customers; credit/member views as applicable.",
+      "dependencies": "P21-P27",
+      "evidence": "PAGE-026-027, 105-107, 134 + current code.",
+      "routesOrSurface": "staff/customer feature modules",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "users, memberships, customers, departments.",
+      "apiImpact": "users/management routes",
+      "securityImpact": "Staff access protected.",
+      "accessibilityImpact": "Accessible tables/drawers.",
+      "testPlan": "CRUD lifecycle + tenant tests.",
+      "acceptanceCriteria": "Removal/restore semantics resolved.",
+      "rollbackPlan": "Soft-delete/restore compatible rollback.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P29",
+      "name": "Menu catalog & customization",
+      "objective": "Implement dishes/categories/add-ons/menu sets/sub-menu/combo and customization.",
+      "businessCapability": "Catalog",
+      "included": "Menu item lifecycle, categories, variants, modifiers, combo components, stock links.",
+      "dependencies": "P17,P23-P25,P28",
+      "evidence": "PAGE-028-033, PAGE-060 and menu workflows.",
+      "routesOrSurface": "apps/web/features/menu; apps/api/modules/menu*",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "menu_* tables, recipe links.",
+      "apiImpact": "/menu/*",
+      "securityImpact": "Catalog edit permissions.",
+      "accessibilityImpact": "Form and dialog accessibility.",
+      "testPlan": "CRUD, visual, data persistence tests.",
+      "acceptanceCriteria": "No orphan modifiers/categories; all reference workflows pass.",
+      "rollbackPlan": "Soft-disable catalog feature if necessary.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P30",
+      "name": "Table, space & QR",
+      "objective": "Implement tables, spaces, QR and allocation/operations.",
+      "businessCapability": "Dining setup",
+      "included": "Floors/sections/tables, layout editor, allocations, merges/swaps/transfers.",
+      "dependencies": "P21,P29",
+      "evidence": "PAGE-040-042, table/space workflows.",
+      "routesOrSurface": "apps/web/features/tables; apps/api table modules",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "floors, sections, dining_tables, allocations.",
+      "apiImpact": "tables/table-allocations/table-operations",
+      "securityImpact": "Scoped by branch.",
+      "accessibilityImpact": "Map keyboard alternative.",
+      "testPlan": "CRUD + allocation concurrency tests.",
+      "acceptanceCriteria": "Table Add New workflow works and persists.",
+      "rollbackPlan": "Migration-compatible rollback.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P31",
+      "name": "Orders board/table/detail",
+      "objective": "Implement main Orders route, table mode, detail tabs, operations and order history surfaces.",
+      "businessCapability": "Order management",
+      "included": "Search/filter, add order, details/KOT/activity, complete/cancel/serve/pickup.",
+      "dependencies": "P30,P29,P33-P34",
+      "evidence": "PAGE-018-021, 051,053-054,111-112,139-141.",
+      "routesOrSurface": "apps/web/features/orders; apps/api/modules/order",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "orders/order_items/order_rounds/order_operation_events.",
+      "apiImpact": "/orders/*",
+      "securityImpact": "Action permissions and tenant scope.",
+      "accessibilityImpact": "Status announcements and focus.",
+      "testPlan": "State-machine/API/E2E tests.",
+      "acceptanceCriteria": "Exact transitions and history match.",
+      "rollbackPlan": "Feature-flag new transition commands.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P32",
+      "name": "Reservations",
+      "objective": "Implement reservation list, booking, completed and cancelled states.",
+      "businessCapability": "Reservations",
+      "included": "Create/edit/cancel/complete and capacity/status semantics.",
+      "dependencies": "P30,P31",
+      "evidence": "PAGE-055,113-115.",
+      "routesOrSurface": "apps/web/features/reservations; API layer",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "Schema only if source-of-truth requires new reservation entity; no unproven table.",
+      "apiImpact": "Contract TBD from P8/P9",
+      "securityImpact": "Reservation access policy.",
+      "accessibilityImpact": "Accessible calendar/list.",
+      "testPlan": "Validation, concurrency, E2E.",
+      "acceptanceCriteria": "No capacity rules are invented without evidence.",
+      "rollbackPlan": "Disable write actions until contract closed.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P33",
+      "name": "POS modes & cart",
+      "objective": "Implement POS mode, active orders, table selector, catalog, cart, customer/membership, order confirmation.",
+      "businessCapability": "POS",
+      "included": "Dine-in/delivery/pickup/takeaway flows and draft state.",
+      "dependencies": "P29-P31",
+      "evidence": "PAGE-056,139-140 and POS continuation workflows.",
+      "routesOrSurface": "apps/web/features/pos; apps/api POS/order/billing clients",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "Orders, bill drafts, customer/membership links.",
+      "apiImpact": "/orders + /billing contracts",
+      "securityImpact": "POS permission set.",
+      "accessibilityImpact": "Keyboard-first cart and dialogs.",
+      "testPlan": "E2E with deterministic synthetic order.",
+      "acceptanceCriteria": "Checkout preview matches reference.",
+      "rollbackPlan": "Rollback POS UI without data loss.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P34",
+      "name": "KOT/KDS",
+      "objective": "Implement KOT order view/history and KDS operational display/state transitions.",
+      "businessCapability": "Kitchen operations",
+      "included": "Pending/completed, filters, service/kitchen modes, ticket/dish status.",
+      "dependencies": "P31,P33,P50",
+      "evidence": "PAGE-020,057,051 and KDS docs.",
+      "routesOrSurface": "apps/web/features/kitchen; apps/api/modules/kitchen",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "kitchen_tickets/items, kot counters.",
+      "apiImpact": "/kitchen/*",
+      "securityImpact": "Kitchen permissions.",
+      "accessibilityImpact": "Status live region/reduced motion.",
+      "testPlan": "Realtime/E2E/state tests.",
+      "acceptanceCriteria": "Observed status transitions become deterministic.",
+      "rollbackPlan": "Disable realtime UI fallback to refresh.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P35",
+      "name": "Notifications & activity",
+      "objective": "Implement notification center and activity history.",
+      "businessCapability": "Operational communication",
+      "included": "Notification categories, activity/audit filters, unread/read where evidenced.",
+      "dependencies": "P24,P27,P31-P34",
+      "evidence": "PAGE-005,022,059 + docs.",
+      "routesOrSurface": "apps/web/features/notifications; audit UI",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "alerts, alert_settings, activity_logs.",
+      "apiImpact": "/alerts /activity-logs",
+      "securityImpact": "Per-user/branch access.",
+      "accessibilityImpact": "Live announcements.",
+      "testPlan": "UI + audit tests.",
+      "acceptanceCriteria": "No notification leaks across tenants.",
+      "rollbackPlan": "Disable noncritical notifications.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P36",
+      "name": "Billing preview & bill lifecycle",
+      "objective": "Implement bill creation/preview, discounts, split and bill list/detail.",
+      "businessCapability": "Billing",
+      "included": "Estimate/preview, split, discount, bill retrieval and finalization hooks.",
+      "dependencies": "P9,P12,P33",
+      "evidence": "Current billing routes + reference POS/Finance evidence.",
+      "routesOrSurface": "apps/web/features/billing; apps/api/modules/billing",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "bills, bill_lines, split tables.",
+      "apiImpact": "/billing/orders/*, /billing/bills/*",
+      "securityImpact": "Billing permissions.",
+      "accessibilityImpact": "Accessible monetary tables/forms.",
+      "testPlan": "Financial calculation unit/property tests.",
+      "acceptanceCriteria": "Bill arithmetic, tax, totals reconcile.",
+      "rollbackPlan": "Transactionally rollback bill writes.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P37",
+      "name": "Payment settlement & reversal",
+      "objective": "Implement mixed settlement, payment modes, credit receivables and reversals.",
+      "businessCapability": "Payments",
+      "included": "Payment chooser, cash/card/mixed, credit, reverse, settlement idempotency.",
+      "dependencies": "P9,P12,P36",
+      "evidence": "Observed settlement behavior + current source.",
+      "routesOrSurface": "apps/web/features/payments; apps/api billing",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "payments, settlement_attempts, receivables, credit payments.",
+      "apiImpact": "/billing/bills/:id/settle, payments, reverse",
+      "securityImpact": "High-risk permissions/idempotency.",
+      "accessibilityImpact": "Accessible numeric inputs and summaries.",
+      "testPlan": "Concurrency, idempotency, double-submit tests.",
+      "acceptanceCriteria": "Financial truth deterministic; no duplicate settlement.",
+      "rollbackPlan": "DB transaction rollback + idempotency key.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P38",
+      "name": "Invoice, receipt, tax document & print UI",
+      "objective": "Implement exact receipt/invoice document states and print preview.",
+      "businessCapability": "Documents",
+      "included": "Invoice settings, bill receipt, receipt document, copies, numbering, tax wording, print controls.",
+      "dependencies": "P12,P36-P37,P50",
+      "evidence": "PAGE-012 + receipt/print assets/code.",
+      "routesOrSurface": "apps/web/features/receipts; packages/ui/print",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "bills + tax config + print_jobs.",
+      "apiImpact": "/receipts, /billing/*/receipt/invoice, /printing",
+      "securityImpact": "Document-level permissions and audit.",
+      "accessibilityImpact": "Print-preview semantics and accessible content.",
+      "testPlan": "Pixel print template regression + data tests.",
+      "acceptanceCriteria": "No ESTIMATE/Paid conflict; correct document type.",
+      "rollbackPlan": "Revert template version without deleting data.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P39",
+      "name": "Returns, voids, trash, duplicates & payment edits",
+      "objective": "Implement destructive/exception workflows with audit and confirmation semantics.",
+      "businessCapability": "Exception handling",
+      "included": "Sales return, void, trash/restore, duplicate draft, payment edit.",
+      "dependencies": "P9,P12,P28,P36-P38",
+      "evidence": "Conflict registry: void wording, purchase duplicate, staff restore patterns, return workflows.",
+      "routesOrSurface": "apps/web/features/exceptions; apps/api exception services",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "Soft-delete/status/audit/index updates.",
+      "apiImpact": "Versioned mutation endpoints.",
+      "securityImpact": "Least privilege + mandatory reason.",
+      "accessibilityImpact": "Confirmation dialogs, focus restore.",
+      "testPlan": "Concurrency/authorization/audit tests.",
+      "acceptanceCriteria": "No irreversible delete without explicit approved policy.",
+      "rollbackPlan": "Use soft-delete/reversal transactions.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P40",
+      "name": "Finance transactions & day book",
+      "objective": "Implement transaction list/day book and observed finance read workflows.",
+      "businessCapability": "Finance operations",
+      "included": "Date range/search/sort, sales/purchase rows, payment modes and tax reads.",
+      "dependencies": "P23,P36-P39,P42",
+      "evidence": "PAGE-023,062-071 + 5 historical observed finance APIs.",
+      "routesOrSurface": "apps/web/features/finance; apps/api finance read layer",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "Indexes on finalized financial timestamps and org/branch.",
+      "apiImpact": "/finance domain + reports APIs",
+      "securityImpact": "Finance view permissions.",
+      "accessibilityImpact": "Keyboard filters/tables.",
+      "testPlan": "API contract + data reconciliation tests.",
+      "acceptanceCriteria": "Reference finance rows reconcile to settlement truth.",
+      "rollbackPlan": "Keep read model backward compatible.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P41",
+      "name": "Finance setup & accounting masters",
+      "objective": "Implement journal/account heads/payment/tax/banks/expense setup.",
+      "businessCapability": "Finance configuration",
+      "included": "Journal voucher, income, expenses, payments, cash/banks, tax/rates, balance transfer, account heads.",
+      "dependencies": "P27,P40",
+      "evidence": "PAGE-063,066-072.",
+      "routesOrSurface": "apps/web/features/finance-setup; apps/api finance modules",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "expense categories/expenses/payment methods/tax configs etc.",
+      "apiImpact": "Finance config APIs",
+      "securityImpact": "Privileged finance permissions.",
+      "accessibilityImpact": "Form validation and accessible tables.",
+      "testPlan": "CRUD + authorization + audit.",
+      "acceptanceCriteria": "All masters have referential integrity.",
+      "rollbackPlan": "Version master data migrations.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P42",
+      "name": "Finance reports suite",
+      "objective": "Implement the 50+ finance report routes with shared report engine and query limits.",
+      "businessCapability": "Financial reporting",
+      "included": "General ledger, trial balance, income statement, balance sheet, tax reports, sales/purchase, party, stock and menu analytics reports.",
+      "dependencies": "P8,P40-P41,P49",
+      "evidence": "PAGE-072-104,116-131,142.",
+      "routesOrSurface": "apps/web/features/finance-reports; apps/api/reports",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "Views/indexes/materialized results only if measured; no speculative entities.",
+      "apiImpact": "/reports/*",
+      "securityImpact": "Report access permissions by report category.",
+      "accessibilityImpact": "Export accessibility and large-table navigation.",
+      "testPlan": "Golden-data query tests, performance tests, visual reports.",
+      "acceptanceCriteria": "All 50+ routes render and return bounded deterministic data.",
+      "rollbackPlan": "Per-report feature flags.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P43",
+      "name": "Global reports",
+      "objective": "Implement `/en/reports` and any evidence-backed global report navigation/summary.",
+      "businessCapability": "Reporting hub",
+      "included": "Top-level report navigation and summary cards, not duplicate finance logic.",
+      "dependencies": "P26,P42",
+      "evidence": "PAGE-024 + global reports docs.",
+      "routesOrSurface": "apps/web/pages/reports; shared report engine",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "None unless report needs measured indexes.",
+      "apiImpact": "/reports/* adapters",
+      "securityImpact": "Role-gated report navigation.",
+      "accessibilityImpact": "Accessible navigation.",
+      "testPlan": "Smoke/visual.",
+      "acceptanceCriteria": "Global report hub is stable and links all child reports.",
+      "rollbackPlan": "Route-only rollback.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P44",
+      "name": "Inventory base & stock item/group",
+      "objective": "Implement stock items, groups, units, suppliers-facing item links and opening stock.",
+      "businessCapability": "Inventory",
+      "included": "Stock Item, Stock Group, Measuring Unit, availability and base stock.",
+      "dependencies": "P25,P29,P48",
+      "evidence": "PAGE-043,045-047 and inventory workflows.",
+      "routesOrSurface": "apps/web/features/inventory; apps/api stock/inventory",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "inventory_items/balances/categories, stock_items/groups/dependencies/units.",
+      "apiImpact": "/inventory/*",
+      "securityImpact": "Inventory permissions.",
+      "accessibilityImpact": "Editable grid accessibility.",
+      "testPlan": "CRUD/data integrity.",
+      "acceptanceCriteria": "Count and link summaries reconcile.",
+      "rollbackPlan": "Transaction rollback on stock writes.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P45",
+      "name": "Consumption, recipes & costing",
+      "objective": "Implement menu stock consumption and recipe/BOM cost logic.",
+      "businessCapability": "Inventory costing",
+      "included": "Consumption editor, recipe versions, ingredient impacts, costing.",
+      "dependencies": "P29,P44",
+      "evidence": "PAGE-044 + recipe/menu workflows; dormant source modules.",
+      "routesOrSurface": "apps/web/features/inventory/recipes; apps/api recipe/stock",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "recipes, recipe_versions, ingredients, consumption events.",
+      "apiImpact": "/inventory/* and menu costing endpoints",
+      "securityImpact": "Costing permissions.",
+      "accessibilityImpact": "Formula explanation and keyboard editing.",
+      "testPlan": "Cost formula/property tests + data comparison.",
+      "acceptanceCriteria": "One-row known case and multi-row cases validated.",
+      "rollbackPlan": "Disable formula modes not evidenced.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P46",
+      "name": "Stock history, adjustments, transfer & counts",
+      "objective": "Implement movement history, adjustment, stock transfer, counts.",
+      "businessCapability": "Inventory control",
+      "included": "Movement types, stock history filters, transfers, counts/confirm, audit.",
+      "dependencies": "P44-P45",
+      "evidence": "PAGE-048,143 and stock history/transfer docs.",
+      "routesOrSurface": "apps/web/features/inventory/control; API stock",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "inventory_movements, stock_transfers, inventory_counts/items.",
+      "apiImpact": "/inventory/movements /transfers /counts /adjustments",
+      "securityImpact": "High-integrity permission boundary.",
+      "accessibilityImpact": "Filter keyboard + status updates.",
+      "testPlan": "Concurrency/locking/rollback tests.",
+      "acceptanceCriteria": "No negative stock or cross-branch movement unless policy permits.",
+      "rollbackPlan": "Transaction/compensating migration rollback.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P47",
+      "name": "Batch production & BOM",
+      "objective": "Implement batch production workflow with BOM, byproducts, overhead/loss/salvage and stock movements.",
+      "businessCapability": "Production",
+      "included": "Template chooser, setup, save, stock movement effects, costing.",
+      "dependencies": "P45-P46",
+      "evidence": "PAGE-049 + batch-production continuation.",
+      "routesOrSurface": "apps/web/features/inventory/production; API recipe/stock",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "recipes/BOM + inventory movements; add constraints only if required.",
+      "apiImpact": "Production command API",
+      "securityImpact": "Production action permissions.",
+      "accessibilityImpact": "Large forms/dialogs accessible.",
+      "testPlan": "End-to-end data before/after + rollback.",
+      "acceptanceCriteria": "Source/stock movements reconcile.",
+      "rollbackPlan": "Atomic transaction rollback.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P48",
+      "name": "Purchasing, suppliers & purchase bills",
+      "objective": "Implement supplier, purchasing, purchase bill/receipt/return lifecycle where reference evidence requires it.",
+      "businessCapability": "Procurement",
+      "included": "Supplier CRUD, purchase orders/receipts, Finance purchase bills and return registers.",
+      "dependencies": "P40-P42,P44",
+      "evidence": "PAGE-045,065,082-083,097-104,137-138 + current dormant purchasing module.",
+      "routesOrSurface": "apps/web/features/purchasing; apps/api purchasing",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "purchasing tables, purchase receipts/orders, supplier price history.",
+      "apiImpact": "/purchase* adapter APIs + finance APIs",
+      "securityImpact": "Supplier/purchase permissions.",
+      "accessibilityImpact": "Accessible line-item editors.",
+      "testPlan": "Financial/inventory reconciliation, duplicate and payment tests.",
+      "acceptanceCriteria": "Purchase bill states unambiguous and reconcile.",
+      "rollbackPlan": "Rollback via reversal/soft cancel.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P49",
+      "name": "Cross-domain financial & inventory reconciliation",
+      "objective": "Make sales, payments, finance, inventory, tax and reports agree.",
+      "businessCapability": "System integrity",
+      "included": "Golden transaction fixtures; reconciliation views; invariants; discrepancy alarms.",
+      "dependencies": "P36-P48",
+      "evidence": "All cross-module conflicts.",
+      "routesOrSurface": "/validation/comparisons; reconciliation services",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "Indexes/constraints only after measured query plans.",
+      "apiImpact": "Reconciliation/report endpoints",
+      "securityImpact": "Finance/inventory audit access.",
+      "accessibilityImpact": "Explain discrepancies in UI.",
+      "testPlan": "Invariants, property tests, golden datasets, exports.",
+      "acceptanceCriteria": "Every critical journey reconciles before/after.",
+      "rollbackPlan": "Block release on invariant failure.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P50",
+      "name": "Printer admin, settings & discovery",
+      "objective": "Implement printer settings, station routing, test/discovery controls.",
+      "businessCapability": "Hardware printing",
+      "included": "Printer CRUD, station assignment, diagnostics, allowed network rules, test ticket.",
+      "dependencies": "P27,P38,P51",
+      "evidence": "PAGE-015; current printing modules and hardware_printers.",
+      "routesOrSurface": "apps/web/features/printing/admin; apps/api printing/admin",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "hardware_printers, preparation_stations.",
+      "apiImpact": "/printers, /stations, /settings/printing",
+      "securityImpact": "Hardware admin permissions.",
+      "accessibilityImpact": "Device forms and statuses accessible.",
+      "testPlan": "Integration + security network allowlist tests.",
+      "acceptanceCriteria": "No public raw TCP SSRF.",
+      "rollbackPlan": "Disable diagnostics endpoints safely.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P51",
+      "name": "Durable print jobs, reprint & print agent",
+      "objective": "Productionize queued printing, retries, failover, credentials, pairing and realtime agent.",
+      "businessCapability": "Printing platform",
+      "included": "print_jobs, print_agents, pairing tokens, retry/failover, reprint audit reason.",
+      "dependencies": "P12,P38,P50",
+      "evidence": "Compiled-only printing/print-agent code + migrations 065-070.",
+      "routesOrSurface": "apps/api/modules/printing, printAgent, realtime; connector app",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "3 new tables + migrations 065-070.",
+      "apiImpact": "6 printing/agent endpoints",
+      "securityImpact": "Pairing rate limit, credential hashing, permission separation.",
+      "accessibilityImpact": "Job status live region, fallback UI.",
+      "testPlan": "Connector integration, retries, duplicate suppression, failure injection.",
+      "acceptanceCriteria": "Print job state machine and audit pass.",
+      "rollbackPlan": "Pause printer delivery/agent and drain queue.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P52",
+      "name": "Services & integrations",
+      "objective": "Implement service routes: RestroLink, dine-in, delivery, SMS, loyalty, Connect.",
+      "businessCapability": "Integrations",
+      "included": "Service settings, platform detail, sharing/appearance.",
+      "dependencies": "P18-P35",
+      "evidence": "PAGE-025,034-039,061,110,132-133.",
+      "routesOrSurface": "apps/web/features/services; apps/api integrations",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "Only evidence-backed configuration tables.",
+      "apiImpact": "Connector APIs",
+      "securityImpact": "Integration credentials protected.",
+      "accessibilityImpact": "Status/error accessibility.",
+      "testPlan": "Mocked integration tests + outage states.",
+      "acceptanceCriteria": "No fake \u201cconnected\u201d status without verification.",
+      "rollbackPlan": "Disable provider independently.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P53",
+      "name": "Migrated data, trash, subscription/support & release notes",
+      "objective": "Implement administrative/support surfaces and data-management routes.",
+      "businessCapability": "Administration",
+      "included": "Migrated sales/purchase registers, trash, subscription, support, release notes.",
+      "dependencies": "P27,P39,P41,P48",
+      "evidence": "PAGE-007,009-010,016-017,135-138.",
+      "routesOrSurface": "apps/web/features/admin; API adapters",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "Migration/import audit tables only if approved.",
+      "apiImpact": "Admin/support APIs",
+      "securityImpact": "Restricted admin permissions.",
+      "accessibilityImpact": "Confirmation/empty/error states.",
+      "testPlan": "Data import/export and audit tests.",
+      "acceptanceCriteria": "Imported records remain traceable.",
+      "rollbackPlan": "Rollback imports by batch marker.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P54",
+      "name": "Platform administration",
+      "objective": "Preserve/currently implemented Platform Admin realm and organization lifecycle if within deployment scope.",
+      "businessCapability": "Platform operations",
+      "included": "Platform auth, organization lifecycle, activation requests, audit, grace/suspend/security controls.",
+      "dependencies": "P11,P20,P21,P24",
+      "evidence": "Current source-map components and routes outside reference inventory.",
+      "routesOrSurface": "apps/web/platform; apps/api/platformAdmin",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "platform admin/session/audit/entitlement tables.",
+      "apiImpact": "/api/v1/platform/*",
+      "securityImpact": "Separate JWT realm, stricter permissions.",
+      "accessibilityImpact": "Restricted access UI.",
+      "testPlan": "Security and lifecycle property tests.",
+      "acceptanceCriteria": "Platform actions auditable and isolated.",
+      "rollbackPlan": "Disable platform admin surface for restaurant users.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P55",
+      "name": "Responsive, keyboard & accessibility hardening",
+      "objective": "Make all routes usable across observed and required device sizes with robust keyboard and assistive technology support.",
+      "businessCapability": "Quality engineering",
+      "included": "Focus order, dialogs, grids, charts, tables, print preview, reduced motion.",
+      "dependencies": "P16-P54",
+      "evidence": "834 screenshots + UI requirements.",
+      "routesOrSurface": "All web components",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "None",
+      "apiImpact": "None",
+      "securityImpact": "No permission bypass via keyboard/ARIA.",
+      "accessibilityImpact": "WCAG 2.2 AA-oriented checks; reduced motion.",
+      "testPlan": "Playwright keyboard + axe tests.",
+      "acceptanceCriteria": "No critical accessibility violations on release routes.",
+      "rollbackPlan": "Do not regress desktop shell while fixing mobile.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P56",
+      "name": "Loading, empty, error, permission & stale-state matrix",
+      "objective": "Complete every documented UI state instead of only happy paths.",
+      "businessCapability": "Resilience UX",
+      "included": "State matrix for routes/components; retry, stale data, optimistic rollback, partial failures.",
+      "dependencies": "P23,P35,P36-P54",
+      "evidence": "Reference state evidence + known discrepancies.",
+      "routesOrSurface": "All features",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "None",
+      "apiImpact": "None",
+      "securityImpact": "Permission state must be server-confirmed.",
+      "accessibilityImpact": "Accessible loading announcements.",
+      "testPlan": "Component/visual/E2E state tests.",
+      "acceptanceCriteria": "All critical components cover required states.",
+      "rollbackPlan": "Revert per-component state handling.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P57",
+      "name": "Visual regression & screenshot parity",
+      "objective": "Execute exact visual comparisons against the 834-image evidence set and golden subsets.",
+      "businessCapability": "Visual validation",
+      "included": "Diff layout, spacing, color, type, icons, charts, tables, filters, drawers and receipts.",
+      "dependencies": "P5,P16-P18,P26-P54,P55-P56",
+      "evidence": "All screenshot evidence.",
+      "routesOrSurface": "/validation/comparisons/visual",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "None",
+      "apiImpact": "None",
+      "securityImpact": "Redaction-safe comparison fixtures.",
+      "accessibilityImpact": "A11y snapshot included.",
+      "testPlan": "Playwright screenshots; pixel/SSIM proposed gates.",
+      "acceptanceCriteria": "0 P0 visual differences; P1 differences explicitly approved.",
+      "rollbackPlan": "Per-surface golden updates require evidence link.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P58",
+      "name": "Workflow replay, video & animation parity",
+      "objective": "Re-run all important workflows and compare event order, visual state changes and motion; use new walkthrough only where applicable.",
+      "businessCapability": "Dynamic validation",
+      "included": "Reference vs rebuilt timelines, transitions, pointer/keyboard actions, chart animations, drawers/modals.",
+      "dependencies": "P4,P6,P31-P54,P57",
+      "evidence": "98 workflows; 8s film; no persisted interaction traces.",
+      "routesOrSurface": "/validation/comparisons/video",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "None",
+      "apiImpact": "None",
+      "securityImpact": "No production data in recordings.",
+      "accessibilityImpact": "Reduced-motion variant checked.",
+      "testPlan": "Recorded E2E workflow and event diff.",
+      "acceptanceCriteria": "All critical workflows reproduce user outcome and state order.",
+      "rollbackPlan": "Quarantine failed recording without production change.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P59",
+      "name": "API/integration contract suite",
+      "objective": "Run exhaustive endpoint contract tests, authz matrix and error semantics against rebuilt API.",
+      "businessCapability": "API quality",
+      "included": "All current/new endpoints, including printing, plus reference-observed finance contracts.",
+      "dependencies": "P8,P11,P22-P54",
+      "evidence": "Current source map and implementation.",
+      "routesOrSurface": "/tests/integration/api",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "None beyond fixtures.",
+      "apiImpact": "All /api/v1 contracts",
+      "securityImpact": "Auth matrix.",
+      "accessibilityImpact": "Client error-state validation.",
+      "testPlan": "Contract tests + mutation tests for invalid input.",
+      "acceptanceCriteria": "100% critical endpoints and 90%+ total endpoint coverage proposed.",
+      "rollbackPlan": "Version/revert contract changes.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P60",
+      "name": "DB migration, SQL & concurrency verification",
+      "objective": "Prove empty-state bootstrap, migration integrity, indexes, transactions, constraints and concurrent writes.",
+      "businessCapability": "Database quality",
+      "included": "Fresh DB, repeat migrations, checksum mismatch detection, transaction rollback, lock contention.",
+      "dependencies": "P10,P25,P36-P49,P51",
+      "evidence": "70 migrations runtime, 103 current runtime tables.",
+      "routesOrSurface": "/tests/database /database/tests",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "All schema and indexes.",
+      "apiImpact": "No SQL endpoint changes.",
+      "securityImpact": "Least privilege and safe parameterization.",
+      "accessibilityImpact": "N/A",
+      "testPlan": "Migration and concurrent write tests.",
+      "acceptanceCriteria": "Clean rebuild + rollback strategy verified.",
+      "rollbackPlan": "Forward-only corrective migrations; no history row edits.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P61",
+      "name": "Security, performance & resilience",
+      "objective": "Harden against auth attacks, tenant breakout, injection, SSRF, rate-limit abuse and load spikes.",
+      "businessCapability": "Production hardening",
+      "included": "OWASP-style app checks, query bounds, report limits, rate limits, websocket controls, print-agent threat model.",
+      "dependencies": "P11,P22-P24,P49-P60",
+      "evidence": "Current security env validation and middleware.",
+      "routesOrSurface": "/tests/security /tests/performance",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "Indexes tuned by real plans.",
+      "apiImpact": "No new endpoints unless needed.",
+      "securityImpact": "Critical security gate.",
+      "accessibilityImpact": "Accessible degradation under failure.",
+      "testPlan": "SAST/dependency audit/DAST/load tests.",
+      "acceptanceCriteria": "No critical/high exploitable finding without mitigation.",
+      "rollbackPlan": "Security hotfix rollback procedure.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P62",
+      "name": "Realtime, offline & external-failure validation",
+      "objective": "Validate Socket.IO, printer agent, live KDS/alerts, offline indicator and provider outages.",
+      "businessCapability": "Runtime resilience",
+      "included": "Reconnect, duplicate events, stale state, degraded mode, queue drain.",
+      "dependencies": "P34,P35,P51,P52,P61",
+      "evidence": "Current realtime/offline components and print gateway.",
+      "routesOrSurface": "apps/web/realtime, apps/api/realtime",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "No new schema unless queue state demands.",
+      "apiImpact": "Socket.IO + external adapters",
+      "securityImpact": "Channel authorization.",
+      "accessibilityImpact": "ARIA live regions and non-motion fallback.",
+      "testPlan": "Fault injection + reconnect tests.",
+      "acceptanceCriteria": "No duplicate or unauthorized event delivery.",
+      "rollbackPlan": "Disable realtime and fall back to polling where safe.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P63",
+      "name": "Staging deployment, backups, restore & rollback",
+      "objective": "Prove the cPanel/Node/MySQL deployment path in an isolated staging environment.",
+      "businessCapability": "Operations",
+      "included": "Release packing, environment validation, migration lock, persistent uploads, DB backup/restore, rollback.",
+      "dependencies": "P10,P15,P25,P51,P60-P62",
+      "evidence": "DEPLOY_README/.env.example/stderr/build metadata.",
+      "routesOrSurface": "release-packages, docs/operations",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "Staging DB + restore target.",
+      "apiImpact": "/api/health /api/ready",
+      "securityImpact": "Protected envs and secrets.",
+      "accessibilityImpact": "Smoke checks.",
+      "testPlan": "Full staging smoke, restore drill, rollback drill.",
+      "acceptanceCriteria": "Staging mirrors prod topology and passes all critical checks.",
+      "rollbackPlan": "Restore prior DB + artifact; verify migration compatibility before app rollback.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    },
+    {
+      "id": "P64",
+      "name": "Production candidate, go-live & hypercare",
+      "objective": "Run final release gates, controlled production rollout, post-deploy verification and handover.",
+      "businessCapability": "Release management",
+      "included": "Final defect burn-down, smoke, monitoring, rollback readiness, 24/7 runbook and stabilization.",
+      "dependencies": "P55-P63",
+      "evidence": "All evidence, validation reports and production checklists.",
+      "routesOrSurface": "Release + operations docs",
+      "componentsExpectedToChange": "See routesOrSurface/files field; phase-specific components are those under the named feature directories.",
+      "sqlImpact": "No unreviewed production migration.",
+      "apiImpact": "No unreviewed API change.",
+      "securityImpact": "Security sign-off required.",
+      "accessibilityImpact": "No unresolved critical a11y defect.",
+      "testPlan": "Final unit/integration/E2E/visual/a11y/security/perf/video/data suites.",
+      "acceptanceCriteria": "PRODUCTION READY only if all critical gates pass.",
+      "rollbackPlan": "Blue/green or file-level rollback + DB compatibility plan; never delete migration history.",
+      "completionDefinition": "Stable, startable, migratable, tested, comparison-documented and deployable."
+    }
+  ],
+  "routeCount": 142,
+  "routes": [
+    {
+      "id": "PAGE-001",
+      "path": "/en/analytics",
+      "title": "Overview - Analytics",
+      "status": "observed"
+    },
+    {
+      "id": "PAGE-002",
+      "path": "/en/analytics/finance",
+      "title": "Finance - Analytics",
+      "status": "observed"
+    },
+    {
+      "id": "PAGE-003",
+      "path": "/en/analytics/order",
+      "title": "Order - Analytics",
+      "status": "observed"
+    },
+    {
+      "id": "PAGE-004",
+      "path": "/en/settings",
+      "title": "Setting | RestroX",
+      "status": "observed"
+    },
+    {
+      "id": "PAGE-005",
+      "path": "/en/settings/notification",
+      "title": "Notifications - Settings | RestroX",
+      "status": "observed"
+    },
+    {
+      "id": "PAGE-006",
+      "path": "/en/settings/activity-log",
+      "title": "Activity Log - Settings | RestroX",
+      "status": "route-observed"
+    },
+    {
+      "id": "PAGE-007",
+      "path": "/en/settings/billing-and-subscription",
+      "title": "Billing and Subscription - Settings | RestroX",
+      "status": "read-only-observed"
+    },
+    {
+      "id": "PAGE-008",
+      "path": "/en/settings/user-role",
+      "title": "Users Role - Settings | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-009",
+      "path": "/en/settings/trash",
+      "title": "Trash - Settings | RestroX",
+      "status": "read-only-observed"
+    },
+    {
+      "id": "PAGE-010",
+      "path": "/en/settings/migrated-data",
+      "title": "Migrated Data - Settings | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-011",
+      "path": "/en/settings/integrations",
+      "title": "Setting | RestroX",
+      "status": "read-only-observed"
+    },
+    {
+      "id": "PAGE-012",
+      "path": "/en/settings/invoice",
+      "title": "Invoice Settings | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-013",
+      "path": "/en/settings/kot-setting",
+      "title": "KOT Setting | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-014",
+      "path": "/en/settings/order-slip-setting",
+      "title": "Order Slip Setting | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-015",
+      "path": "/en/settings/printer",
+      "title": "Printer - Settings | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-016",
+      "path": "/en/settings/support-and-feedback",
+      "title": "Support and Feedbacks | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-017",
+      "path": "/en/settings/release-notes",
+      "title": "Release Notes | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-018",
+      "path": "/en/orders",
+      "title": "Orders | RestroX",
+      "status": "observed"
+    },
+    {
+      "id": "PAGE-019",
+      "path": "/en/orders/table",
+      "title": "Table - Order | RestroX",
+      "status": "observed"
+    },
+    {
+      "id": "PAGE-020",
+      "path": "/en/orders/kot",
+      "title": "KOT - Order | RestroX",
+      "status": "observed"
+    },
+    {
+      "id": "PAGE-021",
+      "path": "/en/orders/:orderId",
+      "title": "Orders | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-022",
+      "path": "/en/notification",
+      "title": "Notification | RestroX",
+      "status": "title-observed"
+    },
+    {
+      "id": "PAGE-023",
+      "path": "/en/finance/transactions",
+      "title": "Finance - Transactions | RestroX",
+      "status": "title-observed"
+    },
+    {
+      "id": "PAGE-024",
+      "path": "/en/reports",
+      "title": "Reports | RestroX",
+      "status": "title-observed"
+    },
+    {
+      "id": "PAGE-025",
+      "path": "/en/services/restrolink",
+      "title": "RestroLink - Services | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-026",
+      "path": "/en/customer",
+      "title": "Customers | RestroX",
+      "status": "title-observed"
+    },
+    {
+      "id": "PAGE-027",
+      "path": "/en/staff",
+      "title": "Staff | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-028",
+      "path": "/en/menu/dish-setup",
+      "title": "Dishes - Menu | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-029",
+      "path": "/en/menu/dish-setup/category",
+      "title": "Categories - Menu | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-030",
+      "path": "/en/menu/dish-setup/add-ons",
+      "title": "Add Ons - Menu | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-031",
+      "path": "/en/menu/menu-setup/menu-set",
+      "title": "MenuSet - Menu | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-032",
+      "path": "/en/menu/menu-setup/sub-menu",
+      "title": "SubMenu - Menu | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-033",
+      "path": "/en/menu/combo-offer",
+      "title": "Combo Offer | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-034",
+      "path": "/en/services/dine-in",
+      "title": "Dine in - Services | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-035",
+      "path": "/en/services/delivery",
+      "title": "Delivery - Services | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-036",
+      "path": "/en/services/sms",
+      "title": "SMS - Services | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-037",
+      "path": "/en/services/loyalty-and-rewards",
+      "title": "Stamp Programs - Services | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-038",
+      "path": "/en/services/connect",
+      "title": "Connect Settings - Services | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-039",
+      "path": "/en/services/setting",
+      "title": "Settings - Services | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-040",
+      "path": "/en/table-and-space/table",
+      "title": "Table | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-041",
+      "path": "/en/table-and-space/space",
+      "title": "Space | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-042",
+      "path": "/en/table-and-space/qr-codes",
+      "title": "QR Codes | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-043",
+      "path": "/en/inventory/stock-item",
+      "title": "Inventory - Stock Item | RestroX",
+      "status": "synthetic-crud-observed"
+    },
+    {
+      "id": "PAGE-044",
+      "path": "/en/inventory/consumption",
+      "title": "Inventory - Consumption | RestroX",
+      "status": "read-only-ui-observed-backend-unverified"
+    },
+    {
+      "id": "PAGE-045",
+      "path": "/en/inventory/suppliers",
+      "title": "Inventory - Suppliers | RestroX",
+      "status": "workflow-observed"
+    },
+    {
+      "id": "PAGE-046",
+      "path": "/en/inventory/measuring-unit",
+      "title": "Inventory - Measuring Unit | RestroX",
+      "status": "synthetic-crud-observed-backend-unverified"
+    },
+    {
+      "id": "PAGE-047",
+      "path": "/en/inventory/stock-group",
+      "title": "Inventory - Stock Group | RestroX",
+      "status": "synthetic-crud-observed-backend-unverified"
+    },
+    {
+      "id": "PAGE-048",
+      "path": "/en/inventory/stock-history",
+      "title": "Inventory - Stock History | RestroX",
+      "status": "read-only-ui-observed-backend-unverified"
+    },
+    {
+      "id": "PAGE-049",
+      "path": "/en/inventory/batch-production",
+      "title": "Inventory - Stock Batch Production | RestroX",
+      "status": "interactive-ui-observed-backend-unverified"
+    },
+    {
+      "id": "PAGE-050",
+      "path": "/en/restrox",
+      "title": "Home | RestroX",
+      "status": "observed"
+    },
+    {
+      "id": "PAGE-051",
+      "path": "/en/orders/kot-history",
+      "title": "KOT History",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-052",
+      "path": "/en/settings/kot-setting/setting",
+      "title": "Kitchen Settings",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-053",
+      "path": "/en/orders/cancelled-history",
+      "title": "Cancelled History",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-054",
+      "path": "/en/orders/cancellation-reasons",
+      "title": "Cancellation Reasons",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-055",
+      "path": "/en/reservations",
+      "title": "Reservation",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-056",
+      "path": "/en/orders/pos-mode",
+      "title": "POS Mode | RestroX",
+      "status": "workflow-observed"
+    },
+    {
+      "id": "PAGE-057",
+      "path": "/en/orders/kds-mode",
+      "title": "KDS Mode | RestroX",
+      "status": "workflow-observed-with-possible-status-transition"
+    },
+    {
+      "id": "PAGE-059",
+      "path": "/en/notification/activity",
+      "title": "Activity | RestroX",
+      "status": "workflow-observed"
+    },
+    {
+      "id": "PAGE-060",
+      "path": "/en/menu/dish-setup/add-dish",
+      "title": "Create Dish | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-061",
+      "path": "/en/services/connect/connect-banner",
+      "title": "Connect Settings - Services | RestroX",
+      "status": "empty-state-observed"
+    },
+    {
+      "id": "PAGE-062",
+      "path": "/en/finance/day-book",
+      "title": "Finance - Day Book | RestroX",
+      "status": "workflow-observed"
+    },
+    {
+      "id": "PAGE-063",
+      "path": "/en/finance/journal-voucher",
+      "title": "Finance - Journal Voucher | RestroX",
+      "status": "empty-state-observed"
+    },
+    {
+      "id": "PAGE-064",
+      "path": "/en/finance/sales-and-purchase",
+      "title": "Finance - Sales & Purchases | RestroX",
+      "status": "workflow-observed"
+    },
+    {
+      "id": "PAGE-065",
+      "path": "/en/finance/sales-and-purchase/purchase-bills",
+      "title": "Finance - Sales & Purchases | RestroX",
+      "status": "workflow-observed"
+    },
+    {
+      "id": "PAGE-066",
+      "path": "/en/finance/income",
+      "title": "Finance - Income | RestroX",
+      "status": "empty-state-observed"
+    },
+    {
+      "id": "PAGE-067",
+      "path": "/en/finance/expenses",
+      "title": "Finance - Expenses | RestroX",
+      "status": "empty-state-observed"
+    },
+    {
+      "id": "PAGE-068",
+      "path": "/en/finance/payments",
+      "title": "Finance - Payments | RestroX",
+      "status": "empty-state-observed"
+    },
+    {
+      "id": "PAGE-069",
+      "path": "/en/finance/cash-and-banks",
+      "title": "Finance - Cash & Banks | RestroX",
+      "status": "workflow-observed"
+    },
+    {
+      "id": "PAGE-070",
+      "path": "/en/finance/tax-and-rates",
+      "title": "Tax and Rates - Settings | RestroX",
+      "status": "workflow-observed"
+    },
+    {
+      "id": "PAGE-071",
+      "path": "/en/finance/balance-transfer",
+      "title": "Finance - Cash & Banks | RestroX",
+      "status": "empty-state-observed"
+    },
+    {
+      "id": "PAGE-072",
+      "path": "/en/finance/reports/account-heads",
+      "title": "Finance - Reports | RestroX",
+      "status": "workflow-observed"
+    },
+    {
+      "id": "PAGE-073",
+      "path": "/en/finance/reports",
+      "title": "Finance - Reports | RestroX",
+      "status": "workflow-observed"
+    },
+    {
+      "id": "PAGE-074",
+      "path": "/en/finance/reports/general-ledger",
+      "title": "Account Summary",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-075",
+      "path": "/en/finance/reports/trial-balance",
+      "title": "Trial Balance",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-076",
+      "path": "/en/finance/reports/income-statement",
+      "title": "Profit Or Loss Statement",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-077",
+      "path": "/en/finance/reports/balance-sheet",
+      "title": "Balance Sheet",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-078",
+      "path": "/en/finance/reports/general-ledger-master",
+      "title": "General Ledger Master",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-079",
+      "path": "/en/finance/reports/payment-mode-summary",
+      "title": "Payment Mode Summary",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-080",
+      "path": "/en/finance/reports/tax-report/sales-register",
+      "title": "Sales Register",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-081",
+      "path": "/en/finance/reports/tax-report/sales-return-register",
+      "title": "Sales Return Register",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-082",
+      "path": "/en/finance/reports/tax-report/purchase-register",
+      "title": "Purchase Register",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-083",
+      "path": "/en/finance/reports/tax-report/purchase-return-register",
+      "title": "Purchase Return Register",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-084",
+      "path": "/en/finance/reports/tax-report/vat-summary-report",
+      "title": "VAT Summary Report",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-085",
+      "path": "/en/finance/reports/tax-report/annex-13-report",
+      "title": "Annex 13 Report",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-086",
+      "path": "/en/finance/reports/tax-report/annex-5-materialized-view-report",
+      "title": "Annex 5 Materialized View Report",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-087",
+      "path": "/en/finance/reports/sales-master-report",
+      "title": "Sales Master Report",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-088",
+      "path": "/en/finance/reports/customerwise-monthly-sales",
+      "title": "Customer Monthly Sales",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-089",
+      "path": "/en/finance/reports/invoicewise-complimentary-discount-report",
+      "title": "Invoice-wise Complimentary Discount Report",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-090",
+      "path": "/en/finance/reports/sales-collection-report",
+      "title": "Sales Collection Report",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-091",
+      "path": "/en/finance/reports/daily-sales-summary",
+      "title": "Daily Sales Summary Report",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-092",
+      "path": "/en/finance/reports/party-balance-report",
+      "title": "Party Balance Report",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-093",
+      "path": "/en/finance/reports/party-receivable-report",
+      "title": "Party Receivable Report",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-094",
+      "path": "/en/finance/reports/party-payable-report",
+      "title": "Party Payable Report",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-095",
+      "path": "/en/finance/reports/balance-confirmation-report",
+      "title": "Balance Confirmation Report",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-096",
+      "path": "/en/finance/reports/purchase-vat-reconciliation",
+      "title": "Purchase VAT Reconciliation",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-097",
+      "path": "/en/finance/reports/purchase-by-supplier",
+      "title": "Purchase By Supplier",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-098",
+      "path": "/en/finance/reports/purchase-return-by-supplier",
+      "title": "Purchase Return By Supplier",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-099",
+      "path": "/en/finance/reports/purchase-by-item",
+      "title": "Purchase By Item",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-100",
+      "path": "/en/finance/reports/purchase-return-by-item",
+      "title": "Purchase Return By Item",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-101",
+      "path": "/en/finance/reports/purchase-by-supplier-monthly",
+      "title": "Purchase By Supplier (Monthly)",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-102",
+      "path": "/en/finance/reports/purchase-return-by-supplier-monthly",
+      "title": "Purchase Return By Supplier (Monthly)",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-103",
+      "path": "/en/finance/reports/purchase-by-item-monthly",
+      "title": "Purchase By Item (Monthly)",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-104",
+      "path": "/en/finance/reports/purchase-return-by-item-monthly",
+      "title": "Purchase Return By Item (Monthly)",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-105",
+      "path": "/en/user/restaurants",
+      "title": "RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-106",
+      "path": "/en/staff/pending",
+      "title": "Staff | RestroX",
+      "status": "empty-state-observed"
+    },
+    {
+      "id": "PAGE-107",
+      "path": "/en/staff/removed",
+      "title": "Staff | RestroX",
+      "status": "empty-state-observed"
+    },
+    {
+      "id": "PAGE-108",
+      "path": "/en/settings/kot-setting/setting",
+      "title": "KOT Setting | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-109",
+      "path": "/en/settings/kot-setting/kitchen-assignment",
+      "title": "KOT Setting | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-110",
+      "path": "/en/services/delivery/:platformId",
+      "title": "Delivery Platform Detail | Services",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-111",
+      "path": "/en/orders/cancelled-history/kot",
+      "title": "Orders | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-112",
+      "path": "/en/orders/cancelled-history/dish",
+      "title": "Orders | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-113",
+      "path": "/en/reservations/booking",
+      "title": "Reservation - Booking | RestroX",
+      "status": "empty-state-observed"
+    },
+    {
+      "id": "PAGE-114",
+      "path": "/en/reservations/completed",
+      "title": "Reservation - Completed | RestroX",
+      "status": "empty-state-observed"
+    },
+    {
+      "id": "PAGE-115",
+      "path": "/en/reservations/cancelled",
+      "title": "Reservation - Cancelled | RestroX",
+      "status": "empty-state-observed"
+    },
+    {
+      "id": "PAGE-116",
+      "path": "/en/finance/reports/complimentary-items-report",
+      "title": "Finance - Reports | RestroX",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-117",
+      "path": "/en/finance/reports/complimentary-addon-report",
+      "title": "Finance - Reports | RestroX",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-118",
+      "path": "/en/finance/reports/salesby-submenu",
+      "title": "Finance - Reports | RestroX",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-119",
+      "path": "/en/finance/reports/submenuwise-monthly-sales-report",
+      "title": "Finance - Submenu-wise Monthly Sales Report | RestroX",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-120",
+      "path": "/en/finance/reports/category-quantity-sales",
+      "title": "Finance - Reports | RestroX",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-121",
+      "path": "/en/finance/reports/categorywise-monthly-sales",
+      "title": "Finance - Category-wise Monthly Sales Report | RestroX",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-122",
+      "path": "/en/finance/reports/dish-monthly-sales",
+      "title": "Finance - Reports | RestroX",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-123",
+      "path": "/en/finance/reports/dish-quantity-sales",
+      "title": "Finance - Reports | RestroX",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-124",
+      "path": "/en/finance/reports/kot-type-wise-sales",
+      "title": "Finance - KOT Type-wise Sales Report | RestroX",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-125",
+      "path": "/en/finance/reports/food-cost-report",
+      "title": "Finance - Food Cost Report | RestroX",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-126",
+      "path": "/en/finance/reports/menuset-wise-sales",
+      "title": "Finance - Menuset-wise Sales Report | RestroX",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-127",
+      "path": "/en/finance/reports/stock-item-ledger-summary",
+      "title": "Finance - Finance Stock Item Ledger Summary | RestroX",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-128",
+      "path": "/en/finance/reports/stock-reconciliation-report",
+      "title": "Finance - Stock Reconciliation Report | RestroX",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-129",
+      "path": "/en/finance/reports/stock-ageing-report",
+      "title": "Finance - Stock Ageing Report | RestroX",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-130",
+      "path": "/en/finance/reports/stock-movement-report",
+      "title": "Finance - Stock Movement Report | RestroX",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-131",
+      "path": "/en/finance/reports/stock-position-report",
+      "title": "Finance - Stock Position Report | RestroX",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-132",
+      "path": "/en/services/restrolink/share-my-menu",
+      "title": "RestroLink - Services | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-133",
+      "path": "/en/services/restrolink/appearance",
+      "title": "RestroLink - Services | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-134",
+      "path": "/en/customer/groups",
+      "title": "Customer Groups | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-135",
+      "path": "/en/settings/migrated-data/sales-register",
+      "title": "Migrated Data - Settings | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-136",
+      "path": "/en/settings/migrated-data/sales-return-register",
+      "title": "Migrated Data - Settings | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-137",
+      "path": "/en/settings/migrated-data/purchase-register",
+      "title": "Migrated Data - Settings | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-138",
+      "path": "/en/settings/migrated-data/purchase-return-register",
+      "title": "Migrated Data - Settings | RestroX",
+      "status": "interactive-ui-observed"
+    },
+    {
+      "id": "PAGE-139",
+      "path": "/en/orders/pos-mode/active-orders",
+      "title": "Active Orders - POS Mode | RestroX",
+      "status": "read-only-ui-observed"
+    },
+    {
+      "id": "PAGE-140",
+      "path": "/en/orders/pos-mode/table",
+      "title": "Table - Order | RestroX",
+      "status": "read-only-ui-observed"
+    },
+    {
+      "id": "PAGE-141",
+      "path": "/en/orders/pos-mode/kot",
+      "title": "KOT - Order | RestroX",
+      "status": "read-only-ui-observed"
+    },
+    {
+      "id": "PAGE-142",
+      "path": "/en/finance/reports/sales-ledger/:accountId",
+      "title": "Sales Ledger \u2014 Account Statement",
+      "status": "report-ui-observed"
+    },
+    {
+      "id": "PAGE-143",
+      "path": "/en/inventory/stock-transfer",
+      "title": "Inventory - Stock Transfer | RestroX",
+      "status": "read-only-ui-observed-no-eligible-destination"
+    }
+  ],
+  "apiEndpointCount": 253,
+  "apiEndpoints": [
+    {
+      "method": "GET",
+      "path": "/activity-logs/",
+      "router": "activityLogRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/alert-settings/",
+      "router": "alertSettingsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/alert-settings/",
+      "router": "alertSettingsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/alerts/",
+      "router": "alertsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/alerts/:id",
+      "router": "alertsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/auth/access-status",
+      "router": "authRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/auth/activation-request",
+      "router": "authRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/activation-request",
+      "router": "authRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/change-password",
+      "router": "authRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/forgot-password",
+      "router": "passwordResetRouter",
+      "source": "passwordReset.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/handle-availability",
+      "router": "authRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/handle-suggestions",
+      "router": "authRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/lock-staff",
+      "router": "authRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/login",
+      "router": "authRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/logout",
+      "router": "authRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/auth/me",
+      "router": "authRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/register",
+      "router": "authRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/reset-password",
+      "router": "passwordResetRouter",
+      "source": "passwordReset.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/switch-branch",
+      "router": "authRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/billing/bills/:id",
+      "router": "billingRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/billing/bills/:id/invoice",
+      "router": "billingRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/billing/bills/:id/payments",
+      "router": "billingRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/billing/bills/:id/payments",
+      "router": "billingRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/billing/bills/:id/receipt",
+      "router": "billingRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/billing/bills/:id/settle",
+      "router": "billingRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/billing/bills/:id/settlement",
+      "router": "billingRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/billing/credit/:receivableId/repay",
+      "router": "billingRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/billing/credit/accounts",
+      "router": "billingRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/billing/customers",
+      "router": "billingRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/billing/customers",
+      "router": "billingRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/billing/customers/:customerId/credit",
+      "router": "billingRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/billing/orders/:orderId",
+      "router": "billingRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/billing/orders/:orderId/bills",
+      "router": "billingRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/billing/orders/:orderId/discount",
+      "router": "billingRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/billing/orders/:orderId/finalize",
+      "router": "billingRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/billing/orders/:orderId/preview",
+      "router": "billingRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/billing/orders/:orderId/split",
+      "router": "billingRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/billing/payments/:id/reverse",
+      "router": "billingRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/branches/",
+      "router": "branchesRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/branches/",
+      "router": "branchesRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/branches/:id",
+      "router": "branchesRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/branches/:id",
+      "router": "branchesRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/complimentary-orders/",
+      "router": "complimentaryOrderRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/dining-sessions/orders/:orderId/tables",
+      "router": "multiTableDiningRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/dining-sessions/tables",
+      "router": "multiTableDiningRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/dining-sessions/tables/:tableId/order",
+      "router": "multiTableDiningRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/expenses/",
+      "router": "expenseRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/expenses/",
+      "router": "expenseRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/expenses/:id",
+      "router": "expenseRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/expenses/:id",
+      "router": "expenseRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/expenses/:id/post",
+      "router": "expenseRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/expenses/:id/void",
+      "router": "expenseRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/expenses/categories",
+      "router": "expenseRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/expenses/categories",
+      "router": "expenseRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/expenses/categories/:id",
+      "router": "expenseRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/expenses/summary",
+      "router": "expenseRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "DELETE",
+      "path": "/floors/:id",
+      "router": "floorsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/floors/:id",
+      "router": "floorsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/floors/:id",
+      "router": "floorsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/health",
+      "router": "healthRouter",
+      "source": "health.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/inventory/availability",
+      "router": "stockRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/inventory/items",
+      "router": "stockRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/inventory/items",
+      "router": "stockRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/inventory/items/:id",
+      "router": "stockRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/inventory/items/:id",
+      "router": "stockRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/inventory/items/:id/adjust",
+      "router": "stockRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/inventory/items/:id/menu-links",
+      "router": "stockRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PUT",
+      "path": "/inventory/items/:id/menu-links",
+      "router": "stockRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/inventory/items/:id/stock-in",
+      "router": "stockRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/inventory/menu-items/:menuItemId/dependencies",
+      "router": "stockRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PUT",
+      "path": "/inventory/menu-items/:menuItemId/dependencies",
+      "router": "stockRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/inventory/movements",
+      "router": "stockRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/inventory/transfers",
+      "router": "stockRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/kitchen/ticket-items/:itemId/status",
+      "router": "kitchenRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/kitchen/tickets",
+      "router": "kitchenRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/kitchen/tickets/:id",
+      "router": "kitchenRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/kitchen/tickets/:id/status",
+      "router": "kitchenRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/management/customers",
+      "router": "managementRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/management/customers",
+      "router": "managementRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/management/customers/:id",
+      "router": "managementRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/management/customers/:id/memberships",
+      "router": "managementRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/management/customers/:id/orders",
+      "router": "managementRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/management/departments",
+      "router": "managementRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/management/departments",
+      "router": "managementRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/management/departments/:id",
+      "router": "managementRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/management/memberships",
+      "router": "managementRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/management/memberships",
+      "router": "managementRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/management/memberships/:id",
+      "router": "managementRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/management/memberships/:id/usage",
+      "router": "managementRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/management/memberships/:id/usage",
+      "router": "managementRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/management/menu-items/:id/department",
+      "router": "managementRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/management/roles",
+      "router": "managementRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PUT",
+      "path": "/management/roles/:roleId/permissions",
+      "router": "managementRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/management/staff/:userId/access",
+      "router": "managementRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PUT",
+      "path": "/management/staff/:userId/access",
+      "router": "managementRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/management/tables/:tableId/waiter",
+      "router": "managementRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/menu/categories/",
+      "router": "menuCategoriesRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/menu/categories/",
+      "router": "menuCategoriesRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "DELETE",
+      "path": "/menu/categories/:id",
+      "router": "menuCategoriesRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/menu/categories/:id",
+      "router": "menuCategoriesRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/menu/categories/:id",
+      "router": "menuCategoriesRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/menu/items/",
+      "router": "menuItemsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/menu/items/",
+      "router": "menuItemsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "DELETE",
+      "path": "/menu/items/:id",
+      "router": "menuItemsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/menu/items/:id",
+      "router": "menuItemsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/menu/items/:id",
+      "router": "menuItemsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/menu/items/:id/combo-components",
+      "router": "menuItemsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PUT",
+      "path": "/menu/items/:id/combo-components",
+      "router": "menuItemsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/menu/items/:itemId/customizations",
+      "router": "menuCustomizationRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/menu/items/:itemId/modifier-groups",
+      "router": "menuCustomizationRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "DELETE",
+      "path": "/menu/items/:itemId/modifier-groups/:groupId",
+      "router": "menuCustomizationRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/menu/modifier-groups",
+      "router": "menuCustomizationRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/menu/modifier-groups",
+      "router": "menuCustomizationRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/menu/modifier-groups/:id",
+      "router": "menuCustomizationRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/menu/modifier-options",
+      "router": "menuCustomizationRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/menu/modifier-options/:id",
+      "router": "menuCustomizationRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/menu/uploads/image",
+      "router": "menuUploadsRouter",
+      "source": "menuUploads.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/menu/variants",
+      "router": "menuCustomizationRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/menu/variants/:id",
+      "router": "menuCustomizationRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/operational-settings/",
+      "router": "operationalSettingsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/operational-settings/",
+      "router": "operationalSettingsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/orders/",
+      "router": "ordersRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/orders/",
+      "router": "ordersRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/orders/:id",
+      "router": "ordersRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/orders/:id/cancel",
+      "router": "ordersRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/orders/:id/complete",
+      "router": "ordersRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/orders/:id/items",
+      "router": "ordersRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/orders/:id/move-items",
+      "router": "ordersRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/orders/:id/pickup",
+      "router": "ordersRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/orders/:id/rounds/:roundId/cancel",
+      "router": "ordersRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/orders/:id/serve",
+      "router": "ordersRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/orders/:id/service-items/:itemId/serve",
+      "router": "ordersRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/orders/:id/status",
+      "router": "ordersRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/orders/service-ready",
+      "router": "ordersRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/current",
+      "router": "organizationsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/organizations/current",
+      "router": "organizationsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/organizations/current/starter-pack/dismiss",
+      "router": "organizationsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "DELETE",
+      "path": "/organizations/current/starter-pack/samples",
+      "router": "organizationsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/payment-methods/",
+      "router": "paymentMethodsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/payment-methods/",
+      "router": "paymentMethodsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "DELETE",
+      "path": "/payment-methods/:id",
+      "router": "paymentMethodsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/payment-methods/:id",
+      "router": "paymentMethodsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/payment-methods/:id",
+      "router": "paymentMethodsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/platform/activation-requests/",
+      "router": "platformActivationRequestsRouter",
+      "source": "activationRequestReadRouter.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/platform/activation-requests/:requestId",
+      "router": "platformActivationRequestsRouter",
+      "source": "activationRequestReadRouter.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/platform/activation-requests/:requestId/approve",
+      "router": "platformActivationRequestsRouter",
+      "source": "activationRequestReadRouter.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/platform/activation-requests/:requestId/approve-until",
+      "router": "platformActivationRequestsRouter",
+      "source": "activationRequestReadRouter.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/platform/activation-requests/:requestId/reject",
+      "router": "platformActivationRequestsRouter",
+      "source": "activationRequestReadRouter.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/platform/audit-logs/",
+      "router": "platformAuditRouter",
+      "source": "platformAuditRouter.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/platform/audit-logs/:auditId",
+      "router": "platformAuditRouter",
+      "source": "platformAuditRouter.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/platform/auth/change-password",
+      "router": "platformAuthRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/platform/auth/login",
+      "router": "platformAuthRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/platform/auth/logout",
+      "router": "platformAuthRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/platform/auth/me",
+      "router": "platformAuthRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/platform/organizations/",
+      "router": "platformOrganizationsRouter",
+      "source": "organizationReadRouter.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/platform/organizations/:organizationId",
+      "router": "platformOrganizationsRouter",
+      "source": "organizationReadRouter.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/platform/organizations/:organizationId/access-expiry",
+      "router": "platformOrganizationsRouter",
+      "source": "organizationReadRouter.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/platform/organizations/:organizationId/cancel",
+      "router": "platformOrganizationsRouter",
+      "source": "organizationReadRouter.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/platform/organizations/:organizationId/grace/extend",
+      "router": "platformOrganizationsRouter",
+      "source": "organizationReadRouter.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/platform/organizations/:organizationId/lifecycle/activate",
+      "router": "platformOrganizationsRouter",
+      "source": "organizationReadRouter.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/platform/organizations/:organizationId/lifecycle/end-grace",
+      "router": "platformOrganizationsRouter",
+      "source": "organizationReadRouter.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/platform/organizations/:organizationId/lifecycle/reactivate",
+      "router": "platformOrganizationsRouter",
+      "source": "organizationReadRouter.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/platform/organizations/:organizationId/lifecycle/start-grace",
+      "router": "platformOrganizationsRouter",
+      "source": "organizationReadRouter.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/platform/organizations/:organizationId/lifecycle/suspend",
+      "router": "platformOrganizationsRouter",
+      "source": "organizationReadRouter.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/platform/organizations/:organizationId/security-suspension",
+      "router": "platformOrganizationsRouter",
+      "source": "organizationReadRouter.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/platform/organizations/:organizationId/security-suspension/clear",
+      "router": "platformOrganizationsRouter",
+      "source": "organizationReadRouter.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/platform/organizations/:organizationId/suspension-schedule",
+      "router": "platformOrganizationsRouter",
+      "source": "organizationReadRouter.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/platform/organizations/:organizationId/suspension-schedule/cancel",
+      "router": "platformOrganizationsRouter",
+      "source": "organizationReadRouter.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/platform/organizations/:organizationId/suspension-schedule/reschedule",
+      "router": "platformOrganizationsRouter",
+      "source": "organizationReadRouter.ts"
+    },
+    {
+      "method": "DELETE",
+      "path": "/printers/:id",
+      "router": "printersRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/printers/:id",
+      "router": "printersRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/printers/:id",
+      "router": "printersRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/ready",
+      "router": "healthRouter",
+      "source": "health.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/receipts/bills/:billId",
+      "router": "receiptSettingsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/receipts/settings",
+      "router": "receiptSettingsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PUT",
+      "path": "/receipts/settings",
+      "router": "receiptSettingsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/reports/branches",
+      "router": "reportsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/reports/complimentary",
+      "router": "reportsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/reports/controls",
+      "router": "reportsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/reports/dashboard",
+      "router": "reportsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/reports/departments",
+      "router": "reportsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/reports/expenses",
+      "router": "reportsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/reports/financial",
+      "router": "reportsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/reports/fnb",
+      "router": "reportsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/reports/fnb/options",
+      "router": "reportsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/reports/occupancy",
+      "router": "reportsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/reports/occupancy/options",
+      "router": "reportsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/reports/payments",
+      "router": "reportsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/reports/sales",
+      "router": "reportsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/reports/shifts",
+      "router": "reportsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/reports/staff",
+      "router": "reportsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/reports/tax",
+      "router": "reportsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/reports/transactions",
+      "router": "reportsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/reports/transactions/:billId",
+      "router": "reportsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/roles/",
+      "router": "rolesRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/roles/",
+      "router": "rolesRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/roles/:id",
+      "router": "rolesRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "DELETE",
+      "path": "/sections/:id",
+      "router": "sectionsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/sections/:id",
+      "router": "sectionsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/sections/:id",
+      "router": "sectionsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/shift-ops/",
+      "router": "shiftRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/shift-ops/",
+      "router": "shiftRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/shift-ops/:id",
+      "router": "shiftRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/shift-ops/:id/cash-movements",
+      "router": "shiftRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/shift-ops/:id/cash-movements",
+      "router": "shiftRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/shift-ops/:id/close",
+      "router": "shiftRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/shift-ops/:id/summary",
+      "router": "shiftRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/shift-ops/business-days",
+      "router": "shiftRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/shift-ops/business-days/:id",
+      "router": "shiftRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/shift-ops/business-days/:id/close",
+      "router": "shiftRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/shift-ops/business-days/current",
+      "router": "shiftRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/shift-ops/business-days/open",
+      "router": "shiftRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/shift-ops/current",
+      "router": "shiftRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/shift-ops/registers",
+      "router": "shiftRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/shift-ops/registers",
+      "router": "shiftRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/shift-ops/registers/:id",
+      "router": "shiftRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/staff-permissions/:userId",
+      "router": "staffPermissionsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PUT",
+      "path": "/staff-permissions/:userId",
+      "router": "staffPermissionsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "DELETE",
+      "path": "/state/:key",
+      "router": "state",
+      "source": "state.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/state/:key",
+      "router": "state",
+      "source": "state.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/state/:key",
+      "router": "state",
+      "source": "state.ts"
+    },
+    {
+      "method": "PUT",
+      "path": "/state/:key",
+      "router": "state",
+      "source": "state.ts"
+    },
+    {
+      "method": "DELETE",
+      "path": "/stations/:id",
+      "router": "stationsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/stations/:id",
+      "router": "stationsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/stations/:id",
+      "router": "stationsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/system/migrations/status",
+      "router": "system",
+      "source": "index.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/table-allocations/",
+      "router": "tableAllocationsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/table-allocations/",
+      "router": "tableAllocationsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "DELETE",
+      "path": "/table-allocations/:id",
+      "router": "tableAllocationsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/table-allocations/:id",
+      "router": "tableAllocationsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/table-allocations/:id",
+      "router": "tableAllocationsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/table-operations/merge",
+      "router": "tableOperationsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/table-operations/overview",
+      "router": "tableOperationsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/table-operations/swap",
+      "router": "tableOperationsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/table-operations/transfer",
+      "router": "tableOperationsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "DELETE",
+      "path": "/tables/:id",
+      "router": "tablesRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/tables/:id",
+      "router": "tablesRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/tables/:id",
+      "router": "tablesRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/units/",
+      "router": "unitsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/units/",
+      "router": "unitsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "DELETE",
+      "path": "/units/:id",
+      "router": "unitsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/units/:id",
+      "router": "unitsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/units/:id",
+      "router": "unitsRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/users/",
+      "router": "usersRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/users/",
+      "router": "usersRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "GET",
+      "path": "/users/:id",
+      "router": "usersRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "PATCH",
+      "path": "/users/:id",
+      "router": "usersRouter",
+      "source": "router.ts"
+    },
+    {
+      "method": "POST",
+      "path": "/printing/kots/:ticketId/print",
+      "router": "printingRouter",
+      "source": "server.cjs (compiled-only)"
+    },
+    {
+      "method": "POST",
+      "path": "/printing/bills/:billId/print",
+      "router": "printingRouter",
+      "source": "server.cjs (compiled-only)"
+    },
+    {
+      "method": "POST",
+      "path": "/printing/jobs/:jobId/reprint",
+      "router": "printingRouter",
+      "source": "server.cjs (compiled-only)"
+    },
+    {
+      "method": "GET",
+      "path": "/printing/kots/:ticketId/jobs",
+      "router": "printingRouter",
+      "source": "server.cjs (compiled-only)"
+    },
+    {
+      "method": "GET",
+      "path": "/printing/bills/:billId/jobs",
+      "router": "printingRouter",
+      "source": "server.cjs (compiled-only)"
+    },
+    {
+      "method": "POST",
+      "path": "/print-agent/pairing/exchange",
+      "router": "printAgent",
+      "source": "server.cjs (compiled-only)"
+    }
+  ],
+  "tableCount": 103,
+  "tables": [
+    "activity_logs",
+    "alert_auth_failure_windows",
+    "alert_settings",
+    "alerts",
+    "bill_lines",
+    "bill_settlement_attempts",
+    "bill_split_batches",
+    "bill_split_requests",
+    "bills",
+    "branch_tax_configs",
+    "branches",
+    "business_days",
+    "cash_movements",
+    "customer_credit_payments",
+    "customer_receivables",
+    "customers",
+    "departments",
+    "dining_tables",
+    "domain_audit_events",
+    "expense_categories",
+    "expenses",
+    "floors",
+    "hardware_printers",
+    "inventory_balances",
+    "inventory_categories",
+    "inventory_consumption_events",
+    "inventory_count_items",
+    "inventory_counts",
+    "inventory_items",
+    "inventory_locations",
+    "inventory_movements",
+    "kitchen_ticket_items",
+    "kitchen_tickets",
+    "kot_number_counters",
+    "lifecycle_automation_attention",
+    "membership_usages",
+    "memberships",
+    "menu_categories",
+    "menu_combo_components",
+    "menu_item_modifier_groups",
+    "menu_item_stock_links",
+    "menu_item_variants",
+    "menu_items",
+    "modifier_groups",
+    "modifier_option_ingredient_impacts",
+    "modifier_options",
+    "operational_settings",
+    "order_amendment_requests",
+    "order_item_recipe_snapshots",
+    "order_items",
+    "order_number_counters",
+    "order_operation_events",
+    "order_rounds",
+    "order_tables",
+    "orders",
+    "organization_access_status_sessions",
+    "organization_activation_requests",
+    "organization_entitlements",
+    "organization_status_history",
+    "organizations",
+    "password_reset_otps",
+    "payment_methods",
+    "payments",
+    "pending_order_table_claims",
+    "permissions",
+    "platform_admin_password_reset_otps",
+    "platform_admin_sessions",
+    "platform_admins",
+    "platform_audit_logs",
+    "preparation_stations",
+    "print_agent_pairing_tokens",
+    "print_agents",
+    "print_jobs",
+    "purchase_order_items",
+    "purchase_order_sequences",
+    "purchase_orders",
+    "purchase_receipt_items",
+    "purchase_receipts",
+    "recipe_version_ingredients",
+    "recipe_versions",
+    "recipes",
+    "registers",
+    "role_permissions",
+    "roles",
+    "sections",
+    "sessions",
+    "shifts",
+    "stock_dependencies",
+    "stock_items",
+    "stock_movements",
+    "stock_transfers",
+    "supplier_contacts",
+    "supplier_item_price_history",
+    "supplier_items",
+    "suppliers",
+    "table_allocations",
+    "units_of_measure",
+    "user_branches",
+    "user_permissions",
+    "user_section_access",
+    "user_table_access",
+    "users",
+    "variant_ingredient_impacts"
+  ]
+}

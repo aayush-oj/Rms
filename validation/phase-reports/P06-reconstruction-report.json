@@ -1,0 +1,17 @@
+{
+  "phase": "P06",
+  "name": "Video timeline & motion canon",
+  "objective": "Analyze the 8s product film and establish what it can and cannot validate; keep missing trace evidence explicit.",
+  "dependencies": "P1-P5",
+  "evidence": "New 8s MP4; historical video manifest.",
+  "routeSurface": "/validation/reference/video",
+  "apiImpact": "None",
+  "sqlImpact": "None",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": null,
+  "notes": "Analysis/provenance phase.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": null
+}

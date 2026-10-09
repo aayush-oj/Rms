@@ -1,0 +1,17 @@
+{
+  "phase": "P03",
+  "name": "Route canon & compatibility map",
+  "objective": "Create the canonical 142-route reference model and map every route to implementation ownership plus aliases.",
+  "dependencies": "P1-P2",
+  "evidence": "142 reference routes",
+  "routeSurface": "apps/web routing + /validation/reference/routes",
+  "apiImpact": "Route resolution/alias APIs if needed.",
+  "sqlImpact": "No required schema change.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": null,
+  "notes": "Analysis/provenance phase.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": null
+}

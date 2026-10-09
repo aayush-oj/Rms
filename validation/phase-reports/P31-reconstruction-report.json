@@ -1,0 +1,17 @@
+{
+  "phase": "P31",
+  "name": "Orders board/table/detail",
+  "objective": "Implement main Orders route, table mode, detail tabs, operations and order history surfaces.",
+  "dependencies": "P30,P29,P33-P34",
+  "evidence": "PAGE-018-021, 051,053-054,111-112,139-141.",
+  "routeSurface": "apps/web/features/orders; apps/api/modules/order",
+  "apiImpact": "/orders/*",
+  "sqlImpact": "orders/order_items/order_rounds/order_operation_events.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}

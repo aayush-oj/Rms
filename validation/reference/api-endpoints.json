@@ -1,0 +1,1520 @@
+[
+  {
+    "method": "GET",
+    "path": "/activity-logs/",
+    "router": "activityLogRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/alert-settings/",
+    "router": "alertSettingsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/alert-settings/",
+    "router": "alertSettingsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/alerts/",
+    "router": "alertsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/alerts/:id",
+    "router": "alertsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/auth/access-status",
+    "router": "authRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/auth/activation-request",
+    "router": "authRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/auth/activation-request",
+    "router": "authRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/auth/change-password",
+    "router": "authRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/auth/forgot-password",
+    "router": "passwordResetRouter",
+    "source": "passwordReset.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/auth/handle-availability",
+    "router": "authRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/auth/handle-suggestions",
+    "router": "authRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/auth/lock-staff",
+    "router": "authRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/auth/login",
+    "router": "authRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/auth/logout",
+    "router": "authRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/auth/me",
+    "router": "authRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/auth/register",
+    "router": "authRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/auth/reset-password",
+    "router": "passwordResetRouter",
+    "source": "passwordReset.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/auth/switch-branch",
+    "router": "authRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/billing/bills/:id",
+    "router": "billingRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/billing/bills/:id/invoice",
+    "router": "billingRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/billing/bills/:id/payments",
+    "router": "billingRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/billing/bills/:id/payments",
+    "router": "billingRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/billing/bills/:id/receipt",
+    "router": "billingRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/billing/bills/:id/settle",
+    "router": "billingRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/billing/bills/:id/settlement",
+    "router": "billingRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/billing/credit/:receivableId/repay",
+    "router": "billingRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/billing/credit/accounts",
+    "router": "billingRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/billing/customers",
+    "router": "billingRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/billing/customers",
+    "router": "billingRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/billing/customers/:customerId/credit",
+    "router": "billingRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/billing/orders/:orderId",
+    "router": "billingRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/billing/orders/:orderId/bills",
+    "router": "billingRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/billing/orders/:orderId/discount",
+    "router": "billingRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/billing/orders/:orderId/finalize",
+    "router": "billingRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/billing/orders/:orderId/preview",
+    "router": "billingRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/billing/orders/:orderId/split",
+    "router": "billingRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/billing/payments/:id/reverse",
+    "router": "billingRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/branches/",
+    "router": "branchesRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/branches/",
+    "router": "branchesRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/branches/:id",
+    "router": "branchesRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/branches/:id",
+    "router": "branchesRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/complimentary-orders/",
+    "router": "complimentaryOrderRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/dining-sessions/orders/:orderId/tables",
+    "router": "multiTableDiningRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/dining-sessions/tables",
+    "router": "multiTableDiningRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/dining-sessions/tables/:tableId/order",
+    "router": "multiTableDiningRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/expenses/",
+    "router": "expenseRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/expenses/",
+    "router": "expenseRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/expenses/:id",
+    "router": "expenseRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/expenses/:id",
+    "router": "expenseRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/expenses/:id/post",
+    "router": "expenseRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/expenses/:id/void",
+    "router": "expenseRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/expenses/categories",
+    "router": "expenseRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/expenses/categories",
+    "router": "expenseRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/expenses/categories/:id",
+    "router": "expenseRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/expenses/summary",
+    "router": "expenseRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "DELETE",
+    "path": "/floors/:id",
+    "router": "floorsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/floors/:id",
+    "router": "floorsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/floors/:id",
+    "router": "floorsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/health",
+    "router": "healthRouter",
+    "source": "health.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/inventory/availability",
+    "router": "stockRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/inventory/items",
+    "router": "stockRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/inventory/items",
+    "router": "stockRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/inventory/items/:id",
+    "router": "stockRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/inventory/items/:id",
+    "router": "stockRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/inventory/items/:id/adjust",
+    "router": "stockRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/inventory/items/:id/menu-links",
+    "router": "stockRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PUT",
+    "path": "/inventory/items/:id/menu-links",
+    "router": "stockRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/inventory/items/:id/stock-in",
+    "router": "stockRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/inventory/menu-items/:menuItemId/dependencies",
+    "router": "stockRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PUT",
+    "path": "/inventory/menu-items/:menuItemId/dependencies",
+    "router": "stockRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/inventory/movements",
+    "router": "stockRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/inventory/transfers",
+    "router": "stockRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/kitchen/ticket-items/:itemId/status",
+    "router": "kitchenRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/kitchen/tickets",
+    "router": "kitchenRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/kitchen/tickets/:id",
+    "router": "kitchenRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/kitchen/tickets/:id/status",
+    "router": "kitchenRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/management/customers",
+    "router": "managementRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/management/customers",
+    "router": "managementRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/management/customers/:id",
+    "router": "managementRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/management/customers/:id/memberships",
+    "router": "managementRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/management/customers/:id/orders",
+    "router": "managementRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/management/departments",
+    "router": "managementRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/management/departments",
+    "router": "managementRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/management/departments/:id",
+    "router": "managementRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/management/memberships",
+    "router": "managementRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/management/memberships",
+    "router": "managementRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/management/memberships/:id",
+    "router": "managementRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/management/memberships/:id/usage",
+    "router": "managementRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/management/memberships/:id/usage",
+    "router": "managementRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/management/menu-items/:id/department",
+    "router": "managementRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/management/roles",
+    "router": "managementRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PUT",
+    "path": "/management/roles/:roleId/permissions",
+    "router": "managementRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/management/staff/:userId/access",
+    "router": "managementRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PUT",
+    "path": "/management/staff/:userId/access",
+    "router": "managementRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/management/tables/:tableId/waiter",
+    "router": "managementRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/menu/categories/",
+    "router": "menuCategoriesRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/menu/categories/",
+    "router": "menuCategoriesRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "DELETE",
+    "path": "/menu/categories/:id",
+    "router": "menuCategoriesRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/menu/categories/:id",
+    "router": "menuCategoriesRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/menu/categories/:id",
+    "router": "menuCategoriesRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/menu/items/",
+    "router": "menuItemsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/menu/items/",
+    "router": "menuItemsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "DELETE",
+    "path": "/menu/items/:id",
+    "router": "menuItemsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/menu/items/:id",
+    "router": "menuItemsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/menu/items/:id",
+    "router": "menuItemsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/menu/items/:id/combo-components",
+    "router": "menuItemsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PUT",
+    "path": "/menu/items/:id/combo-components",
+    "router": "menuItemsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/menu/items/:itemId/customizations",
+    "router": "menuCustomizationRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/menu/items/:itemId/modifier-groups",
+    "router": "menuCustomizationRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "DELETE",
+    "path": "/menu/items/:itemId/modifier-groups/:groupId",
+    "router": "menuCustomizationRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/menu/modifier-groups",
+    "router": "menuCustomizationRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/menu/modifier-groups",
+    "router": "menuCustomizationRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/menu/modifier-groups/:id",
+    "router": "menuCustomizationRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/menu/modifier-options",
+    "router": "menuCustomizationRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/menu/modifier-options/:id",
+    "router": "menuCustomizationRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/menu/uploads/image",
+    "router": "menuUploadsRouter",
+    "source": "menuUploads.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/menu/variants",
+    "router": "menuCustomizationRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/menu/variants/:id",
+    "router": "menuCustomizationRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/operational-settings/",
+    "router": "operationalSettingsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/operational-settings/",
+    "router": "operationalSettingsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/orders/",
+    "router": "ordersRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/orders/",
+    "router": "ordersRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/orders/:id",
+    "router": "ordersRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/orders/:id/cancel",
+    "router": "ordersRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/orders/:id/complete",
+    "router": "ordersRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/orders/:id/items",
+    "router": "ordersRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/orders/:id/move-items",
+    "router": "ordersRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/orders/:id/pickup",
+    "router": "ordersRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/orders/:id/rounds/:roundId/cancel",
+    "router": "ordersRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/orders/:id/serve",
+    "router": "ordersRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/orders/:id/service-items/:itemId/serve",
+    "router": "ordersRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/orders/:id/status",
+    "router": "ordersRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/orders/service-ready",
+    "router": "ordersRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/organizations/current",
+    "router": "organizationsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/organizations/current",
+    "router": "organizationsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/organizations/current/starter-pack/dismiss",
+    "router": "organizationsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "DELETE",
+    "path": "/organizations/current/starter-pack/samples",
+    "router": "organizationsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/payment-methods/",
+    "router": "paymentMethodsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/payment-methods/",
+    "router": "paymentMethodsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "DELETE",
+    "path": "/payment-methods/:id",
+    "router": "paymentMethodsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/payment-methods/:id",
+    "router": "paymentMethodsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/payment-methods/:id",
+    "router": "paymentMethodsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/platform/activation-requests/",
+    "router": "platformActivationRequestsRouter",
+    "source": "activationRequestReadRouter.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/platform/activation-requests/:requestId",
+    "router": "platformActivationRequestsRouter",
+    "source": "activationRequestReadRouter.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/platform/activation-requests/:requestId/approve",
+    "router": "platformActivationRequestsRouter",
+    "source": "activationRequestReadRouter.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/platform/activation-requests/:requestId/approve-until",
+    "router": "platformActivationRequestsRouter",
+    "source": "activationRequestReadRouter.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/platform/activation-requests/:requestId/reject",
+    "router": "platformActivationRequestsRouter",
+    "source": "activationRequestReadRouter.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/platform/audit-logs/",
+    "router": "platformAuditRouter",
+    "source": "platformAuditRouter.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/platform/audit-logs/:auditId",
+    "router": "platformAuditRouter",
+    "source": "platformAuditRouter.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/platform/auth/change-password",
+    "router": "platformAuthRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/platform/auth/login",
+    "router": "platformAuthRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/platform/auth/logout",
+    "router": "platformAuthRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/platform/auth/me",
+    "router": "platformAuthRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/platform/organizations/",
+    "router": "platformOrganizationsRouter",
+    "source": "organizationReadRouter.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/platform/organizations/:organizationId",
+    "router": "platformOrganizationsRouter",
+    "source": "organizationReadRouter.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/platform/organizations/:organizationId/access-expiry",
+    "router": "platformOrganizationsRouter",
+    "source": "organizationReadRouter.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/platform/organizations/:organizationId/cancel",
+    "router": "platformOrganizationsRouter",
+    "source": "organizationReadRouter.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/platform/organizations/:organizationId/grace/extend",
+    "router": "platformOrganizationsRouter",
+    "source": "organizationReadRouter.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/platform/organizations/:organizationId/lifecycle/activate",
+    "router": "platformOrganizationsRouter",
+    "source": "organizationReadRouter.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/platform/organizations/:organizationId/lifecycle/end-grace",
+    "router": "platformOrganizationsRouter",
+    "source": "organizationReadRouter.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/platform/organizations/:organizationId/lifecycle/reactivate",
+    "router": "platformOrganizationsRouter",
+    "source": "organizationReadRouter.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/platform/organizations/:organizationId/lifecycle/start-grace",
+    "router": "platformOrganizationsRouter",
+    "source": "organizationReadRouter.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/platform/organizations/:organizationId/lifecycle/suspend",
+    "router": "platformOrganizationsRouter",
+    "source": "organizationReadRouter.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/platform/organizations/:organizationId/security-suspension",
+    "router": "platformOrganizationsRouter",
+    "source": "organizationReadRouter.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/platform/organizations/:organizationId/security-suspension/clear",
+    "router": "platformOrganizationsRouter",
+    "source": "organizationReadRouter.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/platform/organizations/:organizationId/suspension-schedule",
+    "router": "platformOrganizationsRouter",
+    "source": "organizationReadRouter.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/platform/organizations/:organizationId/suspension-schedule/cancel",
+    "router": "platformOrganizationsRouter",
+    "source": "organizationReadRouter.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/platform/organizations/:organizationId/suspension-schedule/reschedule",
+    "router": "platformOrganizationsRouter",
+    "source": "organizationReadRouter.ts"
+  },
+  {
+    "method": "DELETE",
+    "path": "/printers/:id",
+    "router": "printersRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/printers/:id",
+    "router": "printersRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/printers/:id",
+    "router": "printersRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/ready",
+    "router": "healthRouter",
+    "source": "health.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/receipts/bills/:billId",
+    "router": "receiptSettingsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/receipts/settings",
+    "router": "receiptSettingsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PUT",
+    "path": "/receipts/settings",
+    "router": "receiptSettingsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/reports/branches",
+    "router": "reportsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/reports/complimentary",
+    "router": "reportsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/reports/controls",
+    "router": "reportsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/reports/dashboard",
+    "router": "reportsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/reports/departments",
+    "router": "reportsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/reports/expenses",
+    "router": "reportsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/reports/financial",
+    "router": "reportsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/reports/fnb",
+    "router": "reportsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/reports/fnb/options",
+    "router": "reportsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/reports/occupancy",
+    "router": "reportsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/reports/occupancy/options",
+    "router": "reportsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/reports/payments",
+    "router": "reportsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/reports/sales",
+    "router": "reportsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/reports/shifts",
+    "router": "reportsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/reports/staff",
+    "router": "reportsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/reports/tax",
+    "router": "reportsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/reports/transactions",
+    "router": "reportsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/reports/transactions/:billId",
+    "router": "reportsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/roles/",
+    "router": "rolesRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/roles/",
+    "router": "rolesRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/roles/:id",
+    "router": "rolesRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "DELETE",
+    "path": "/sections/:id",
+    "router": "sectionsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/sections/:id",
+    "router": "sectionsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/sections/:id",
+    "router": "sectionsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/shift-ops/",
+    "router": "shiftRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/shift-ops/",
+    "router": "shiftRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/shift-ops/:id",
+    "router": "shiftRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/shift-ops/:id/cash-movements",
+    "router": "shiftRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/shift-ops/:id/cash-movements",
+    "router": "shiftRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/shift-ops/:id/close",
+    "router": "shiftRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/shift-ops/:id/summary",
+    "router": "shiftRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/shift-ops/business-days",
+    "router": "shiftRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/shift-ops/business-days/:id",
+    "router": "shiftRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/shift-ops/business-days/:id/close",
+    "router": "shiftRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/shift-ops/business-days/current",
+    "router": "shiftRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/shift-ops/business-days/open",
+    "router": "shiftRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/shift-ops/current",
+    "router": "shiftRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/shift-ops/registers",
+    "router": "shiftRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/shift-ops/registers",
+    "router": "shiftRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/shift-ops/registers/:id",
+    "router": "shiftRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/staff-permissions/:userId",
+    "router": "staffPermissionsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PUT",
+    "path": "/staff-permissions/:userId",
+    "router": "staffPermissionsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "DELETE",
+    "path": "/state/:key",
+    "router": "state",
+    "source": "state.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/state/:key",
+    "router": "state",
+    "source": "state.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/state/:key",
+    "router": "state",
+    "source": "state.ts"
+  },
+  {
+    "method": "PUT",
+    "path": "/state/:key",
+    "router": "state",
+    "source": "state.ts"
+  },
+  {
+    "method": "DELETE",
+    "path": "/stations/:id",
+    "router": "stationsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/stations/:id",
+    "router": "stationsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/stations/:id",
+    "router": "stationsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/system/migrations/status",
+    "router": "system",
+    "source": "index.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/table-allocations/",
+    "router": "tableAllocationsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/table-allocations/",
+    "router": "tableAllocationsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "DELETE",
+    "path": "/table-allocations/:id",
+    "router": "tableAllocationsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/table-allocations/:id",
+    "router": "tableAllocationsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/table-allocations/:id",
+    "router": "tableAllocationsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/table-operations/merge",
+    "router": "tableOperationsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/table-operations/overview",
+    "router": "tableOperationsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/table-operations/swap",
+    "router": "tableOperationsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/table-operations/transfer",
+    "router": "tableOperationsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "DELETE",
+    "path": "/tables/:id",
+    "router": "tablesRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/tables/:id",
+    "router": "tablesRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/tables/:id",
+    "router": "tablesRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/units/",
+    "router": "unitsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/units/",
+    "router": "unitsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "DELETE",
+    "path": "/units/:id",
+    "router": "unitsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/units/:id",
+    "router": "unitsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/units/:id",
+    "router": "unitsRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/users/",
+    "router": "usersRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/users/",
+    "router": "usersRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/users/:id",
+    "router": "usersRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/users/:id",
+    "router": "usersRouter",
+    "source": "router.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/printing/kots/:ticketId/print",
+    "router": "printingRouter",
+    "source": "server.cjs (compiled-only)"
+  },
+  {
+    "method": "POST",
+    "path": "/printing/bills/:billId/print",
+    "router": "printingRouter",
+    "source": "server.cjs (compiled-only)"
+  },
+  {
+    "method": "POST",
+    "path": "/printing/jobs/:jobId/reprint",
+    "router": "printingRouter",
+    "source": "server.cjs (compiled-only)"
+  },
+  {
+    "method": "GET",
+    "path": "/printing/kots/:ticketId/jobs",
+    "router": "printingRouter",
+    "source": "server.cjs (compiled-only)"
+  },
+  {
+    "method": "GET",
+    "path": "/printing/bills/:billId/jobs",
+    "router": "printingRouter",
+    "source": "server.cjs (compiled-only)"
+  },
+  {
+    "method": "POST",
+    "path": "/print-agent/pairing/exchange",
+    "router": "printAgent",
+    "source": "server.cjs (compiled-only)"
+  }
+]

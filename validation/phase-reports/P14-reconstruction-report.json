@@ -1,0 +1,17 @@
+{
+  "phase": "P14",
+  "name": "Monorepo/tooling scaffold",
+  "objective": "Create maintainable React/TS + Node/TS + relational DB workspace with packages and validation folders.",
+  "dependencies": "P13",
+  "evidence": "Architecture brief.",
+  "routeSurface": "Repo root",
+  "apiImpact": "Tooling only.",
+  "sqlImpact": "None",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}

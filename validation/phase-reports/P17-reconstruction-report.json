@@ -1,0 +1,17 @@
+{
+  "phase": "P17",
+  "name": "Shared UI primitives",
+  "objective": "Build the reusable component foundation.",
+  "dependencies": "P16",
+  "evidence": "Reference screenshots and source bundle components.",
+  "routeSurface": "packages/ui",
+  "apiImpact": "None",
+  "sqlImpact": "None",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}

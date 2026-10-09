@@ -1,0 +1,17 @@
+{
+  "phase": "P23",
+  "name": "API client, schemas & state framework",
+  "objective": "Create typed API client with validation, caching, retry and error boundaries.",
+  "dependencies": "P8,P19-P22",
+  "evidence": "Current app API calls and server middleware.",
+  "routeSurface": "apps/web/lib/api; packages/validation",
+  "apiImpact": "All versioned APIs.",
+  "sqlImpact": "None",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}

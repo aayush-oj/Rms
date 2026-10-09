@@ -1,0 +1,13 @@
+artifact,finding,status,confidence,required_action,phase
+Reference route inventory,142 route records; PAGE-058 absent; PAGE-052/PAGE-108 duplicate path,OBSERVED,high,Canonicalize without inventing route,P03
+Screenshots,"834 images, multiple duplicate groups; visual evidence broad across modules",OBSERVED,high,Build golden-state matrix,P05/P57
+New MP4,"8 sec, 1280x720, 24fps, 192 frames; marketing walkthrough not interaction trace",OBSERVED,high,Use for motion/storyboard validation only,P06/P58
+dist/server.cjs.map,796 source entries / contents; migrations 001-064,OBSERVED,high,Recover and reconcile source,P07/P13
+dist/server.cjs,Runtime includes migrations 065-070 + printing/print-agent,OBSERVED,high,Sync source/build map,P07/P15/P51
+Frontend Cz bundle,116 React source file debug references; different /work/report/settings route family,OBSERVED,high,Build canonical /en route layer,P13/P19
+Database config,MySQL 8.0 specific,OBSERVED,high,Approve MySQL or port to PostgreSQL,P10
+Deployment README,"cPanel Node 22+, one process, persistent uploads, health/ready checks",OBSERVED document,medium,Prove in staging,P63
+stderr.log,Production env validation failed in a prior run for origins/bootstrap/password rules,OBSERVED,high,Reproduce in staging with fixed env,P63
+Printing,Durable jobs/reprint/agent code present; physical output unverified,OBSERVED,high,Onsite printer acceptance,P51/P63
+Playwright traces,No persisted traces in inspection bundle,UNKNOWN,high,Capture new trace set,P06/P58
+Reference business semantics,Several cross-module conflicts,CONFLICTING,high,Close state-machine policies,P09/P12/P49

@@ -1,0 +1,17 @@
+{
+  "phase": "P02",
+  "name": "Canonical requirement model",
+  "objective": "Normalize observed, confirmed, inferred, proposed, unknown and conflicting behavior into a requirements ledger.",
+  "dependencies": "P1",
+  "evidence": "All",
+  "routeSurface": "/docs/analysis/requirements",
+  "apiImpact": "None",
+  "sqlImpact": "None",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": null,
+  "notes": "Analysis/provenance phase.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": null
+}

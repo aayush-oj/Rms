@@ -1,0 +1,17 @@
+{
+  "phase": "P35",
+  "name": "Notifications & activity",
+  "objective": "Implement notification center and activity history.",
+  "dependencies": "P24,P27,P31-P34",
+  "evidence": "PAGE-005,022,059 + docs.",
+  "routeSurface": "apps/web/features/notifications; audit UI",
+  "apiImpact": "/alerts /activity-logs",
+  "sqlImpact": "alerts, alert_settings, activity_logs.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}

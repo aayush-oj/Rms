@@ -1,0 +1,17 @@
+{
+  "phase": "P11",
+  "name": "Security/tenant/RBAC authority",
+  "objective": "Freeze organization, branch, user, role, permission and session boundaries.",
+  "dependencies": "P1-P10",
+  "evidence": "Current identity source + reference Settings/Staff.",
+  "routeSurface": "apps/api/modules/identity and authorization",
+  "apiImpact": "Auth/RBAC APIs.",
+  "sqlImpact": "Existing identity tables; possible constraint/index fixes.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": null,
+  "notes": "Analysis/provenance phase.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": null
+}

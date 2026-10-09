@@ -1,0 +1,17 @@
+{
+  "phase": "P10",
+  "name": "Database authority & engine decision",
+  "objective": "Decide and freeze the production relational engine; reconcile current MySQL implementation with the PostgreSQL-or-approved requirement.",
+  "dependencies": "P1-P9",
+  "evidence": "Current migrations/config + project brief",
+  "routeSurface": "/docs/database/engine-decision",
+  "apiImpact": "DB adapter stable.",
+  "sqlImpact": "All 70 migrations impacted if porting.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": null,
+  "notes": "Analysis/provenance phase.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": null
+}

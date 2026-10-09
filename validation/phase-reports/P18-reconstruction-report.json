@@ -1,0 +1,17 @@
+{
+  "phase": "P18",
+  "name": "Application shell & navigation",
+  "objective": "Rebuild header/sidebar/breadcrumb/notification/profile/workspace shell.",
+  "dependencies": "P16-P17",
+  "evidence": "Reference screenshots; current AppShell candidate.",
+  "routeSurface": "apps/web/src/app and navigation",
+  "apiImpact": "Route gateway hooks.",
+  "sqlImpact": "None",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}

@@ -1,0 +1,17 @@
+{
+  "phase": "P16",
+  "name": "Design tokens & typography",
+  "objective": "Extract and codify shared visual tokens from screenshot/code evidence.",
+  "dependencies": "P5-P7,P14",
+  "evidence": "834 screenshots + CSS bundles.",
+  "routeSurface": "packages/ui/styles",
+  "apiImpact": "None",
+  "sqlImpact": "None",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}

@@ -1,0 +1,17 @@
+{
+  "phase": "P38",
+  "name": "Invoice, receipt, tax document & print UI",
+  "objective": "Implement exact receipt/invoice document states and print preview.",
+  "dependencies": "P12,P36-P37,P50",
+  "evidence": "PAGE-012 + receipt/print assets/code.",
+  "routeSurface": "apps/web/features/receipts; packages/ui/print",
+  "apiImpact": "/receipts, /billing/*/receipt/invoice, /printing",
+  "sqlImpact": "bills + tax config + print_jobs.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}

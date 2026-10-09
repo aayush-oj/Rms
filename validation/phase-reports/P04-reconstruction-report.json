@@ -1,0 +1,17 @@
+{
+  "phase": "P04",
+  "name": "Workflow canonicalization",
+  "objective": "Turn 98 documented workflows and cross-module journeys into executable workflow definitions.",
+  "dependencies": "P1-P3",
+  "evidence": "98 workflows",
+  "routeSurface": "/tests/e2e /validation/reference/workflows",
+  "apiImpact": "Test-only endpoints prohibited.",
+  "sqlImpact": "Fixture seed entities where required.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": null,
+  "notes": "Analysis/provenance phase.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": null
+}

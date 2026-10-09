@@ -1,0 +1,17 @@
+{
+  "phase": "P27",
+  "name": "Settings core & restaurant configuration",
+  "objective": "Implement settings routes except dedicated printing/migrated/support surfaces.",
+  "dependencies": "P18-P25",
+  "evidence": "PAGE-004-014, PAGE-052, docs.",
+  "routeSurface": "apps/web/features/settings; apps/api admin modules",
+  "apiImpact": "settings APIs",
+  "sqlImpact": "operational_settings, branch_tax_configs, role data.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}

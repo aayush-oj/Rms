@@ -1,0 +1,17 @@
+{
+  "phase": "P39",
+  "name": "Returns, voids, trash, duplicates & payment edits",
+  "objective": "Implement destructive/exception workflows with audit and confirmation semantics.",
+  "dependencies": "P9,P12,P28,P36-P38",
+  "evidence": "Conflict registry: void wording, purchase duplicate, staff restore patterns, return workflows.",
+  "routeSurface": "apps/web/features/exceptions; apps/api exception services",
+  "apiImpact": "Versioned mutation endpoints.",
+  "sqlImpact": "Soft-delete/status/audit/index updates.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}

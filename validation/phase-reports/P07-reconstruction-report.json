@@ -1,0 +1,17 @@
+{
+  "phase": "P07",
+  "name": "Current code artifact reconciliation",
+  "objective": "Compare active frontend bundles, server bundle, source map, build metadata and deployment docs; establish source-of-truth gaps.",
+  "dependencies": "P1",
+  "evidence": "Current dist artifact",
+  "routeSurface": "/docs/analysis/source-reconciliation",
+  "apiImpact": "None",
+  "sqlImpact": "None",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": null,
+  "notes": "Analysis/provenance phase.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": null
+}

@@ -1,0 +1,17 @@
+{
+  "phase": "P20",
+  "name": "Auth, session & recovery",
+  "objective": "Implement secure authentication UX and server flow.",
+  "dependencies": "P11,P19",
+  "evidence": "Current auth implementation + Settings/Staff evidence.",
+  "routeSurface": "apps/web/features/auth; apps/api/modules/identity",
+  "apiImpact": "/api/v1/auth/*",
+  "sqlImpact": "Use existing identity tables after audit.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}

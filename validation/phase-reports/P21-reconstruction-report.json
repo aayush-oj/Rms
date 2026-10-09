@@ -1,0 +1,17 @@
+{
+  "phase": "P21",
+  "name": "Workspace & branch context",
+  "objective": "Implement organization/branch selection and isolation in UI and API.",
+  "dependencies": "P11,P19,P20",
+  "evidence": "PAGE-105 and current organizations/branches APIs.",
+  "routeSurface": "apps/web context; apps/api org scope",
+  "apiImpact": "/organizations /branches /auth/switch-branch",
+  "sqlImpact": "organizations, branches, user_branches constraints/indexes.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}

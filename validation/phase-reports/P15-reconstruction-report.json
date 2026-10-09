@@ -1,0 +1,17 @@
+{
+  "phase": "P15",
+  "name": "Reproducible build & release pipeline",
+  "objective": "Make frontend/backend/package artifacts reproducible with checksums and provenance.",
+  "dependencies": "P14",
+  "evidence": "Current package/readme + build metadata.",
+  "routeSurface": "scripts, .github/workflows, release-packages",
+  "apiImpact": "Build outputs versioned.",
+  "sqlImpact": "None",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}

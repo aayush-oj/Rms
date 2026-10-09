@@ -1,0 +1,17 @@
+{
+  "phase": "P34",
+  "name": "KOT/KDS",
+  "objective": "Implement KOT order view/history and KDS operational display/state transitions.",
+  "dependencies": "P31,P33,P50",
+  "evidence": "PAGE-020,057,051 and KDS docs.",
+  "routeSurface": "apps/web/features/kitchen; apps/api/modules/kitchen",
+  "apiImpact": "/kitchen/*",
+  "sqlImpact": "kitchen_tickets/items, kot counters.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}

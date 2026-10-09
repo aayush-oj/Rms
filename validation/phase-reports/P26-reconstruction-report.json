@@ -1,0 +1,17 @@
+{
+  "phase": "P26",
+  "name": "Analytics routes & data product",
+  "objective": "Implement exact analytics pages, filters, charts, KPI cards, Top Selling Dishes and export.",
+  "dependencies": "P19,P23-P25,P42-P49",
+  "evidence": "PAGE-001-003 and analytics docs/screens.",
+  "routeSurface": "apps/web/features/analytics; reports query layer",
+  "apiImpact": "Analytics/report endpoints",
+  "sqlImpact": "Report indexes/views/materialized summaries only where measured.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}

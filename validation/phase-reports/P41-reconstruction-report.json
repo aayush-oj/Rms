@@ -1,0 +1,17 @@
+{
+  "phase": "P41",
+  "name": "Finance setup & accounting masters",
+  "objective": "Implement journal/account heads/payment/tax/banks/expense setup.",
+  "dependencies": "P27,P40",
+  "evidence": "PAGE-063,066-072.",
+  "routeSurface": "apps/web/features/finance-setup; apps/api finance modules",
+  "apiImpact": "Finance config APIs",
+  "sqlImpact": "expense categories/expenses/payment methods/tax configs etc.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}

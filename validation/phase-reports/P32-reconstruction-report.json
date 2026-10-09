@@ -1,0 +1,17 @@
+{
+  "phase": "P32",
+  "name": "Reservations",
+  "objective": "Implement reservation list, booking, completed and cancelled states.",
+  "dependencies": "P30,P31",
+  "evidence": "PAGE-055,113-115.",
+  "routeSurface": "apps/web/features/reservations; API layer",
+  "apiImpact": "Contract TBD from P8/P9",
+  "sqlImpact": "Schema only if source-of-truth requires new reservation entity; no unproven table.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}

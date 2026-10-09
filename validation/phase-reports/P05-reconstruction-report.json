@@ -1,0 +1,17 @@
+{
+  "phase": "P05",
+  "name": "Screenshot baseline & viewport matrix",
+  "objective": "Build the visual evidence index from all 834 captures and define comparison cohorts.",
+  "dependencies": "P1-P4",
+  "evidence": "All 834 screenshots",
+  "routeSurface": "/validation/reference/screenshots",
+  "apiImpact": "None",
+  "sqlImpact": "None",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": null,
+  "notes": "Analysis/provenance phase.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": null
+}

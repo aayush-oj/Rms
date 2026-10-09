@@ -1,0 +1,30 @@
+import { Router } from 'express';
+import { authenticate, requirePermission } from '../identity/middleware';
+import { validateRequest } from '../../middleware/validate';
+import { recipeController } from './controller';
+import { createRecipeSchema, createVersionSchema, directStockLinkSchema, ingredientImpactSchema, ingredientSchema, listRecipesQuerySchema, updateIngredientSchema, updateRecipeSchema, updateVersionSchema } from './validation';
+import { z } from 'zod';
+
+export const recipeRouter = Router();
+recipeRouter.use(authenticate());
+
+recipeRouter.get('/', requirePermission('recipe:view','recipe:view_cost'), validateRequest({query:listRecipesQuerySchema}), recipeController.list);
+recipeRouter.post('/', requirePermission('recipe:create'), validateRequest({body:createRecipeSchema}), recipeController.create);
+recipeRouter.get('/menu-items/:menuItemId/costing', requirePermission('recipe:view_cost'), recipeController.menuItemCosting);
+recipeRouter.get('/menu-items/:menuItemId/direct-stock', requirePermission('recipe:view'), recipeController.directStock);
+recipeRouter.put('/menu-items/:menuItemId/direct-stock', requirePermission('recipe:update'), validateRequest({body:directStockLinkSchema}), recipeController.setDirectStock);
+recipeRouter.get('/modifier-options/:optionId/ingredient-impacts', requirePermission('recipe:view'), recipeController.modifierImpacts);
+recipeRouter.put('/modifier-options/:optionId/ingredient-impacts', requirePermission('recipe:update'), validateRequest({body:z.object({impacts:z.array(ingredientImpactSchema).max(100)})}), recipeController.setModifierImpacts);
+recipeRouter.get('/variants/:variantId/ingredient-impacts', requirePermission('recipe:view'), recipeController.variantImpacts);
+recipeRouter.put('/variants/:variantId/ingredient-impacts', requirePermission('recipe:update'), validateRequest({body:z.object({impacts:z.array(ingredientImpactSchema).max(100)})}), recipeController.setVariantImpacts);
+recipeRouter.get('/:id', requirePermission('recipe:view','recipe:view_cost'), recipeController.get);
+recipeRouter.patch('/:id', requirePermission('recipe:update'), validateRequest({body:updateRecipeSchema}), recipeController.update);
+recipeRouter.post('/:id/archive', requirePermission('recipe:archive'), recipeController.archive);
+recipeRouter.get('/:id/cost', requirePermission('recipe:view_cost'), recipeController.cost);
+recipeRouter.get('/:id/versions', requirePermission('recipe:view'), recipeController.versions);
+recipeRouter.post('/:id/versions', requirePermission('recipe:update'), validateRequest({body:createVersionSchema}), recipeController.createVersion);
+recipeRouter.patch('/:id/versions/:versionId', requirePermission('recipe:update'), validateRequest({body:updateVersionSchema}), recipeController.updateVersion);
+recipeRouter.post('/:id/versions/:versionId/activate', requirePermission('recipe:activate'), recipeController.activateVersion);
+recipeRouter.post('/:id/versions/:versionId/ingredients', requirePermission('recipe:update'), validateRequest({body:ingredientSchema}), recipeController.addIngredient);
+recipeRouter.patch('/:id/versions/:versionId/ingredients/:ingredientId', requirePermission('recipe:update'), validateRequest({body:updateIngredientSchema}), recipeController.updateIngredient);
+recipeRouter.delete('/:id/versions/:versionId/ingredients/:ingredientId', requirePermission('recipe:update'), recipeController.deleteIngredient);

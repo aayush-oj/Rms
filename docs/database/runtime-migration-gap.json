@@ -1,0 +1,13 @@
+{
+  "sourceMapMigrations": "001-064",
+  "runtimeOnlyMigrations": [
+    "065_printer_domain_model.ts",
+    "066_durable_print_jobs.ts",
+    "067_print_agent_foundation.ts",
+    "068_printing_manual_permissions.ts",
+    "069_print_agent_pairing_tokens.ts",
+    "070_print_job_retry_failover.ts"
+  ],
+  "status": "RECOVERED_RUNTIME_PROVENANCE_ONLY",
+  "reason": "Active runtime is newer than server.cjs.map; compiled migration names are preserved without fabricated SQL source."
+}

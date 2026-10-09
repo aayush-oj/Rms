@@ -1,0 +1,17 @@
+{
+  "phase": "P33",
+  "name": "POS modes & cart",
+  "objective": "Implement POS mode, active orders, table selector, catalog, cart, customer/membership, order confirmation.",
+  "dependencies": "P29-P31",
+  "evidence": "PAGE-056,139-140 and POS continuation workflows.",
+  "routeSurface": "apps/web/features/pos; apps/api POS/order/billing clients",
+  "apiImpact": "/orders + /billing contracts",
+  "sqlImpact": "Orders, bill drafts, customer/membership links.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}

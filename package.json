@@ -1,0 +1,14 @@
+{
+  "name": "restrox-rebuild-01-42",
+  "private": true,
+  "version": "1.0.0-reconstruction",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "validate": "node scripts/validate-rebuild.cjs",
+    "pack": "node scripts/package-release.cjs",
+    "check:ts-syntax": "node scripts/check-ts-syntax.cjs"
+  }
+}

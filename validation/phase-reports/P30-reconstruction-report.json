@@ -1,0 +1,17 @@
+{
+  "phase": "P30",
+  "name": "Table, space & QR",
+  "objective": "Implement tables, spaces, QR and allocation/operations.",
+  "dependencies": "P21,P29",
+  "evidence": "PAGE-040-042, table/space workflows.",
+  "routeSurface": "apps/web/features/tables; apps/api table modules",
+  "apiImpact": "tables/table-allocations/table-operations",
+  "sqlImpact": "floors, sections, dining_tables, allocations.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}

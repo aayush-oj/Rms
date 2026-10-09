@@ -1,0 +1,17 @@
+{
+  "name": "MIH DineOS — Restaurant Management System",
+  "short_name": "DineOS",
+  "description": "MIH DineOS restaurant operations, management and reporting.",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#FAFCF8",
+  "theme_color": "#0B5D3B",
+  "icons": [
+    {
+      "src": "/brand/mih-dineos-mark.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

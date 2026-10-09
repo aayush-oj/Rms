@@ -1,0 +1,17 @@
+{
+  "phase": "P36",
+  "name": "Billing preview & bill lifecycle",
+  "objective": "Implement bill creation/preview, discounts, split and bill list/detail.",
+  "dependencies": "P9,P12,P33",
+  "evidence": "Current billing routes + reference POS/Finance evidence.",
+  "routeSurface": "apps/web/features/billing; apps/api/modules/billing",
+  "apiImpact": "/billing/orders/*, /billing/bills/*",
+  "sqlImpact": "bills, bill_lines, split tables.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}

@@ -1,0 +1,17 @@
+{
+  "phase": "P29",
+  "name": "Menu catalog & customization",
+  "objective": "Implement dishes/categories/add-ons/menu sets/sub-menu/combo and customization.",
+  "dependencies": "P17,P23-P25,P28",
+  "evidence": "PAGE-028-033, PAGE-060 and menu workflows.",
+  "routeSurface": "apps/web/features/menu; apps/api/modules/menu*",
+  "apiImpact": "/menu/*",
+  "sqlImpact": "menu_* tables, recipe links.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}

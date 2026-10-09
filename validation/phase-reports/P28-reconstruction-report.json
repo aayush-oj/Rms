@@ -1,0 +1,17 @@
+{
+  "phase": "P28",
+  "name": "People, staff & customer surfaces",
+  "objective": "Implement staff lifecycle, pending/removed, customers and groups.",
+  "dependencies": "P21-P27",
+  "evidence": "PAGE-026-027, 105-107, 134 + current code.",
+  "routeSurface": "staff/customer feature modules",
+  "apiImpact": "users/management routes",
+  "sqlImpact": "users, memberships, customers, departments.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}

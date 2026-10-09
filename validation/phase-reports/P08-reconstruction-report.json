@@ -1,0 +1,17 @@
+{
+  "phase": "P08",
+  "name": "API contract reconciliation",
+  "objective": "Convert observed and implemented API surfaces into canonical OpenAPI-like contracts, including errors/auth/idempotency.",
+  "dependencies": "P1-P7",
+  "evidence": "API observations + current source map",
+  "routeSurface": "apps/api/contracts /docs/api",
+  "apiImpact": "Versioned API contracts.",
+  "sqlImpact": "No immediate schema change.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": null,
+  "notes": "Analysis/provenance phase.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": null
+}

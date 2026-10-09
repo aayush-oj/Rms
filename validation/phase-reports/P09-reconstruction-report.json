@@ -1,0 +1,17 @@
+{
+  "phase": "P09",
+  "name": "Domain state-machine closure",
+  "objective": "Resolve authoritative states and transitions for orders, KOT/KDS, bills, payments, voids, inventory and reservations.",
+  "dependencies": "P2-P8",
+  "evidence": "Conflicting workflows and source implementation.",
+  "routeSurface": "/docs/workflows/state-machines",
+  "apiImpact": "Transition endpoints.",
+  "sqlImpact": "Potential status constraints/checks.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": null,
+  "notes": "Analysis/provenance phase.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": null
+}

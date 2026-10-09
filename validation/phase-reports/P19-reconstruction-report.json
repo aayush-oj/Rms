@@ -1,0 +1,17 @@
+{
+  "phase": "P19",
+  "name": "Route gateway & locale aliases",
+  "objective": "Replace manual pathname switching with deterministic route matching; expose canonical /en routes.",
+  "dependencies": "P3,P18",
+  "evidence": "142 route inventory; current 40 candidate path strings.",
+  "routeSurface": "apps/web/src/app/routes",
+  "apiImpact": "None",
+  "sqlImpact": "Optional route registry table if persisted.",
+  "recoveryStatus": "RECOVERED_FROM_SUPPLIED_ARTIFACTS",
+  "validationMode": "EVIDENCE_AND_ARTIFACT_GATE",
+  "frontendSourceAvailable": false,
+  "notes": "Frontend original TypeScript source was not supplied; compiled runtime asset is retained as artifact-backed runtime. Backend TypeScript is recovered from server.cjs.map where available.",
+  "acceptanceEvaluated": true,
+  "blockers": [],
+  "manualEvidenceGap": "Exact frontend source and persisted Playwright traces were not supplied."
+}
