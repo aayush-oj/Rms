@@ -24,7 +24,7 @@ Implement the evidence-backed global reporting hub for `/en/reports`, providing 
 
 ## Verification status
 - GitHub writes: commits returned for all implementation and documentation changes. Remote files were re-fetched and the `main` branch head was verified at `7bbab9689c2a99df08f7bf03789119b7a53ce556` before this documentation correction.
-- GitHub Actions run [#6](https://github.com/aayush-oj/Rms/actions/runs/37935486307): **success** for static route/catalog consistency, TypeScript syntax, and two production-mode starts against a clean MySQL 8 test database. Both runtime passes applied/checked migrations and verified HTTP 200 for `/en/reports`, `/en/reports/`, and the four-item catalog.
+- GitHub Actions run [#12](https://github.com/aayush-oj/Rms/actions/runs/37935693711): **success** for the P42 Finance Reports dependency contract, static route/catalog consistency, TypeScript syntax, and two production-mode starts against a clean MySQL 8 test database. Both runtime passes applied/checked migrations and verified HTTP 200 for `/en/reports`, `/en/reports/`, and the four-item catalog.
 - The CI runtime passes provide live HTTP evidence for the preserved compiled production runtime; they do not replace the full P01–P43 regression suite or browser-based visual/accessibility checks.
 - Browser/accessibility test: not run.
 - Full P01–P43 regression verification twice: not run; the historical full validator requires external evidence archives not present in the current execution workspace.
