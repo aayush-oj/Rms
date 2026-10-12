@@ -32,6 +32,7 @@ Implement the evidence-backed global reporting hub for `/en/reports`, providing 
 - The CI runtime passes provide live HTTP evidence for the preserved compiled production runtime; they do not replace the full P01–P43 regression suite or screenshot-level visual parity checks.
 - Follow-up GitHub Actions run [#16](https://github.com/aayush-oj/Rms/actions/runs/37960236434): **success**; the phase-chain structural audit passed, and P43 runtime/browser checks passed again.
 - Latest GitHub Actions run [#20](https://github.com/aayush-oj/Rms/actions/runs/38203419300): **success** on commit `c7845bb7677d1a7bfcc5223ded023302b64a5566`; the phase-chain audit, P42 dependency contract, global reports route/assets, TypeScript syntax, two runtime starts, and browser/accessibility checks all passed. This is repeated targeted P43 CI evidence, not the missing full P01–P43 regression or screenshot parity sign-off.
+- Latest GitHub Actions run [#22](https://github.com/aayush-oj/Rms/actions/runs/38204107800): **success** on commit `2b985944449cc231b7f304945dc55b45721a7772`; all prior targeted checks passed, and the browser test now asserts the four visible report links match their exact canonical destination paths. This still does not certify the full P01–P43 regression or visual parity.
 - Browser/accessibility test: passed in CI runs #15 and #16.
 - Full P01–P43 regression verification twice: not run; the historical full validator requires external evidence archives not present in the current execution workspace.
 - Production readiness: not established.
