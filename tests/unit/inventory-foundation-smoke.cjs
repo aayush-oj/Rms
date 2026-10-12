@@ -66,6 +66,7 @@ assert.ok(repository.includes("const locationIds=[Number(data.fromLocationId),Nu
 assert.ok(repository.includes("'TRANSFER_OUT'") && repository.includes("'TRANSFER_IN'"), 'transfer must record both sides of the stock movement');
 assert.ok(repository.includes("Stock changed since this count was started; refresh and recount"), 'count confirmation must detect stale stock');
 assert.ok(repository.includes("INCOMPLETE_STOCK_COUNT"), 'count confirmation must reject incomplete item submissions');
+assert.ok(repository.includes('const byCount=new Map<number,any[]>()') && repository.includes('items:byCount.get(Number(r.id))||[]'), 'stock count list must return tenant-scoped item details rather than empty item arrays');
 assert.ok(repository.includes("DUPLICATE_COUNT_ITEM"), 'count confirmation must reject duplicate item submissions');
 assert.ok(repository.includes('WHERE id=? AND count_id=? AND organization_id=? AND branch_id=?'), 'count item writes must remain scoped to the owning count and tenant');
 assert.ok(repository.includes("WHERE id=? AND organization_id=? AND branch_id=? AND status=?"), 'count confirmation status update must enforce tenant scope and draft state');
