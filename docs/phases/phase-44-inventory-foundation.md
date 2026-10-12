@@ -14,6 +14,8 @@ Establish and verify the inventory foundation: stock items, groups/categories, u
 
 ## Added in this checkpoint
 - `tests/unit/inventory-foundation-smoke.cjs`: checks authentication and permission gates, tenant/branch context, core inventory schema presence, scoped repository lookups, transactional write patterns, and positive/non-zero quantity validation.
+- `apps/web/public/inventory.html`: added an accessible inventory workspace for items, stock balances, opening stock, adjustments, transfers, movement history, categories, measuring units, locations, and stock counts; it calls the authenticated `/api/v1/inventory` contract and does not persist tenant data in browser storage.
+- `tests/unit/inventory-ui-smoke.cjs`: checks the workspace sections and API operations and parses its inline JavaScript; the P44 workflow runs it in both repeated static regression passes.
 - `.github/workflows/p44-inventory-foundation-smoke.yml`: runs the phase-chain audit, inventory contract, and TypeScript syntax check on relevant changes.
 - `npm run test:inventory-foundation`: stable local entry point for the inventory contract.
 - Repository-level stock-count guards now reject empty/oversized item sets, unsafe IDs, and non-finite/negative counted quantities before opening a transaction; the contract test checks these guards.
@@ -28,6 +30,7 @@ Establish and verify the inventory foundation: stock items, groups/categories, u
 - [x] Verify cross-tenant and cross-branch item/stock lookups are isolated in live MySQL.
 - [ ] Reconcile the inventory foundation with P48 purchasing and P49 reconciliation without duplicate stock ledgers.
 - [ ] Full P01–P44 regression and full-start checks pass twice; available static suite and clean/migrated MySQL runtime starts now pass twice, but this is not the full product end-to-end matrix.
+- [ ] Inventory workspace is integrated into the active production runtime and verified against the deployed API; the active cPanel runtime still loads `runtime/dist/server.cjs`, which is a separate compiled bundle and is not rebuilt by these source changes.
 - [ ] Visual parity against the supplied inventory reference captures is verified before marking P44 complete.
 
 ## Latest verification evidence
@@ -51,4 +54,4 @@ Establish and verify the inventory foundation: stock items, groups/categories, u
 - [Repeated regression CI run](https://github.com/aayush-oj/Rms/actions/runs/38206957368): success on `dfb7421c742447f23fea4748bb963f0f84699ec4`; phase-chain, inventory, global/finance reports and TypeScript syntax checks all passed twice in one CI job.
 
 ## Current status
-**IN PROGRESS.** Live MySQL repository tests and strict repository typechecking now pass for item/category/location CRUD, custom-unit creation, stock ledger reconciliation, forced transaction rollback, insufficient-stock rejection, and cross-tenant/cross-branch isolation. Production completion remains open because the active compiled runtime bundle is not rebuilt from these source changes, the editable web checkout contains no inventory feature/routes, the reference screenshot archive is not available in the current project files for parity comparison, and the full P01–P44 end-to-end matrix has not been run twice.
+**IN PROGRESS.** Live MySQL repository tests and strict repository typechecking now pass for item/category/location CRUD, custom-unit creation, stock ledger reconciliation, forced transaction rollback, insufficient-stock rejection, and cross-tenant/cross-branch isolation. Production completion remains open because the active compiled runtime bundle is not rebuilt from these source changes, the inventory workspace now exists as editable static web source but is not yet integrated into the active compiled production runtime, and the reference screenshot archive is not available in the current project files for parity comparison, and the full P01–P44 end-to-end matrix has not been run twice.
