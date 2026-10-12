@@ -58,7 +58,26 @@ export class InventoryRepository {
 
   async listLocations(orgId: number, branchId: number) { await this.assertBranch(orgId, branchId); const [rows]=await this.pool().execute<RowDataPacket[]>('SELECT * FROM inventory_locations WHERE organization_id=? AND branch_id=? ORDER BY is_active DESC, name',[orgId,branchId]); return rows.map(mapLocation); }
   async createLocation(orgId: number, branchId: number, data: any) { await this.assertBranch(orgId, branchId); try { const [r]=await this.pool().execute<ResultSetHeader>('INSERT INTO inventory_locations (organization_id, branch_id, name, code, is_active, notes) VALUES (?, ?, ?, ?, ?, ?)',[orgId,branchId,data.name,data.code.toUpperCase(),data.isActive===false?0:1,data.notes??null]); const [rows]=await this.pool().execute<RowDataPacket[]>('SELECT * FROM inventory_locations WHERE id=? AND organization_id=? AND branch_id=?',[r.insertId,orgId,branchId]); return mapLocation(rows[0]); } catch(e:any){ if(e?.errno===1062) throw new ConflictError('Inventory location name or code already exists','INVENTORY_LOCATION_DUPLICATE'); throw e; } }
-  async updateLocation(orgId:number,branchId:number,id:number,data:any){ const [rows]=await this.pool().execute<RowDataPacket[]>('SELECT * FROM inventory_locations WHERE id=? AND organization_id=? AND branch_id=? FOR UPDATE',[id,orgId,branchId]); if(!rows.length) throw new NotFoundError('Inventory location not found','INVENTORY_LOCATION_NOT_FOUND'); const r=rows[0]; const [active] = await this.pool().execute<RowDataPacket[]>('SELECT COUNT(*) c FROM inventory_balances WHERE organization_id=? AND branch_id=? AND location_id=?',[orgId,branchId,id]); if(data.isActive===false && Number(active[0].c)>0){ /* historical balances remain readable */ } try { await this.pool().execute('UPDATE inventory_locations SET name=?, code=?, is_active=?, notes=?, updated_at=NOW() WHERE id=? AND organization_id=? AND branch_id=?',[data.name??r.name,(data.code??r.code).toUpperCase(),data.isActive===undefined?r.is_active:data.isActive?1:0,data.notes!==undefined?data.notes:r.notes,id,orgId,branchId]); const [u]=await this.pool().execute<RowDataPacket[]>('SELECT * FROM inventory_locations WHERE id=?',[id]); return mapLocation(u[0]); } catch(e:any){ if(e?.errno===1062) throw new ConflictError('Inventory location name or code already exists','INVENTORY_LOCATION_DUPLICATE'); throw e; } }
+  async updateLocation(orgId:number,branchId:number,id:number,data:any){
+    const conn=await this.pool().getConnection();
+    try {
+      await conn.beginTransaction();
+      await this.assertBranch(orgId,branchId,conn);
+      const [rows]=await conn.execute<RowDataPacket[]>('SELECT * FROM inventory_locations WHERE id=? AND organization_id=? AND branch_id=? FOR UPDATE',[id,orgId,branchId]);
+      if(!rows.length) throw new NotFoundError('Inventory location not found','INVENTORY_LOCATION_NOT_FOUND');
+      const r=rows[0];
+      await conn.execute('UPDATE inventory_locations SET name=?, code=?, is_active=?, notes=?, updated_at=NOW() WHERE id=? AND organization_id=? AND branch_id=?',[data.name??r.name,(data.code??r.code).toUpperCase(),data.isActive===undefined?r.is_active:data.isActive?1:0,data.notes!==undefined?data.notes:r.notes,id,orgId,branchId]);
+      const [updated]=await conn.execute<RowDataPacket[]>('SELECT * FROM inventory_locations WHERE id=? AND organization_id=? AND branch_id=?',[id,orgId,branchId]);
+      await conn.commit();
+      return mapLocation(updated[0]);
+    } catch(e:any) {
+      await conn.rollback();
+      if(e?.errno===1062) throw new ConflictError('Inventory location name or code already exists','INVENTORY_LOCATION_DUPLICATE');
+      throw e;
+    } finally {
+      conn.release();
+    }
+  }
 
   async validateItem(conn: PoolConnection, orgId: number, branchId: number, itemId: number, forUpdate=false) {
     const [rows]=await conn.execute<RowDataPacket[]>(`SELECT ii.*, u.symbol AS unit_symbol FROM inventory_items ii JOIN units_of_measure u ON u.id=ii.unit_id WHERE ii.id=? AND ii.organization_id=? AND ii.branch_id=? ${forUpdate?'FOR UPDATE':''}`,[itemId,orgId,branchId]);
