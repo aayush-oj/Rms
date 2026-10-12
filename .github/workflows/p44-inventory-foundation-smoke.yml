@@ -86,12 +86,10 @@ jobs:
           P43_DB_NAME: restrox_test
           P43_DB_USER: rms
           P43_DB_PASSWORD: p43-ci-db-password
-      - name: Install browser smoke dependencies
-        run: npm install --no-save --package-lock=false playwright
+      - name: Install isolated MySQL and browser test dependencies
+        run: npm install --no-save --package-lock=false tsx mysql2 typescript @types/node playwright
       - name: Install Chromium for inventory UI verification
         run: npx playwright install --with-deps chromium
-      - name: Install isolated MySQL repository test dependencies
-        run: npm install --no-save --package-lock=false tsx mysql2 typescript @types/node
       # Executes the repository itself against the migrated MySQL service, including forced mid-transfer rollback.
       # Keep the fixture test coupled to the same full migration path used by production startup.
       # The fixture also verifies branch-level isolation within a tenant.
