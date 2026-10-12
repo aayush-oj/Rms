@@ -87,8 +87,8 @@ assert.ok(repository.includes('WHERE id=? AND count_id=? AND organization_id=? A
 assert.ok(repository.includes("WHERE id=? AND organization_id=? AND branch_id=? AND status=?"), 'count confirmation status update must enforce tenant scope and draft state');
 assert.ok(repository.includes("COUNT_CORRECTION"), 'count variance must be written to the movement ledger');
 assert.ok(repository.includes("inventory_balances SET current_quantity=?") && repository.includes("INSERT INTO inventory_movements"), 'balance mutation and movement ledger write must be paired in the same transaction');
-assert.ok(repository.includes("if(incomingUnitCost<0 || !Number.isFinite(incomingUnitCost))"), 'incoming acquisition cost must be finite and non-negative');
-assert.ok(repository.includes("if(!Number.isFinite(incomingQuantity) || incomingQuantity<0)"), 'weighted-average cost must reject invalid incoming quantities');
+assert.ok(repository.includes('assertUnitCost(incomingUnitCost)'), 'incoming acquisition cost must match inventory unit-cost storage precision');
+assert.ok(repository.includes("if(!Number.isFinite(incomingQuantity) || incomingQuantity<0 || incomingQuantity>999999999999)"), 'weighted-average cost must reject invalid or out-of-range incoming quantities');
 assert.ok(repository.includes("async updateWeightedAverageCost("), 'purchase receipt cost updates must use the shared weighted-average implementation');
 assert.ok(validation.includes("'COUNT_CORRECTION', 'PURCHASE_RECEIPT'"), 'inventory movement filters must expose purchase receipts in the ledger history');
 
