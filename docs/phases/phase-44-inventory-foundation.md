@@ -18,7 +18,7 @@ Establish and verify the inventory foundation: stock items, groups/categories, u
 - `npm run test:inventory-foundation`: stable local entry point for the inventory contract.
 
 ## Verification / acceptance
-- [ ] P44 contract CI run passes on the final checkpoint commit.
+- [x] P44 contract CI passes on the latest checkpoint commit `2d3909034c5af3909ed55e9b45e653c7ef80d195` in [run #5](https://github.com/aayush-oj/Rms/actions/runs/38204634768); phase-chain audit, inventory contract, and TypeScript syntax all passed.
 - [ ] Review and exercise create/update/list/get for stock items, categories/groups, units and locations against isolated MySQL fixtures.
 - [ ] Verify opening stock, adjustment, transfer and stock count writes atomically update balances and append correct movements.
 - [ ] Verify cross-tenant and cross-branch IDs cannot be read or mutated.
@@ -26,5 +26,10 @@ Establish and verify the inventory foundation: stock items, groups/categories, u
 - [ ] Full P01–P44 regression and full-start checks pass twice; fix any regressions and record evidence.
 - [ ] Visual parity against the supplied inventory reference captures is verified before marking P44 complete.
 
+## Latest verification evidence
+- [P44 CI run #3](https://github.com/aayush-oj/Rms/actions/runs/38204565581): success.
+- [P44 CI run #4](https://github.com/aayush-oj/Rms/actions/runs/38204628427): success after explicitly tenant/branch-scoping inventory balance mutations.
+- [P44 CI run #5](https://github.com/aayush-oj/Rms/actions/runs/38204634768): success; phase-chain audit, inventory contract assertions, and TypeScript syntax check all passed.
+
 ## Current status
-**IN PROGRESS.** The new static contract and CI wiring are committed; passing CI is necessary but does not alone establish P44 completion. Full database behavior, tenant-isolation integration tests, screenshot parity and P01–P44 regression remain acceptance gates.
+**IN PROGRESS.** The contract and CI wiring pass, but static assertions are not live database workflow tests; passing CI does not alone establish P44 completion. Full database behavior, tenant-isolation integration tests, screenshot parity and P01–P44 regression remain acceptance gates.
