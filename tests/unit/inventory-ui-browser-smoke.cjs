@@ -98,6 +98,28 @@ async function main() {
     await page.getByText('Saved successfully.').waitFor();
     assert.ok(requests.some(r => r.method === 'POST' && r.path === '/opening-stock'), 'opening stock must post to the inventory API');
 
+    await page.locator('#adjust-item').selectOption('4');
+    await page.locator('#adjust-location').selectOption('3');
+    await page.locator('#adjust-delta').fill('-1');
+    await page.locator('#adjust-reason').fill('Spoilage');
+    await page.getByRole('button', { name: 'Record adjustment' }).click();
+    await page.getByText('Saved successfully.').waitFor();
+    const adjustment = requests.find(r => r.method === 'POST' && r.path === '/adjustments');
+    assert.equal(adjustment.body.deltaQuantity, -1, 'adjustment must submit signed quantity changes');
+    assert.equal(adjustment.body.reason, 'Spoilage');
+
+    await page.locator('#transfer-item').selectOption('4');
+    await page.locator('#transfer-from').selectOption('3');
+    await page.locator('#transfer-to').selectOption('3');
+    await page.locator('#transfer-qty').fill('2');
+    await page.locator('#transfer-reason').fill('Reorganization');
+    await page.getByRole('button', { name: 'Transfer stock' }).click();
+    await page.getByText('Saved successfully.').waitFor();
+    const transfer = requests.find(r => r.method === 'POST' && r.path === '/transfers');
+    assert.equal(transfer.body.quantity, 2, 'transfer must submit a positive quantity');
+    assert.equal(transfer.body.fromLocationId, 3);
+    assert.equal(transfer.body.toLocationId, 3);
+
     await page.getByRole('tab', { name: 'Stock counts' }).click();
     await page.locator('#count-location').selectOption('3');
     await page.locator('#count-items').selectOption(['4']);
@@ -105,11 +127,17 @@ async function main() {
     await page.getByText('Saved successfully.').waitFor();
     const countCreate = requests.find(r => r.method === 'POST' && r.path === '/counts');
     assert.deepEqual(countCreate.body.itemIds, [4], 'stock count must submit all selected item IDs');
+    page.on('dialog', dialog => dialog.accept('11'));
+    await page.getByRole('button', { name: 'Open draft' }).click();
+    await page.getByText('Stock count confirmed; balances reconciled.').waitFor();
+    const confirmation = requests.find(r => r.method === 'POST' && r.path === '/counts/8/confirm');
+    assert.deepEqual(confirmation.body.items, [{ inventoryItemId: 4, countedQuantity: 11 }], 'count confirmation must submit counted quantities for reconciliation');
+    assert.ok(requests.some(r => r.method === 'GET' && r.path === '/movements'), 'movement ledger should refresh after stock mutations');
 
     await page.setViewportSize({ width: 390, height: 844 });
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), 'mobile layout must not overflow horizontally');
     assert.deepEqual(pageErrors, [], 'browser JavaScript errors: ' + pageErrors.join('; '));
-    console.log('Inventory UI browser smoke PASS (rendering, search, item creation, opening stock, stock counts, mobile layout).');
+    console.log('Inventory UI browser smoke PASS (rendering, search, item creation, opening stock, adjustment, transfer, count reconciliation, movement refresh, mobile layout).');
   } finally {
     if (browser) await browser.close();
     await new Promise(resolve => server.close(resolve));
