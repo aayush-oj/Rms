@@ -5,6 +5,7 @@ on:
     paths:
       - 'apps/api/src/server/modules/inventory/**'
       - 'apps/api/src/server/modules/stock/**'
+      - 'apps/api/src/server/routes/index.ts'
       - 'apps/api/src/server/db/migrations/017_inventory_foundation.ts'
       - 'tests/unit/inventory-foundation-smoke.cjs'
       - 'tests/unit/global-reports-runtime-smoke.cjs'
