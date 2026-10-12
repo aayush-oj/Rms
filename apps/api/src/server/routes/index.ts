@@ -10,6 +10,7 @@ import { platformOrganizationsRouter } from '../modules/platformAdmin/organizati
 import { platformActivationRequestsRouter } from '../modules/platformAdmin/activationRequestReadRouter';
 import { platformAuditRouter } from '../modules/platformAdmin/platformAuditRouter';
 import { staffPermissionsRouter } from '../modules/staffPermissions/router';
+import { inventoryRouter } from '../modules/inventory';
 import { complimentaryOrderRouter } from '../modules/complimentary/router';
 import { multiTableDiningRouter } from '../modules/multiTableDining/router';
 import {
@@ -58,10 +59,15 @@ apiV1Router.use('/kitchen', kitchenRouter);
 apiV1Router.use('/billing', billingRouter);
 apiV1Router.use('/management', managementRouter);
 apiV1Router.use('/shift-ops', shiftRouter);
+// The inventory foundation is the canonical /inventory API. Mount the
+// legacy stock router after it so non-overlapping menu-link/dependency endpoints
+// continue to work while core item, balance, movement and count routes converge.
+apiV1Router.use('/inventory', inventoryRouter);
 apiV1Router.use('/inventory', stockRouter);
-// Purchasing, recipes, and the legacy unit/location inventory API remain
-// dormant. Historical tables/code are preserved without exposing those heavy
-// workflows in the active restaurant product.
+// Keep the legacy stock surface available under an explicit alias for clients
+// migrating from the former /inventory stock-item contract.
+apiV1Router.use('/stock', stockRouter);
+// Purchasing and recipe workflows remain separate phase-owned capabilities.
 apiV1Router.use('/expenses', expenseRouter);
 apiV1Router.use('/reports', reportsRouter);
 apiV1Router.use('/alerts', alertsRouter);
