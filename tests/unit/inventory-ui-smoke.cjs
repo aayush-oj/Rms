@@ -7,7 +7,7 @@ const html = fs.readFileSync(path.join(__dirname, '../../apps/web/public/invento
 const required = [
   'role="tablist"', 'id="view-items"', 'id="view-stock"', 'id="view-movements"',
   'id="view-categories"', 'id="view-units"', 'id="view-locations"', 'id="view-counts"',
-  "const api='/api/v1/inventory'", "credentials:'same-origin'",
+  "const api='/api/v1/inventory'", "credentials:'same-origin'", "fetch(api+path,{...options,credentials:'same-origin',headers:{Accept:'application/json','Content-Type':'application/json',...(options.headers||{})}})",
   "request('/items')", "request('/units')", "request('/categories')",
   "request('/locations')", "request('/stock')", "request('/movements')", "request('/counts')",
   "'/opening-stock'", "'/adjustments'", "'/transfers'", "'/units'",
