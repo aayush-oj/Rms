@@ -8,6 +8,8 @@ on:
       - 'apps/api/src/server/routes/index.ts'
       - 'apps/api/src/server/db/migrations/017_inventory_foundation.ts'
       - 'tests/unit/inventory-foundation-smoke.cjs'
+      - 'tests/unit/inventory-ui-smoke.cjs'
+      - 'apps/web/public/inventory.html'
       - 'tests/unit/global-reports-runtime-smoke.cjs'
       - 'scripts/check-ts-syntax.cjs'
       - 'scripts/audit-phase-chain.cjs'
@@ -65,6 +67,7 @@ jobs:
             echo "::group::Full available regression pass $pass"
             node scripts/audit-phase-chain.cjs
             node tests/unit/inventory-foundation-smoke.cjs
+            node tests/unit/inventory-ui-smoke.cjs
             npm run test:global-reports
             npm run test:finance-reports
             npm run check:ts-syntax
