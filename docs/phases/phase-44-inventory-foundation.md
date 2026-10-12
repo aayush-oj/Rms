@@ -40,6 +40,7 @@ Establish and verify the inventory foundation: stock items, groups/categories, u
 - [P44 CI run](https://github.com/aayush-oj/Rms/actions/runs/38206168205): success; stock count lists now return scoped item details instead of empty arrays, and weighted-average costing rejects non-finite or negative incoming quantities.
 - [P44 CI run](https://github.com/aayush-oj/Rms/actions/runs/38206741591): success on `fafb1071e2bfa4b00da686b8233afb3873bb99b7`; repository-level stock-count input validation passes the phase contract, reports regression contracts, phase-chain audit, and TypeScript syntax check.
 - [P44 CI run](https://github.com/aayush-oj/Rms/actions/runs/38206748444): success on `65337d5701aeaab4241f23023426b1f0be633ed0`; added regression assertions for stock-count input guards.
+- [Repeated regression CI run](https://github.com/aayush-oj/Rms/actions/runs/38206957368): success on `dfb7421c742447f23fea4748bb963f0f84699ec4`; phase-chain, inventory, global/finance reports and TypeScript syntax checks all passed twice in one CI job.
 
 ## Current status
 **IN PROGRESS.** The contract and CI wiring pass, but static assertions are not live database workflow tests; passing CI does not alone establish P44 completion. Full database behavior, tenant-isolation integration tests, screenshot parity and P01–P44 regression remain acceptance gates.
