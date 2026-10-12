@@ -17,7 +17,7 @@ const required = [
 ];
 for (const fragment of required) assert.ok(html.includes(fragment), `inventory UI missing contract: ${fragment}`);
 assert.ok(!html.includes('localStorage'), 'inventory UI must not persist tenant data in local storage');
-const scripts = [...html.matchAll(/<script>([\\s\\S]*?)<\\/script>/gi)];
+const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/gi)];
 assert.ok(scripts.length > 0, 'inventory UI must have its client controller');
 for (const [index, match] of scripts.entries()) new vm.Script(match[1], { filename: `inventory-inline-${index + 1}.js` });
 console.log('Inventory UI smoke: navigation, API contracts, ledger actions, validation and safe rendering passed.');
