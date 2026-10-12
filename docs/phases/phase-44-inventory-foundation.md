@@ -32,6 +32,9 @@ Establish and verify the inventory foundation: stock items, groups/categories, u
 - [P44 CI run #5](https://github.com/aayush-oj/Rms/actions/runs/38204634768): success; phase-chain audit, inventory contract assertions, and TypeScript syntax check all passed.
 - [P44 CI run #8](https://github.com/aayush-oj/Rms/actions/runs/38204817754): success on `951b5f470872fe73f0551148bc8e6bcb250812ec`; confirms transactional category/location updates and TypeScript syntax.
 - [P44 CI run #12](https://github.com/aayush-oj/Rms/actions/runs/38205319791): success on `d752329e2da421d1ab32d4cc8526a763d249154d`; confirms item creation rereads are tenant/branch-scoped and opening stock, adjustment, transfer, count creation, and count confirmation validate the active branch inside their transaction.
+- [P44 CI run](https://github.com/aayush-oj/Rms/actions/runs/38205869297): success; adds explicit not-found behavior for missing or cross-tenant item stock lookups and verifies it in the inventory contract.
+- [P44 CI run](https://github.com/aayush-oj/Rms/actions/runs/38205872240): success; exposes `PURCHASE_RECEIPT` in the movement-history filter and covers the filter contract.
+- [P44 CI run](https://github.com/aayush-oj/Rms/actions/runs/38205901569): success on commit `7f071981ea08f2ab0a587ac727af2543970b411f`; the P44 workflow now also runs global reports and finance reports regression contracts alongside phase-chain, inventory contract, and TypeScript syntax checks.
 
 ## Current status
 **IN PROGRESS.** The contract and CI wiring pass, but static assertions are not live database workflow tests; passing CI does not alone establish P44 completion. Full database behavior, tenant-isolation integration tests, screenshot parity and P01–P44 regression remain acceptance gates.
