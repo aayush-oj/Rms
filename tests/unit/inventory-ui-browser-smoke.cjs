@@ -69,7 +69,7 @@ async function main() {
 
     await page.goto(base + '/inventory.html', { waitUntil: 'networkidle' });
     await page.getByRole('heading', { name: 'Inventory', level: 1 }).waitFor();
-    await page.getByRole('cell', { name: 'Rice' }).waitFor();
+    await page.getByRole('cell', { name: 'Rice', exact: true }).waitFor();
     assert.equal(await page.locator('#items-body tr').count(), 1, 'initial stock item should render');
     assert.equal(await page.locator('#stock-body tr').count(), 1, 'stock balance should render');
     assert.equal(await page.locator('#units-body tr').count(), 1, 'measuring unit should render');
