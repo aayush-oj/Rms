@@ -105,8 +105,9 @@ export class InventoryRepository {
   async ensureBalance(conn:PoolConnection,orgId:number,branchId:number,itemId:number,locationId:number){ await conn.execute('INSERT IGNORE INTO inventory_balances (organization_id,branch_id,inventory_item_id,location_id,current_quantity) VALUES (?,?,?,?,0)',[orgId,branchId,itemId,locationId]); return this.balance(orgId,branchId,itemId,locationId,conn); }
 
   async updateWeightedAverageCost(orgId:number,branchId:number,itemId:number,incomingQuantity:number,incomingUnitCost:number,conn:PoolConnection){
-    if(incomingQuantity<=0) return;
-    if(incomingUnitCost<0 || !Number.isFinite(incomingUnitCost)) throw new BadRequestError('Incoming acquisition cost must be non-negative','INVALID_ACQUISITION_COST');
+    if(!Number.isFinite(incomingQuantity) || incomingQuantity<0) throw new BadRequestError('Incoming acquisition quantity must be finite and non-negative','INVALID_ACQUISITION_QUANTITY');
+    if(incomingQuantity===0) return;
+    if(incomingUnitCost<0 || !Number.isFinite(incomingUnitCost)) throw new BadRequestError('Incoming acquisition cost must be finite and non-negative','INVALID_ACQUISITION_COST');
     const item=await this.validateItem(conn,orgId,branchId,itemId,true);
     const [stockRows]=await conn.execute<RowDataPacket[]>('SELECT COALESCE(SUM(current_quantity),0) total_quantity FROM inventory_balances WHERE organization_id=? AND branch_id=? AND inventory_item_id=?',[orgId,branchId,itemId]);
     const currentQuantity=q(Number(stockRows[0]?.total_quantity||0));
