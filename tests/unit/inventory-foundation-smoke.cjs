@@ -71,6 +71,7 @@ assert.ok(repository.includes("COUNT_CORRECTION"), 'count variance must be writt
 assert.ok(repository.includes("inventory_balances SET current_quantity=?") && repository.includes("INSERT INTO inventory_movements"), 'balance mutation and movement ledger write must be paired in the same transaction');
 assert.ok(repository.includes("if(incomingUnitCost<0 || !Number.isFinite(incomingUnitCost))"), 'incoming acquisition cost must be finite and non-negative');
 assert.ok(repository.includes("async updateWeightedAverageCost("), 'purchase receipt cost updates must use the shared weighted-average implementation');
+assert.ok(validation.includes("'COUNT_CORRECTION', 'PURCHASE_RECEIPT'"), 'inventory movement filters must expose purchase receipts in the ledger history');
 
 assert.ok(repository.includes("if(!rows.length)throw new NotFoundError('Inventory item not found','INVENTORY_ITEM_NOT_FOUND');return this.listStock(orgId,branchId,{itemId});"), 'item stock lookup must return not-found for foreign-tenant or missing item IDs');
 
