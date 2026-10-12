@@ -2,13 +2,14 @@ import { Router } from 'express';
 import { authenticate, requirePermission } from '../identity/middleware';
 import { validateRequest } from '../../middleware/validate';
 import { inventoryController } from './controller';
-import { adjustmentSchema, confirmCountSchema, createCategorySchema, createCountSchema, createItemSchema, createLocationSchema, inventoryListQuerySchema, movementListQuerySchema, openingStockSchema, transferSchema, updateCategorySchema, updateItemSchema, updateLocationSchema } from './validation';
+import { adjustmentSchema, confirmCountSchema, createCategorySchema, createCountSchema, createItemSchema, createLocationSchema, createUnitSchema, inventoryListQuerySchema, movementListQuerySchema, openingStockSchema, transferSchema, updateCategorySchema, updateItemSchema, updateLocationSchema } from './validation';
 
 export const inventoryRouter=Router();
 inventoryRouter.use(authenticate());
 const view=requirePermission('inventory:view','inventory:history:view');
 const manage=requirePermission('inventory:manage');
 inventoryRouter.get('/units',view,inventoryController.units);
+inventoryRouter.post('/units',requirePermission('inventory:items:manage'),validateRequest({body:createUnitSchema}),inventoryController.createUnit);
 inventoryRouter.get('/overview',view,inventoryController.overview);
 inventoryRouter.get('/categories',view,inventoryController.categories);
 inventoryRouter.post('/categories',requirePermission('inventory:categories:manage'),validateRequest({body:createCategorySchema}),inventoryController.createCategory);
