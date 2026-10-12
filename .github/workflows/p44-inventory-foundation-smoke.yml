@@ -76,6 +76,16 @@ jobs:
           P43_DB_NAME: restrox_test
           P43_DB_USER: rms
           P43_DB_PASSWORD: p43-ci-db-password
+      - name: Install isolated MySQL repository test dependencies
+        run: npm install --no-save --package-lock=false tsx mysql2
+      - name: Verify real inventory repository transactions, ledger and tenant isolation
+        run: npm run test:inventory-foundation:mysql
+        env:
+          P44_DB_HOST: 127.0.0.1
+          P44_DB_PORT: 3306
+          P44_DB_NAME: restrox_test
+          P44_DB_USER: rms
+          P44_DB_PASSWORD: p43-ci-db-password
       - name: Start production runtime against migrated MySQL (pass 2)
         run: npm run test:global-reports:runtime
         env:
