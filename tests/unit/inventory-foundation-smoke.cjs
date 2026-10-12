@@ -32,6 +32,7 @@ for (const table of ['inventory_categories', 'inventory_locations', 'inventory_i
   assert.ok(migration.includes(`organization_id BIGINT UNSIGNED NOT NULL`) && migration.includes(`branch_id BIGINT UNSIGNED NOT NULL`), `${table} schema must carry tenant and branch scope`);
 }
 assert.ok(repository.includes('WHERE id=? AND organization_id=? AND branch_id=?'), 'item and location lookups must be tenant/branch scoped');
+assert.ok(repository.includes('WHERE organization_id=? AND branch_id=? AND inventory_item_id=? AND location_id=?'), 'balance mutations must scope the write itself to tenant and branch');
 assert.ok(repository.includes('await conn.beginTransaction()'), 'inventory writes must use database transactions');
 assert.ok(repository.includes('async openingStock('), 'opening stock operation must exist');
 assert.ok(repository.includes('async transfer('), 'stock transfer operation must exist');
