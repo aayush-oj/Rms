@@ -25,7 +25,7 @@ Establish and verify the inventory foundation: stock items, groups/categories, u
 - [x] P44 contract CI passes on commit `d752329e2da421d1ab32d4cc8526a763d249154d` in [run #12](https://github.com/aayush-oj/Rms/actions/runs/38205319791); phase-chain audit, inventory contract, active-branch guards for item/stock/count workflows, and TypeScript syntax all passed.
 - [ ] Review and exercise create/update/list/get for stock items, categories/groups, units and locations against isolated MySQL fixtures.
 - [x] Verify opening stock, adjustment, transfer and stock count writes against isolated MySQL; assert balance/ledger reconciliation and forced mid-transfer rollback.
-- [x] Verify cross-tenant item reads/listing are isolated in live MySQL; cross-branch coverage remains to be added.
+- [x] Verify cross-tenant and cross-branch item/stock lookups are isolated in live MySQL.
 - [ ] Reconcile the inventory foundation with P48 purchasing and P49 reconciliation without duplicate stock ledgers.
 - [ ] Full P01–P44 regression and full-start checks pass twice; available static suite and clean/migrated MySQL runtime starts now pass twice, but this is not the full product end-to-end matrix.
 - [ ] Visual parity against the supplied inventory reference captures is verified before marking P44 complete.
@@ -46,6 +46,7 @@ Establish and verify the inventory foundation: stock items, groups/categories, u
 - [P44 full MySQL repository run](https://github.com/aayush-oj/Rms/actions/runs/38207830220): success on `f7bddc559f9c3f23dd9822f0188ccfc6630b2c49`; production startup applied migrations to clean MySQL, live repository tests exercised opening stock, adjustment, transfer, count confirmation, ledger consistency, forced transaction rollback, insufficient stock, and cross-tenant isolation, and runtime restarted successfully on the migrated schema.
 - Canonical `inventoryRouter` is now mounted at `/api/v1/inventory` ahead of the legacy stock router; legacy stock-only routes also remain available through `/api/v1/stock`.
 - [P44 repeated regression + MySQL startup run](https://github.com/aayush-oj/Rms/actions/runs/38207167582): success on `a3f8c7b02a483a91fcf77f4658f0efde612fcb31`; static regression suite passed twice, then the production runtime applied migrations to a clean MySQL 8 instance and restarted successfully against the migrated schema.
+- [P44 router + cross-branch regression run](https://github.com/aayush-oj/Rms/actions/runs/38207991618): success; confirms the canonical inventory router is mounted ahead of the legacy stock fallback and the live MySQL repository suite verifies cross-tenant and cross-branch isolation.
 - [Repeated regression CI run](https://github.com/aayush-oj/Rms/actions/runs/38206957368): success on `dfb7421c742447f23fea4748bb963f0f84699ec4`; phase-chain, inventory, global/finance reports and TypeScript syntax checks all passed twice in one CI job.
 
 ## Current status
