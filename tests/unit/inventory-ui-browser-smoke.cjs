@@ -93,7 +93,7 @@ async function main() {
     await page.getByRole('tab', { name: 'On-hand stock' }).click();
     await page.getByLabel('Item *').first().selectOption('4');
     await page.getByLabel('Location *').first().selectOption('3');
-    await page.getByLabel('Quantity *').fill('3');
+    await page.getByLabel('Quantity *').first().fill('3');
     await page.getByRole('button', { name: 'Record opening stock' }).click();
     await page.getByText('Saved successfully.').waitFor();
     assert.ok(requests.some(r => r.method === 'POST' && r.path === '/opening-stock'), 'opening stock must post to the inventory API');
