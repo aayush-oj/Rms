@@ -15,6 +15,7 @@
     "test:finance-reports": "node tests/unit/finance-reports-smoke.cjs",
     "test:global-reports:browser": "node tests/unit/global-reports-browser-smoke.cjs",
     "audit:phase-chain": "node scripts/audit-phase-chain.cjs",
-    "test:inventory-foundation": "node tests/unit/inventory-foundation-smoke.cjs"
+    "test:inventory-foundation": "node tests/unit/inventory-foundation-smoke.cjs",
+    "test:inventory-foundation:mysql": "node --import tsx tests/unit/inventory-foundation-mysql-integration.cjs"
   }
 }
