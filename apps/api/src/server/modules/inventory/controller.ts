@@ -6,6 +6,7 @@ function ctx(req: Request){ if(!req.user?.organizationId) throw new ForbiddenErr
 function id(v:any,label:string){const n=Number(v);if(!Number.isInteger(n)||n<=0)throw new BadRequestError(`Valid ${label} is required`,`INVALID_${label.toUpperCase().replace(/[^A-Z]+/g,'_')}_ID`);return n;}
 export class InventoryController {
   units=async(req:Request,res:Response,next:NextFunction)=>{try{const c=ctx(req);res.json({success:true,data:await inventoryRepository.listUnits(c.orgId)} satisfies ApiSuccessResponse<any>)}catch(e){next(e)}};
+  createUnit=async(req:Request,res:Response,next:NextFunction)=>{try{const c=ctx(req);res.status(201).json({success:true,data:await inventoryRepository.createUnit(c.orgId,c.branchId,req.body)} satisfies ApiSuccessResponse<any>)}catch(e){next(e)}};
   categories=async(req:Request,res:Response,next:NextFunction)=>{try{const c=ctx(req);res.json({success:true,data:await inventoryRepository.listCategories(c.orgId,c.branchId)} satisfies ApiSuccessResponse<any>)}catch(e){next(e)}};
   createCategory=async(req:Request,res:Response,next:NextFunction)=>{try{const c=ctx(req);res.status(201).json({success:true,data:await inventoryRepository.createCategory(c.orgId,c.branchId,req.body)} satisfies ApiSuccessResponse<any>)}catch(e){next(e)}};
   updateCategory=async(req:Request,res:Response,next:NextFunction)=>{try{const c=ctx(req);res.json({success:true,data:await inventoryRepository.updateCategory(c.orgId,c.branchId,id(req.params.id,'category'),req.body)} satisfies ApiSuccessResponse<any>)}catch(e){next(e)}};
