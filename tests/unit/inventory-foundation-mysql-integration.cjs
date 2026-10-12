@@ -126,7 +126,7 @@ async function main() {
       repo.adjustment(tenantA.orgId, tenantA.branchId, {
         inventoryItemId: item.id, locationId: locationA.id, deltaQuantity: -999, reason: 'P44 insufficient stock',
       }, tenantA.userId),
-      (error) => error && error.code === 'INSUFFICIENT_STOCK',
+      (error) => error && error.errorCode === 'INSUFFICIENT_STOCK',
       'insufficient-stock adjustment must fail with a domain conflict',
     );
     assert.equal((await repo.movements(tenantA.orgId, tenantA.branchId, { inventoryItemId: item.id })).length, 5,
@@ -136,7 +136,7 @@ async function main() {
       'cross-tenant item lookup must not return another tenant item');
     await assert.rejects(
       repo.getStockForItem(tenantB.orgId, tenantB.branchId, item.id),
-      (error) => error && error.code === 'INVENTORY_ITEM_NOT_FOUND',
+      (error) => error && error.errorCode === 'INVENTORY_ITEM_NOT_FOUND',
       'cross-tenant stock lookup must return not-found',
     );
     assert.equal((await repo.listItems(tenantB.orgId, tenantB.branchId)).length, 0,
@@ -144,7 +144,7 @@ async function main() {
 
     await assert.rejects(
       repo.createCount(tenantA.orgId, tenantA.branchId, locationA.id, [item.id, item.id], tenantA.userId),
-      (error) => error && error.code === 'DUPLICATE_COUNT_ITEM',
+      (error) => error && error.errorCode === 'DUPLICATE_COUNT_ITEM',
       'stock count creation must reject duplicate item IDs',
     );
 
