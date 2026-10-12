@@ -18,6 +18,7 @@ on:
       - 'apps/api/src/server/modules/stock/**'
       - 'apps/api/src/server/db/migrations/017_inventory_foundation.ts'
       - 'tests/unit/inventory-foundation-smoke.cjs'
+      - 'tests/unit/global-reports-runtime-smoke.cjs'
       - 'scripts/check-ts-syntax.cjs'
       - 'scripts/audit-phase-chain.cjs'
       - 'package.json'
