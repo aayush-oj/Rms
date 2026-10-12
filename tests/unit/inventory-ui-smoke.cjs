@@ -12,7 +12,7 @@ const required = [
   "request('/locations')", "request('/stock')", "request('/movements')", "request('/counts')",
   "'/opening-stock'", "'/adjustments'", "'/transfers'", "'/units'",
   "'/counts/'+encodeURIComponent(b.dataset.count)+'/confirm'",
-  'aria-live="polite"', 'const esc=s=>' , 'function notice(message,error=false)',
+  'aria-live="polite"', 'const esc=s=>', 'function notice(message,error=false)',
   'data-count=', 'min="0.0001"', 'Counted quantities must be zero or greater.'
 ];
 for (const fragment of required) assert.ok(html.includes(fragment), `inventory UI missing contract: ${fragment}`);
