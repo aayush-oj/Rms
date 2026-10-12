@@ -32,13 +32,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Audit phase chain and evidence manifest
-        run: node scripts/audit-phase-chain.cjs
-      - name: Verify inventory foundation contracts
-        run: node tests/unit/inventory-foundation-smoke.cjs
-      - name: Verify global reports regression contract
-        run: npm run test:global-reports
-      - name: Verify finance reports regression contract
-        run: npm run test:finance-reports
-      - name: Verify TypeScript syntax
-        run: npm run check:ts-syntax
+      - name: Repeat P00–P44 static regression suite twice
+        shell: bash
+        run: |
+          set -euo pipefail
+          for pass in 1 2; do
+            echo "::group::Full available regression pass $pass"
+            node scripts/audit-phase-chain.cjs
+            node tests/unit/inventory-foundation-smoke.cjs
+            npm run test:global-reports
+            npm run test:finance-reports
+            npm run check:ts-syntax
+            echo "::endgroup::"
+          done
