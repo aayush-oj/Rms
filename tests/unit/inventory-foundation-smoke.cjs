@@ -41,4 +41,18 @@ assert.ok(validation.includes("deltaQuantity: z.coerce.number()") && validation.
 assert.ok(validation.includes("countedQuantity: nonNegative"), 'counted stock must be non-negative');
 assert.ok(legacyStockRouter.includes("stockRouter.use(authenticate())"), 'legacy stock endpoints must remain authenticated');
 assert.ok(legacyStockRouter.includes("requirePermission('inventory:items:manage')"), 'legacy stock writes must remain permission gated');
+
+assert.ok(repository.includes("if(after<0) throw new ConflictError('Insufficient stock','INSUFFICIENT_STOCK')"), 'stock writes must reject negative resulting balances');
+assert.ok(repository.includes("OPENING_STOCK_ALREADY_RECORDED"), 'opening stock must not be recorded twice');
+assert.ok(repository.includes("OPENING_STOCK_NOT_INITIAL"), 'opening stock must precede other movements');
+assert.ok(repository.includes("const locationIds=[Number(data.fromLocationId),Number(data.toLocationId)].sort((a,b)=>a-b)"), 'transfer must lock locations in deterministic order');
+assert.ok(repository.includes("'TRANSFER_OUT'") && repository.includes("'TRANSFER_IN'"), 'transfer must record both sides of the stock movement');
+assert.ok(repository.includes("Stock changed since this count was started; refresh and recount"), 'count confirmation must detect stale stock');
+assert.ok(repository.includes("INCOMPLETE_STOCK_COUNT"), 'count confirmation must reject incomplete item submissions');
+assert.ok(repository.includes("DUPLICATE_COUNT_ITEM"), 'count confirmation must reject duplicate item submissions');
+assert.ok(repository.includes("COUNT_CORRECTION"), 'count variance must be written to the movement ledger');
+assert.ok(repository.includes("inventory_balances SET current_quantity=?") && repository.includes("INSERT INTO inventory_movements"), 'balance mutation and movement ledger write must be paired in the same transaction');
+assert.ok(repository.includes("if(incomingUnitCost<0 || !Number.isFinite(incomingUnitCost))"), 'incoming acquisition cost must be finite and non-negative');
+assert.ok(repository.includes("async updateWeightedAverageCost("), 'purchase receipt cost updates must use the shared weighted-average implementation');
+
 console.log('P44 inventory foundation contract PASS (auth, permissions, tenant/branch scope, schema, and stock-operation invariants)');
