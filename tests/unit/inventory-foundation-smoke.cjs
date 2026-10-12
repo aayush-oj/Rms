@@ -15,6 +15,8 @@ const legacyStockRouter = read('apps/api/src/server/modules/stock/router.ts');
 const apiRoutes = read('apps/api/src/server/routes/index.ts');
 
 assert.ok(router.includes("inventoryRouter.use(authenticate())"), 'inventory endpoints must require authentication');
+assert.ok(router.includes("post('/units'") && router.includes('createUnitSchema') && controller.includes('createUnit='), 'tenant-scoped measuring unit creation must be exposed behind inventory permissions');
+assert.ok(repository.includes('async createUnit(') && repository.includes('INVENTORY_UNIT_DUPLICATE'), 'measuring unit creation must validate base dimensions and reject duplicate symbols');
 assert.ok(types.includes('export interface InventoryItem') && types.includes('export interface InventoryBalance') && types.includes('export interface InventoryCount'), 'inventory repository imports must resolve to explicit domain contracts');
 for (const movement of ['OPENING','ADJUSTMENT_IN','ADJUSTMENT_OUT','TRANSFER_IN','TRANSFER_OUT','COUNT_CORRECTION','PURCHASE_RECEIPT']) assert.ok(types.includes(`'${movement}'`), `inventory movement type must include ${movement}`);
 assert.ok(apiRoutes.includes("import { inventoryRouter } from '../modules/inventory'"), 'canonical inventory router must be imported into API composition');
