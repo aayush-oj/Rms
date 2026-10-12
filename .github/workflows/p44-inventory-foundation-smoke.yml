@@ -1,0 +1,40 @@
+name: P44 Inventory foundation smoke
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/api/src/server/modules/inventory/**'
+      - 'apps/api/src/server/modules/stock/**'
+      - 'apps/api/src/server/db/migrations/017_inventory_foundation.ts'
+      - 'tests/unit/inventory-foundation-smoke.cjs'
+      - 'scripts/check-ts-syntax.cjs'
+      - 'scripts/audit-phase-chain.cjs'
+      - 'package.json'
+      - '.github/workflows/p44-inventory-foundation-smoke.yml'
+  pull_request:
+    paths:
+      - 'apps/api/src/server/modules/inventory/**'
+      - 'apps/api/src/server/modules/stock/**'
+      - 'apps/api/src/server/db/migrations/017_inventory_foundation.ts'
+      - 'tests/unit/inventory-foundation-smoke.cjs'
+      - 'scripts/check-ts-syntax.cjs'
+      - 'scripts/audit-phase-chain.cjs'
+      - 'package.json'
+      - '.github/workflows/p44-inventory-foundation-smoke.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Audit phase chain and evidence manifest
+        run: node scripts/audit-phase-chain.cjs
+      - name: Verify inventory foundation contracts
+        run: node tests/unit/inventory-foundation-smoke.cjs
+      - name: Verify TypeScript syntax
+        run: npm run check:ts-syntax
