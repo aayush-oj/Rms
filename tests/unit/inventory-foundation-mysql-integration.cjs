@@ -139,7 +139,7 @@ async function main() {
       (error) => error && error.errorCode === 'INVENTORY_ITEM_NOT_FOUND',
       'cross-tenant stock lookup must return not-found',
     );
-    assert.equal((await repo.listItems(tenantB.orgId, tenantB.branchId)).length, 0,
+    assert.equal((await repo.listItems(tenantB.orgId, tenantB.branchId, {})).length, 0,
       'cross-tenant item listing must remain isolated');
 
     await assert.rejects(
