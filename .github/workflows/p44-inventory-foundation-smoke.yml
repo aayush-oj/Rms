@@ -36,5 +36,9 @@ jobs:
         run: node scripts/audit-phase-chain.cjs
       - name: Verify inventory foundation contracts
         run: node tests/unit/inventory-foundation-smoke.cjs
+      - name: Verify global reports regression contract
+        run: npm run test:global-reports
+      - name: Verify finance reports regression contract
+        run: npm run test:finance-reports
       - name: Verify TypeScript syntax
         run: npm run check:ts-syntax
