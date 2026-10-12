@@ -11,8 +11,11 @@ const repository = read('apps/api/src/server/modules/inventory/repository.ts');
 const validation = read('apps/api/src/server/modules/inventory/validation.ts');
 const migration = read('apps/api/src/server/db/migrations/017_inventory_foundation.ts');
 const legacyStockRouter = read('apps/api/src/server/modules/stock/router.ts');
+const apiRoutes = read('apps/api/src/server/routes/index.ts');
 
 assert.ok(router.includes("inventoryRouter.use(authenticate())"), 'inventory endpoints must require authentication');
+assert.ok(apiRoutes.includes("import { inventoryRouter } from '../modules/inventory'"), 'canonical inventory router must be imported into API composition');
+assert.ok(apiRoutes.indexOf("apiV1Router.use('/inventory', inventoryRouter)") < apiRoutes.indexOf("apiV1Router.use('/inventory', stockRouter)"), 'canonical inventory routes must take precedence while legacy stock-only routes fall through');
 for (const [route, permission] of [
   ["post('/items'", "'inventory:items:manage'"],
   ["post('/opening-stock'", "'inventory:opening:manage'"],
