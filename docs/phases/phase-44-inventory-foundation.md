@@ -35,6 +35,8 @@ Establish and verify the inventory foundation: stock items, groups/categories, u
 - [P44 CI run](https://github.com/aayush-oj/Rms/actions/runs/38205869297): success; adds explicit not-found behavior for missing or cross-tenant item stock lookups and verifies it in the inventory contract.
 - [P44 CI run](https://github.com/aayush-oj/Rms/actions/runs/38205872240): success; exposes `PURCHASE_RECEIPT` in the movement-history filter and covers the filter contract.
 - [P44 CI run](https://github.com/aayush-oj/Rms/actions/runs/38205901569): success on commit `7f071981ea08f2ab0a587ac727af2543970b411f`; the P44 workflow now also runs global reports and finance reports regression contracts alongside phase-chain, inventory contract, and TypeScript syntax checks.
+- [P44 CI run](https://github.com/aayush-oj/Rms/actions/runs/38206142466): success; stock count item updates and finalization now include tenant/branch predicates, and finalization requires the count to remain in DRAFT.
+- [P44 CI run](https://github.com/aayush-oj/Rms/actions/runs/38206168205): success; stock count lists now return scoped item details instead of empty arrays, and weighted-average costing rejects non-finite or negative incoming quantities.
 
 ## Current status
 **IN PROGRESS.** The contract and CI wiring pass, but static assertions are not live database workflow tests; passing CI does not alone establish P44 completion. Full database behavior, tenant-isolation integration tests, screenshot parity and P01–P44 regression remain acceptance gates.
