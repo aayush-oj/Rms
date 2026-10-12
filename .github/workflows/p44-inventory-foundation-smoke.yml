@@ -17,6 +17,8 @@ on:
       - '.github/workflows/p44-inventory-foundation-smoke.yml'
   pull_request:
     paths:
+      - 'apps/web/public/inventory.html'
+      - 'tests/unit/inventory-ui-smoke.cjs'
       - 'apps/api/src/server/routes/index.ts'
       - 'apps/api/src/server/db/migrations/017_inventory_foundation.ts'
       - 'apps/api/src/server/modules/inventory/**'
