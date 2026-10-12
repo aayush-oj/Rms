@@ -18,7 +18,7 @@ Establish and verify the inventory foundation: stock items, groups/categories, u
 - `npm run test:inventory-foundation`: stable local entry point for the inventory contract.
 
 ## Verification / acceptance
-- [x] P44 contract CI passes on the latest checkpoint commit `2d3909034c5af3909ed55e9b45e653c7ef80d195` in [run #5](https://github.com/aayush-oj/Rms/actions/runs/38204634768); phase-chain audit, inventory contract, and TypeScript syntax all passed.
+- [x] P44 contract CI passes on commit `951b5f470872fe73f0551148bc8e6bcb250812ec` in [run #8](https://github.com/aayush-oj/Rms/actions/runs/38204817754); phase-chain audit, inventory contract, transactional category/location assertions, and TypeScript syntax all passed.
 - [ ] Review and exercise create/update/list/get for stock items, categories/groups, units and locations against isolated MySQL fixtures.
 - [ ] Verify opening stock, adjustment, transfer and stock count writes atomically update balances and append correct movements.
 - [ ] Verify cross-tenant and cross-branch IDs cannot be read or mutated.
@@ -30,6 +30,7 @@ Establish and verify the inventory foundation: stock items, groups/categories, u
 - [P44 CI run #3](https://github.com/aayush-oj/Rms/actions/runs/38204565581): success.
 - [P44 CI run #4](https://github.com/aayush-oj/Rms/actions/runs/38204628427): success after explicitly tenant/branch-scoping inventory balance mutations.
 - [P44 CI run #5](https://github.com/aayush-oj/Rms/actions/runs/38204634768): success; phase-chain audit, inventory contract assertions, and TypeScript syntax check all passed.
+- [P44 CI run #8](https://github.com/aayush-oj/Rms/actions/runs/38204817754): success on `951b5f470872fe73f0551148bc8e6bcb250812ec`; confirms transactional category/location updates and TypeScript syntax.
 
 ## Current status
 **IN PROGRESS.** The contract and CI wiring pass, but static assertions are not live database workflow tests; passing CI does not alone establish P44 completion. Full database behavior, tenant-isolation integration tests, screenshot parity and P01–P44 regression remain acceptance gates.
