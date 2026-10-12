@@ -16,6 +16,7 @@ Establish and verify the inventory foundation: stock items, groups/categories, u
 - `tests/unit/inventory-foundation-smoke.cjs`: checks authentication and permission gates, tenant/branch context, core inventory schema presence, scoped repository lookups, transactional write patterns, and positive/non-zero quantity validation.
 - `.github/workflows/p44-inventory-foundation-smoke.yml`: runs the phase-chain audit, inventory contract, and TypeScript syntax check on relevant changes.
 - `npm run test:inventory-foundation`: stable local entry point for the inventory contract.
+- Repository-level stock-count guards now reject empty/oversized item sets, unsafe IDs, and non-finite/negative counted quantities before opening a transaction; the contract test checks these guards.
 
 ## Verification / acceptance
 - [x] P44 contract CI passes on commit `d752329e2da421d1ab32d4cc8526a763d249154d` in [run #12](https://github.com/aayush-oj/Rms/actions/runs/38205319791); phase-chain audit, inventory contract, active-branch guards for item/stock/count workflows, and TypeScript syntax all passed.
