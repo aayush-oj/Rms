@@ -9,6 +9,7 @@ on:
       - 'apps/api/src/server/db/migrations/017_inventory_foundation.ts'
       - 'tests/unit/inventory-foundation-smoke.cjs'
       - 'tests/unit/inventory-ui-smoke.cjs'
+      - 'tests/unit/inventory-ui-browser-smoke.cjs'
       - 'apps/web/public/inventory.html'
       - 'tests/unit/global-reports-runtime-smoke.cjs'
       - 'scripts/check-ts-syntax.cjs'
@@ -84,11 +85,17 @@ jobs:
           P43_DB_NAME: restrox_test
           P43_DB_USER: rms
           P43_DB_PASSWORD: p43-ci-db-password
+      - name: Install browser smoke dependencies
+        run: npm install --no-save --package-lock=false playwright
+      - name: Install Chromium for inventory UI verification
+        run: npx playwright install --with-deps chromium
       - name: Install isolated MySQL repository test dependencies
         run: npm install --no-save --package-lock=false tsx mysql2 typescript @types/node
       # Executes the repository itself against the migrated MySQL service, including forced mid-transfer rollback.
       # Keep the fixture test coupled to the same full migration path used by production startup.
       # The fixture also verifies branch-level isolation within a tenant.
+      - name: Verify inventory UI in a real browser
+        run: npm run test:inventory-ui:browser
       - name: Strictly type-check inventory repository and domain contracts
         run: npm run check:inventory-types
       - name: Verify real inventory repository transactions, ledger and tenant isolation
