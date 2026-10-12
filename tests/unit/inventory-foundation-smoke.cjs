@@ -9,11 +9,14 @@ const router = read('apps/api/src/server/modules/inventory/router.ts');
 const controller = read('apps/api/src/server/modules/inventory/controller.ts');
 const repository = read('apps/api/src/server/modules/inventory/repository.ts');
 const validation = read('apps/api/src/server/modules/inventory/validation.ts');
+const types = read('apps/api/src/server/modules/inventory/types.ts');
 const migration = read('apps/api/src/server/db/migrations/017_inventory_foundation.ts');
 const legacyStockRouter = read('apps/api/src/server/modules/stock/router.ts');
 const apiRoutes = read('apps/api/src/server/routes/index.ts');
 
 assert.ok(router.includes("inventoryRouter.use(authenticate())"), 'inventory endpoints must require authentication');
+assert.ok(types.includes('export interface InventoryItem') && types.includes('export interface InventoryBalance') && types.includes('export interface InventoryCount'), 'inventory repository imports must resolve to explicit domain contracts');
+for (const movement of ['OPENING','ADJUSTMENT_IN','ADJUSTMENT_OUT','TRANSFER_IN','TRANSFER_OUT','COUNT_CORRECTION','PURCHASE_RECEIPT']) assert.ok(types.includes(`'${movement}'`), `inventory movement type must include ${movement}`);
 assert.ok(apiRoutes.includes("import { inventoryRouter } from '../modules/inventory'"), 'canonical inventory router must be imported into API composition');
 assert.ok(apiRoutes.indexOf("apiV1Router.use('/inventory', inventoryRouter)") < apiRoutes.indexOf("apiV1Router.use('/inventory', stockRouter)"), 'canonical inventory routes must take precedence while legacy stock-only routes fall through');
 for (const [route, permission] of [
