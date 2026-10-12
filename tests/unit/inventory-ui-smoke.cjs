@@ -12,7 +12,7 @@ const required = [
   "'/opening-stock'", "'/adjustments'", "'/transfers'", "'/units'",
   "'/counts/'+encodeURIComponent(b.dataset.count)+'/confirm'",
   'aria-live="polite"', 'function esc(s)', 'function notice(message,error=false)',
-  'data-count=', 'min="0.0001"', 'counted quantities must be zero or greater.'
+  'data-count=', 'min="0.0001"', 'Counted quantities must be zero or greater.'
 ];
 for (const fragment of required) assert.ok(html.includes(fragment), `inventory UI missing contract: ${fragment}`);
 assert.ok(!html.includes('localStorage'), 'inventory UI must not persist tenant data in local storage');
