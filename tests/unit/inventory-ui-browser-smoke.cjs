@@ -11,7 +11,7 @@ const html = fs.readFileSync(htmlPath, 'utf8');
 const fixtures = {
   units: [{ id: 1, name: 'Kilogram', symbol: 'kg', dimension: 'MASS', conversionFactor: 1 }],
   categories: [{ id: 2, name: 'Produce', code: 'PROD', isActive: true }],
-  locations: [{ id: 3, name: 'Main store', code: 'MAIN', notes: '', isActive: true }],
+  locations: [{ id: 3, name: 'Main store', code: 'MAIN', notes: '', isActive: true }, { id: 6, name: 'Back store', code: 'BACK', notes: '', isActive: true }],
   items: [{ id: 4, name: 'Rice', sku: 'RICE', categoryName: 'Produce', unitSymbol: 'kg', costPerUnit: 2, reorderPoint: 5, reorderQuantity: 10, isActive: true }],
   stock: [{ inventoryItemId: 4, locationId: 3, itemName: 'Rice', locationName: 'Main store', unitSymbol: 'kg', currentQuantity: 12, reorderPoint: 5, status: 'IN_STOCK' }],
   movements: [],
@@ -110,7 +110,7 @@ async function main() {
 
     await page.locator('#transfer-item').selectOption('4');
     await page.locator('#transfer-from').selectOption('3');
-    await page.locator('#transfer-to').selectOption('3');
+    await page.locator('#transfer-to').selectOption('6');
     await page.locator('#transfer-qty').fill('2');
     await page.locator('#transfer-reason').fill('Reorganization');
     await page.getByRole('button', { name: 'Transfer stock' }).click();
@@ -118,7 +118,7 @@ async function main() {
     const transfer = requests.find(r => r.method === 'POST' && r.path === '/transfers');
     assert.equal(transfer.body.quantity, 2, 'transfer must submit a positive quantity');
     assert.equal(transfer.body.fromLocationId, 3);
-    assert.equal(transfer.body.toLocationId, 3);
+    assert.equal(transfer.body.toLocationId, 6);
 
     await page.getByRole('tab', { name: 'Stock counts' }).click();
     await page.locator('#count-location').selectOption('3');
