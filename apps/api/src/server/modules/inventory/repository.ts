@@ -35,7 +35,26 @@ export class InventoryRepository {
 
   async listCategories(orgId: number, branchId: number) { await this.assertBranch(orgId, branchId); const [rows] = await this.pool().execute<RowDataPacket[]>('SELECT * FROM inventory_categories WHERE organization_id = ? AND branch_id = ? ORDER BY is_active DESC, name', [orgId, branchId]); return rows.map(mapCategory); }
   async createCategory(orgId: number, branchId: number, data: any) { await this.assertBranch(orgId, branchId); try { const [r] = await this.pool().execute<ResultSetHeader>('INSERT INTO inventory_categories (organization_id, branch_id, name, code, is_active) VALUES (?, ?, ?, ?, ?)', [orgId, branchId, data.name, data.code || null, data.isActive === false ? 0 : 1]); const [rows] = await this.pool().execute<RowDataPacket[]>('SELECT * FROM inventory_categories WHERE id = ? AND organization_id = ? AND branch_id = ?', [r.insertId, orgId, branchId]); return mapCategory(rows[0]); } catch (e:any) { if (e?.errno === 1062) throw new ConflictError('Inventory category name or code already exists', 'INVENTORY_CATEGORY_DUPLICATE'); throw e; } }
-  async updateCategory(orgId: number, branchId: number, id: number, data: any) { const [rows] = await this.pool().execute<RowDataPacket[]>('SELECT * FROM inventory_categories WHERE id = ? AND organization_id = ? AND branch_id = ? FOR UPDATE', [id, orgId, branchId]); if (!rows.length) throw new NotFoundError('Inventory category not found', 'INVENTORY_CATEGORY_NOT_FOUND'); const r=rows[0]; try { await this.pool().execute('UPDATE inventory_categories SET name=?, code=?, is_active=?, updated_at=NOW() WHERE id=? AND organization_id=? AND branch_id=?', [data.name ?? r.name, data.code !== undefined ? data.code : r.code, data.isActive === undefined ? r.is_active : data.isActive ? 1 : 0, id, orgId, branchId]); const [u]=await this.pool().execute<RowDataPacket[]>('SELECT * FROM inventory_categories WHERE id = ?', [id]); return mapCategory(u[0]); } catch(e:any){ if(e?.errno===1062) throw new ConflictError('Inventory category name or code already exists','INVENTORY_CATEGORY_DUPLICATE'); throw e; } }
+  async updateCategory(orgId: number, branchId: number, id: number, data: any) {
+    const conn = await this.pool().getConnection();
+    try {
+      await conn.beginTransaction();
+      await this.assertBranch(orgId, branchId, conn);
+      const [rows] = await conn.execute<RowDataPacket[]>('SELECT * FROM inventory_categories WHERE id = ? AND organization_id = ? AND branch_id = ? FOR UPDATE', [id, orgId, branchId]);
+      if (!rows.length) throw new NotFoundError('Inventory category not found', 'INVENTORY_CATEGORY_NOT_FOUND');
+      const r = rows[0];
+      await conn.execute('UPDATE inventory_categories SET name=?, code=?, is_active=?, updated_at=NOW() WHERE id=? AND organization_id=? AND branch_id=?', [data.name ?? r.name, data.code !== undefined ? data.code : r.code, data.isActive === undefined ? r.is_active : data.isActive ? 1 : 0, id, orgId, branchId]);
+      const [updated] = await conn.execute<RowDataPacket[]>('SELECT * FROM inventory_categories WHERE id = ? AND organization_id = ? AND branch_id = ?', [id, orgId, branchId]);
+      await conn.commit();
+      return mapCategory(updated[0]);
+    } catch (e: any) {
+      await conn.rollback();
+      if (e?.errno === 1062) throw new ConflictError('Inventory category name or code already exists', 'INVENTORY_CATEGORY_DUPLICATE');
+      throw e;
+    } finally {
+      conn.release();
+    }
+  }
 
   async listLocations(orgId: number, branchId: number) { await this.assertBranch(orgId, branchId); const [rows]=await this.pool().execute<RowDataPacket[]>('SELECT * FROM inventory_locations WHERE organization_id=? AND branch_id=? ORDER BY is_active DESC, name',[orgId,branchId]); return rows.map(mapLocation); }
   async createLocation(orgId: number, branchId: number, data: any) { await this.assertBranch(orgId, branchId); try { const [r]=await this.pool().execute<ResultSetHeader>('INSERT INTO inventory_locations (organization_id, branch_id, name, code, is_active, notes) VALUES (?, ?, ?, ?, ?, ?)',[orgId,branchId,data.name,data.code.toUpperCase(),data.isActive===false?0:1,data.notes??null]); const [rows]=await this.pool().execute<RowDataPacket[]>('SELECT * FROM inventory_locations WHERE id=? AND organization_id=? AND branch_id=?',[r.insertId,orgId,branchId]); return mapLocation(rows[0]); } catch(e:any){ if(e?.errno===1062) throw new ConflictError('Inventory location name or code already exists','INVENTORY_LOCATION_DUPLICATE'); throw e; } }
