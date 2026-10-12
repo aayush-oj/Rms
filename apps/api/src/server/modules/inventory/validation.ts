@@ -4,6 +4,7 @@ const nonNegative = z.coerce.number().finite().min(0).max(999999999999);
 const positive = z.coerce.number().finite().positive().max(999999999999);
 const unitCost = z.coerce.number().finite().min(0).max(9999999999.9999);
 
+export const createUnitSchema = z.object({ name: z.string().trim().min(1).max(50), symbol: z.string().trim().min(1).max(20), dimension: z.enum(['MASS','VOLUME','COUNT','LENGTH','TIME']), baseUnitSymbol: z.string().trim().min(1).max(20), conversionFactor: z.coerce.number().finite().positive().max(999999.999999), isActive: z.boolean().default(true) });
 export const createCategorySchema = z.object({ name: z.string().trim().min(1).max(120), code: z.string().trim().max(50).optional(), isActive: z.boolean().default(true) });
 export const updateCategorySchema = createCategorySchema.partial();
 export const createLocationSchema = z.object({ name: z.string().trim().min(1).max(120), code: z.string().trim().min(1).max(50).toUpperCase(), notes: z.string().trim().max(500).nullable().optional(), isActive: z.boolean().default(true) });
