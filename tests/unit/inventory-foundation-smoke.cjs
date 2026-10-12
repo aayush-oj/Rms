@@ -68,6 +68,9 @@ assert.ok(repository.includes("Stock changed since this count was started; refre
 assert.ok(repository.includes("INCOMPLETE_STOCK_COUNT"), 'count confirmation must reject incomplete item submissions');
 assert.ok(repository.includes('const byCount=new Map<number,any[]>()') && repository.includes('items:byCount.get(Number(r.id))||[]'), 'stock count list must return tenant-scoped item details rather than empty item arrays');
 assert.ok(repository.includes("DUPLICATE_COUNT_ITEM"), 'count confirmation must reject duplicate item submissions');
+assert.ok(repository.includes("'INVALID_COUNT_ITEMS'"), 'repository boundary must reject empty, oversized, unsafe, non-finite, or negative stock count inputs even when called without HTTP schema validation');
+assert.ok(repository.includes('inputItems.some(item=>!item||!Number.isSafeInteger(Number(item.inventoryItemId))||Number(item.inventoryItemId)<=0||!Number.isFinite(Number(item.countedQuantity))||Number(item.countedQuantity)<0'), 'count confirmation must reject invalid quantities before opening a transaction');
+assert.ok(repository.includes('itemIds.length<1||itemIds.length>1000'), 'count creation must reject empty or oversized item lists before constructing SQL');
 assert.ok(repository.includes('WHERE id=? AND count_id=? AND organization_id=? AND branch_id=?'), 'count item writes must remain scoped to the owning count and tenant');
 assert.ok(repository.includes("WHERE id=? AND organization_id=? AND branch_id=? AND status=?"), 'count confirmation status update must enforce tenant scope and draft state');
 assert.ok(repository.includes("COUNT_CORRECTION"), 'count variance must be written to the movement ledger');
