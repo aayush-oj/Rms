@@ -61,6 +61,11 @@ async function main() {
     await page.goto(`${base}/en/reports`, { waitUntil: 'networkidle' });
     await page.getByRole('heading', { name: 'Reports', level: 1 }).waitFor();
     assert.equal(await page.locator('.card').count(), 4, 'all four report cards should render');
+    assert.deepEqual(
+      await page.locator('.card').evaluateAll(links => links.map(link => new URL(link.href).pathname)),
+      ['/en/analytics', '/en/analytics/finance', '/en/analytics/order', '/en/finance/reports'],
+      'every visible report card must preserve its canonical, evidence-backed destination',
+    );
     const search = page.getByRole('searchbox', { name: 'Find a report' });
     await search.fill('finance');
     assert.equal(await page.locator('.card').count(), 2, 'finance search should filter to two cards');
