@@ -91,16 +91,16 @@ async function main() {
     assert.equal(create.body.categoryId, 2);
 
     await page.getByRole('tab', { name: 'On-hand stock' }).click();
-    await page.getByLabel('Item *').first().selectOption('4');
-    await page.getByLabel('Location *').first().selectOption('3');
-    await page.getByLabel('Quantity *').first().fill('3');
+    await page.locator('#opening-item').selectOption('4');
+    await page.locator('#opening-location').selectOption('3');
+    await page.locator('#opening-qty').fill('3');
     await page.getByRole('button', { name: 'Record opening stock' }).click();
     await page.getByText('Saved successfully.').waitFor();
     assert.ok(requests.some(r => r.method === 'POST' && r.path === '/opening-stock'), 'opening stock must post to the inventory API');
 
     await page.getByRole('tab', { name: 'Stock counts' }).click();
-    await page.getByLabel('Location *').selectOption('3');
-    await page.getByLabel('Items to count *').selectOption(['4']);
+    await page.locator('#count-location').selectOption('3');
+    await page.locator('#count-items').selectOption(['4']);
     await page.getByRole('button', { name: 'Create draft count' }).click();
     await page.getByText('Saved successfully.').waitFor();
     const countCreate = requests.find(r => r.method === 'POST' && r.path === '/counts');
