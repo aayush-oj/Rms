@@ -78,10 +78,12 @@ jobs:
           P43_DB_USER: rms
           P43_DB_PASSWORD: p43-ci-db-password
       - name: Install isolated MySQL repository test dependencies
-        run: npm install --no-save --package-lock=false tsx mysql2
+        run: npm install --no-save --package-lock=false tsx mysql2 typescript @types/node
       # Executes the repository itself against the migrated MySQL service, including forced mid-transfer rollback.
       # Keep the fixture test coupled to the same full migration path used by production startup.
       # The fixture also verifies branch-level isolation within a tenant.
+      - name: Strictly type-check inventory repository and domain contracts
+        run: npm run check:inventory-types
       - name: Verify real inventory repository transactions, ledger and tenant isolation
         run: npm run test:inventory-foundation:mysql
         env:
