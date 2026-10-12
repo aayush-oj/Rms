@@ -72,4 +72,6 @@ assert.ok(repository.includes("inventory_balances SET current_quantity=?") && re
 assert.ok(repository.includes("if(incomingUnitCost<0 || !Number.isFinite(incomingUnitCost))"), 'incoming acquisition cost must be finite and non-negative');
 assert.ok(repository.includes("async updateWeightedAverageCost("), 'purchase receipt cost updates must use the shared weighted-average implementation');
 
+assert.ok(repository.includes("if(!rows.length)throw new NotFoundError('Inventory item not found','INVENTORY_ITEM_NOT_FOUND');return this.listStock(orgId,branchId,{itemId});"), 'item stock lookup must return not-found for foreign-tenant or missing item IDs');
+
 console.log('P44 inventory foundation contract PASS (auth, permissions, tenant/branch scope, schema, and stock-operation invariants)');
