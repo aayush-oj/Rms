@@ -36,8 +36,14 @@ export class InventoryRepository {
     const name=String(data.name).trim();
     const baseUnitSymbol=String(data.baseUnitSymbol).trim();
     const conversionFactor=Number(data.conversionFactor);
+    const lockName=`inventory_unit_${orgId}_${symbol.toLowerCase()}`;
+    let lockAcquired=false;
     try {
+      if(!Number.isFinite(conversionFactor)||conversionFactor<=0||conversionFactor>999999.999999) throw new BadRequestError('Unit conversion factor must be finite, positive, and within supported precision','INVALID_INVENTORY_CONVERSION_FACTOR');
       await conn.beginTransaction();
+      const [locks]=await conn.execute<RowDataPacket[]>('SELECT GET_LOCK(?,5) acquired',[lockName]);
+      if(Number(locks[0]?.acquired)!==1) throw new ConflictError('Unit symbol is being created; retry the request','INVENTORY_UNIT_LOCK_TIMEOUT');
+      lockAcquired=true;
       await this.assertBranch(orgId,branchId,conn);
       const [duplicates]=await conn.execute<RowDataPacket[]>(
         'SELECT id FROM units_of_measure WHERE (organization_id IS NULL OR organization_id=?) AND LOWER(symbol)=LOWER(?) FOR UPDATE',
@@ -64,6 +70,7 @@ export class InventoryRepository {
       if(e?.errno===1062) throw new ConflictError('A unit with this symbol already exists for this organization','INVENTORY_UNIT_DUPLICATE');
       throw e;
     } finally {
+      if(lockAcquired) { try { await conn.execute<RowDataPacket[]>('SELECT RELEASE_LOCK(?) released',[lockName]); } catch {} }
       conn.release();
     }
   }
