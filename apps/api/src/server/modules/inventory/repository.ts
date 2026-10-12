@@ -1,7 +1,6 @@
-import { PoolConnection, ResultSetHeader, RowDataPacket } from 'mysql2/promise';
-import { getDatabasePool } from '../../db/pool';
+import type { Pool, PoolConnection, ResultSetHeader, RowDataPacket } from 'mysql2/promise';
 import { BadRequestError, ConflictError, ForbiddenError, NotFoundError } from '../../shared/errors';
-import { InventoryBalance, InventoryCategory, InventoryCount, InventoryItem, InventoryLocation, InventoryMovement, InventoryMovementType, InventoryOverview } from './types';
+import type { InventoryBalance, InventoryCategory, InventoryCount, InventoryItem, InventoryLocation, InventoryMovement, InventoryMovementType, InventoryOverview } from './types';
 
 const SCALE = 10000;
 const q = (n: number) => Math.round(Number(n) * SCALE) / SCALE;
@@ -16,7 +15,9 @@ function mapMovement(r: any): InventoryMovement { return { id: Number(r.id), org
 function stockStatus(current: number, reorderPoint: number): 'OUT_OF_STOCK' | 'LOW_STOCK' | 'IN_STOCK' { if (current <= 0) return 'OUT_OF_STOCK'; if (current <= reorderPoint) return 'LOW_STOCK'; return 'IN_STOCK'; }
 
 export class InventoryRepository {
-  pool() { return getDatabasePool(); }
+  constructor(private readonly poolProvider: () => Pool = () => require('../../db/pool').getDatabasePool() as Pool) {}
+
+  pool() { return this.poolProvider(); }
 
   async assertBranch(orgId: number, branchId: number, conn?: PoolConnection) {
     const db = conn || this.pool();
