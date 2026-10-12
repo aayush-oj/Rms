@@ -8,7 +8,7 @@ const required = [
   'role="tablist"', 'id="view-items"', 'id="view-stock"', 'id="view-movements"',
   'id="view-categories"', 'id="view-units"', 'id="view-locations"', 'id="view-counts"',
   "const api='/api/v1/inventory'", "credentials:'same-origin'",
-  "request('/items?activeOnly=false')", "request('/units')", "request('/categories')",
+  "request('/items')", "request('/units')", "request('/categories')",
   "request('/locations')", "request('/stock')", "request('/movements')", "request('/counts')",
   "'/opening-stock'", "'/adjustments'", "'/transfers'", "'/units'",
   "'/counts/'+encodeURIComponent(b.dataset.count)+'/confirm'",
