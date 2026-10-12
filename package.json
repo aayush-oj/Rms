@@ -16,6 +16,7 @@
     "test:global-reports:browser": "node tests/unit/global-reports-browser-smoke.cjs",
     "audit:phase-chain": "node scripts/audit-phase-chain.cjs",
     "test:inventory-foundation": "node tests/unit/inventory-foundation-smoke.cjs",
-    "test:inventory-foundation:mysql": "node --import tsx tests/unit/inventory-foundation-mysql-integration.cjs"
+    "test:inventory-foundation:mysql": "node --import tsx tests/unit/inventory-foundation-mysql-integration.cjs",
+    "check:inventory-types": "tsc --noEmit --strict --target ES2022 --module commonjs --moduleResolution node --esModuleInterop --skipLibCheck apps/api/src/server/modules/inventory/repository.ts apps/api/src/server/modules/inventory/types.ts"
   }
 }
