@@ -80,6 +80,9 @@ assert.ok(repository.includes("'INVALID_STOCK_MOVEMENT_QUANTITY'"), 'stock movem
 assert.ok(repository.includes("'INVALID_OPENING_STOCK_QUANTITY'"), 'opening stock writes must reject invalid quantities before opening a transaction');
 assert.ok(repository.includes("'INVALID_ADJUSTMENT_QUANTITY'"), 'adjustments must reject zero, non-finite, and out-of-range deltas before opening a transaction');
 assert.ok(repository.includes("'INVALID_TRANSFER_QUANTITY'"), 'transfers must reject invalid quantities before opening a transaction');
+assert.ok(repository.includes('MAX_UNIT_COST = 9999999999.9999'), 'unit-cost bounds must match DECIMAL(14,4) storage precision');
+assert.ok(repository.includes("'INVALID_INVENTORY_UNIT_COST'"), 'repository item and weighted-average cost writes must reject values that overflow storage precision');
+assert.ok(validation.includes('const unitCost = z.coerce.number().finite().min(0).max(9999999999.9999)'), 'API cost validation must match DECIMAL(14,4) storage precision');
 assert.ok(repository.includes('WHERE id=? AND count_id=? AND organization_id=? AND branch_id=?'), 'count item writes must remain scoped to the owning count and tenant');
 assert.ok(repository.includes("WHERE id=? AND organization_id=? AND branch_id=? AND status=?"), 'count confirmation status update must enforce tenant scope and draft state');
 assert.ok(repository.includes("COUNT_CORRECTION"), 'count variance must be written to the movement ledger');
