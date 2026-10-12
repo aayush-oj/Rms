@@ -53,6 +53,11 @@ async function main() {
 
     const tenantA = await seedTenant('P44 Inventory Integration A', `p44a${suffix}`);
     const tenantB = await seedTenant('P44 Inventory Integration B', `p44b${suffix}`);
+    const [secondaryBranch] = await pool.execute(
+      'INSERT INTO branches (organization_id, name, code, is_active) VALUES (?, ?, ?, TRUE)',
+      [tenantA.orgId, 'Secondary branch', 'P44-02'],
+    );
+    tenantA.secondaryBranchId = Number(secondaryBranch.insertId);
     const [units] = await pool.execute(
       "SELECT id FROM units_of_measure WHERE organization_id IS NULL AND symbol = 'kg' AND is_active = TRUE LIMIT 1",
     );
@@ -134,6 +139,8 @@ async function main() {
 
     assert.equal(await repo.getItem(tenantB.orgId, tenantB.branchId, item.id), null,
       'cross-tenant item lookup must not return another tenant item');
+    assert.equal(await repo.getItem(tenantA.orgId, tenantA.secondaryBranchId, item.id), null,
+      'cross-branch item lookup must not return another branch item');
     await assert.rejects(
       repo.getStockForItem(tenantB.orgId, tenantB.branchId, item.id),
       (error) => error && error.errorCode === 'INVENTORY_ITEM_NOT_FOUND',
@@ -141,6 +148,11 @@ async function main() {
     );
     assert.equal((await repo.listItems(tenantB.orgId, tenantB.branchId, {})).length, 0,
       'cross-tenant item listing must remain isolated');
+    await assert.rejects(
+      repo.getStockForItem(tenantA.orgId, tenantA.secondaryBranchId, item.id),
+      (error) => error && error.errorCode === 'INVENTORY_ITEM_NOT_FOUND',
+      'cross-branch stock lookup must return not-found',
+    );
 
     await assert.rejects(
       repo.createCount(tenantA.orgId, tenantA.branchId, locationA.id, [item.id, item.id], tenantA.userId),
