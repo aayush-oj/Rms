@@ -1,6 +1,6 @@
 # Phase 0–43 audit register
 
-**Reviewed:** 2026-10-09  
+**Reviewed:** 2026-10-12  
 **Repository:** [aayush-oj/Rms](https://github.com/aayush-oj/Rms), branch `main`  
 **Purpose:** Reconcile the canonical master plan, historical phase documents, source/evidence manifests, and fresh Phase 43 checks before sign-off.
 
@@ -13,7 +13,7 @@
 - Compared all 64 canonical entries in `docs/analysis/master-plan.json` against the numbered phase register.
 - Compared the P01–P42 scope register, validation reference, and historical chain.
 - Confirmed the canonical reference inventory sizes recorded in the validator: 142 routes, 253 API methods, 103 SQL entities, and 50 Finance Reports entries.
-- Reviewed the phase-specific P43 CI run [#15](https://github.com/aayush-oj/Rms/actions/runs/37936407643) and the subsequent phase-chain audit run [#16](https://github.com/aayush-oj/Rms/actions/runs/37960236434). Run #16 passed the structural phase-chain audit and repeated the P43 runtime/browser checks.
+- Reviewed the phase-specific P43 CI run [#15](https://github.com/aayush-oj/Rms/actions/runs/37936407643), phase-chain audit run [#16](https://github.com/aayush-oj/Rms/actions/runs/37960236434), and latest targeted run [#20](https://github.com/aayush-oj/Rms/actions/runs/38203419300). Run #20 passed the structural audit, P42 dependency contract, P43 assets/routes, TypeScript syntax, two runtime starts, and browser/accessibility checks. These remain targeted checks, not the full P01–P43 regression twice.
 - Separated historical status, targeted current CI evidence, and outstanding evidence gaps. Historical labels are not treated as fresh regression results.
 
 ## Numbered phase review
