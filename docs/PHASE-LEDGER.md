@@ -61,7 +61,7 @@ See [Phase 0 baseline audit](phases/phase-00-baseline-audit.md) and [Phase 0–4
 | P41 | Finance setup & accounting masters | Implement journal/account heads/payment/tax/banks/expense setup. | Historical recovery chain marks validated; source gaps explicit; fresh full regression not certified |
 | P42 | Finance reports suite | Implement the 50+ finance report routes with shared report engine and query limits. | Historical recovery chain marks validated; source gaps explicit; fresh full regression not certified |
 | P43 | Global reports | Implement `/en/reports` and any evidence-backed global report navigation/summary. | IN PROGRESS — static/production runtime checks passed twice; browser/accessibility and full P01–P43 regression open |
-| P44 | Inventory base & stock item/group | Implement stock items, groups, units, suppliers-facing item links and opening stock. | Not started — blocked on P43 acceptance |
+| P44 | Inventory base & stock item/group | Implement stock items, groups, units, suppliers-facing item links and opening stock. | In progress — inventory repository, tenant/branch scoping and contract CI implemented; live MySQL workflows, full P01–P44 regression twice and screenshot parity remain unverified; P43 acceptance is still open |
 | P45 | Consumption, recipes & costing | Implement menu stock consumption and recipe/BOM cost logic. | Not started — blocked on P44 |
 | P46 | Stock history, adjustments, transfer & counts | Implement movement history, adjustment, stock transfer, counts. | Not started — blocked on P45 |
 | P47 | Batch production & BOM | Implement batch production workflow with BOM, byproducts, overhead/loss/salvage and stock movements. | Not started — blocked on P46 |
