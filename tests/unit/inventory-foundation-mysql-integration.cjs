@@ -63,21 +63,42 @@ async function main() {
     );
     assert.ok(units.length, 'migration 017 must seed the global kilogram unit');
     const unitId = Number(units[0].id);
+    const customUnit = await repo.createUnit(tenantA.orgId, tenantA.branchId, {
+      name: 'P44 Bag', symbol: `bag${suffix}`, dimension: 'MASS', baseUnitSymbol: 'kg', conversionFactor: 25, isActive: true,
+    });
+    assert.ok((await repo.listUnits(tenantA.orgId)).some((unit) => unit.id === customUnit.id),
+      'tenant-specific measuring unit must appear in the scoped unit list');
+    await assert.rejects(
+      repo.createUnit(tenantA.orgId, tenantA.branchId, {
+        name: 'Duplicate P44 Bag', symbol: `bag${suffix}`, dimension: 'MASS', baseUnitSymbol: 'kg', conversionFactor: 25, isActive: true,
+      }),
+      (error) => error && error.errorCode === 'INVENTORY_UNIT_DUPLICATE',
+      'duplicate unit symbols must be rejected for a tenant',
+    );
 
     const category = await repo.createCategory(tenantA.orgId, tenantA.branchId, {
       name: 'P44 Ingredients', code: 'P44-ING', isActive: true,
     });
+    const updatedCategory = await repo.updateCategory(tenantA.orgId, tenantA.branchId, category.id, { name: 'P44 Ingredients Updated' });
+    assert.equal(updatedCategory.name, 'P44 Ingredients Updated');
+    assert.ok((await repo.listCategories(tenantA.orgId, tenantA.branchId)).some((row) => row.id === category.id));
     const locationA = await repo.createLocation(tenantA.orgId, tenantA.branchId, {
       name: 'Main store', code: 'P44-MAIN', isActive: true,
     });
     const locationB = await repo.createLocation(tenantA.orgId, tenantA.branchId, {
       name: 'Prep store', code: 'P44-PREP', isActive: true,
     });
+    await repo.updateLocation(tenantA.orgId, tenantA.branchId, locationA.id, { notes: 'P44 main location verified' });
+    assert.ok((await repo.listLocations(tenantA.orgId, tenantA.branchId)).some((row) => row.id === locationA.id));
     const item = await repo.createItem(tenantA.orgId, tenantA.branchId, {
       name: 'P44 Rice', sku: `P44-RICE-${suffix}`, categoryId: category.id,
       unitId, costPerUnit: 2.5, reorderPoint: 1, reorderQuantity: 5,
       isActive: true, notes: 'MySQL integration fixture',
     });
+    const updatedItem = await repo.updateItem(tenantA.orgId, tenantA.branchId, item.id, { notes: 'P44 fixture updated' });
+    assert.equal(updatedItem.notes, 'P44 fixture updated');
+    assert.equal((await repo.getItem(tenantA.orgId, tenantA.branchId, item.id)).id, item.id);
+    assert.ok((await repo.listItems(tenantA.orgId, tenantA.branchId, {})).some((row) => row.id === item.id));
 
     await repo.openingStock(tenantA.orgId, tenantA.branchId, {
       inventoryItemId: item.id, locationId: locationA.id, quantity: 10, reason: 'P44 opening',
