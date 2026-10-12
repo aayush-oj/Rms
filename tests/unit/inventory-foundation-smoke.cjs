@@ -33,6 +33,13 @@ for (const table of ['inventory_categories', 'inventory_locations', 'inventory_i
 }
 assert.ok(repository.includes('WHERE id=? AND organization_id=? AND branch_id=?'), 'item and location lookups must be tenant/branch scoped');
 assert.ok(repository.includes('await this.assertBranch(orgId,branchId,conn); const existing=await this.validateItem(conn,orgId,branchId,id,true);'), 'item updates must reject inactive or unauthorized branches before mutation');
+assert.ok(repository.includes("WHERE ii.id=? AND ii.organization_id=? AND ii.branch_id=?',[r.insertId,orgId,branchId]"), 'item creation reread must remain tenant/branch scoped');
+for (const operation of ['openingStock','adjustment','transfer','createCount','confirmCount']) {
+  const start=repository.indexOf(`async ${operation}(`);
+  const end=repository.indexOf('\n  async ',start+8);
+  const body=repository.slice(start,end<0?undefined:end);
+  assert.ok(start>=0 && body.includes('await this.assertBranch(orgId,branchId,conn)'), `${operation} must validate active branch within its transaction`);
+}
 assert.ok(repository.includes('WHERE organization_id=? AND branch_id=? AND inventory_item_id=? AND location_id=?'), 'balance mutations must scope the write itself to tenant and branch');
 assert.ok(repository.includes('await conn.beginTransaction()'), 'inventory writes must use database transactions');
 for (const [method, nextMethod] of [['async updateCategory(', 'async listLocations('], ['async updateLocation(', 'async validateItem(']]) {
