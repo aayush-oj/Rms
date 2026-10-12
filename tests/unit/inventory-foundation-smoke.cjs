@@ -73,6 +73,10 @@ assert.ok(repository.includes('inputItems.some(item=>!item||!Number.isSafeIntege
 assert.ok(repository.includes('itemIds.length<1||itemIds.length>1000'), 'count creation must reject empty or oversized item lists before constructing SQL');
 assert.ok(repository.includes("'DUPLICATE_COUNT_ITEM'"), 'stock count creation and confirmation must reject duplicate item IDs');
 assert.ok(repository.includes('ii.organization_id=ici.organization_id AND ii.branch_id=ici.branch_id'), 'stock count confirmation joins must preserve tenant and branch boundaries');
+assert.ok(repository.includes("'INVALID_STOCK_MOVEMENT_QUANTITY'"), 'stock movement writes must reject zero, non-finite, and out-of-range deltas at repository boundary');
+assert.ok(repository.includes("'INVALID_OPENING_STOCK_QUANTITY'"), 'opening stock writes must reject invalid quantities before opening a transaction');
+assert.ok(repository.includes("'INVALID_ADJUSTMENT_QUANTITY'"), 'adjustments must reject zero, non-finite, and out-of-range deltas before opening a transaction');
+assert.ok(repository.includes("'INVALID_TRANSFER_QUANTITY'"), 'transfers must reject invalid quantities before opening a transaction');
 assert.ok(repository.includes('WHERE id=? AND count_id=? AND organization_id=? AND branch_id=?'), 'count item writes must remain scoped to the owning count and tenant');
 assert.ok(repository.includes("WHERE id=? AND organization_id=? AND branch_id=? AND status=?"), 'count confirmation status update must enforce tenant scope and draft state');
 assert.ok(repository.includes("COUNT_CORRECTION"), 'count variance must be written to the movement ledger');
