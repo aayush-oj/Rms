@@ -16,6 +16,7 @@ Establish and verify the inventory foundation: stock items, groups/categories, u
 - `tests/unit/inventory-foundation-smoke.cjs`: checks authentication and permission gates, tenant/branch context, core inventory schema presence, scoped repository lookups, transactional write patterns, and positive/non-zero quantity validation.
 - `apps/web/public/inventory.html`: added an accessible inventory workspace for items, stock balances, opening stock, adjustments, transfers, movement history, categories, measuring units, locations, and stock counts; it calls the authenticated `/api/v1/inventory` contract and does not persist tenant data in browser storage.
 - `tests/unit/inventory-ui-smoke.cjs`: checks the workspace sections and API operations and parses its inline JavaScript; the P44 workflow runs it in both repeated static regression passes.
+- `tests/unit/inventory-ui-browser-smoke.cjs`: Playwright/Chromium checks loading, search, item creation, opening stock, stock-count payloads, mobile layout, and page errors against a mocked authenticated API.
 - `.github/workflows/p44-inventory-foundation-smoke.yml`: runs the phase-chain audit, inventory contract, and TypeScript syntax check on relevant changes.
 - `npm run test:inventory-foundation`: stable local entry point for the inventory contract.
 - Repository-level stock-count guards now reject empty/oversized item sets, unsafe IDs, and non-finite/negative counted quantities before opening a transaction; the contract test checks these guards.
@@ -34,6 +35,7 @@ Establish and verify the inventory foundation: stock items, groups/categories, u
 - [ ] Visual parity against the supplied inventory reference captures is verified before marking P44 complete.
 
 ## Latest verification evidence
+- [P44 full verification run](https://github.com/aayush-oj/Rms/actions/runs/38215527994): success on commit `d014536e1b83be195330c39bbdc7a5b409dec990`; both P00–P44 static regression passes, clean-database production startup/migrations, Chromium browser workflow, strict inventory type-check, live MySQL repository transactions/tenant isolation, and migrated-database production restart all passed.
 - [P44 CI run #3](https://github.com/aayush-oj/Rms/actions/runs/38204565581): success.
 - [P44 CI run #4](https://github.com/aayush-oj/Rms/actions/runs/38204628427): success after explicitly tenant/branch-scoping inventory balance mutations.
 - [P44 CI run #5](https://github.com/aayush-oj/Rms/actions/runs/38204634768): success; phase-chain audit, inventory contract assertions, and TypeScript syntax check all passed.
