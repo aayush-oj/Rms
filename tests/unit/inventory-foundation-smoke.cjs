@@ -34,6 +34,14 @@ for (const table of ['inventory_categories', 'inventory_locations', 'inventory_i
 assert.ok(repository.includes('WHERE id=? AND organization_id=? AND branch_id=?'), 'item and location lookups must be tenant/branch scoped');
 assert.ok(repository.includes('WHERE organization_id=? AND branch_id=? AND inventory_item_id=? AND location_id=?'), 'balance mutations must scope the write itself to tenant and branch');
 assert.ok(repository.includes('await conn.beginTransaction()'), 'inventory writes must use database transactions');
+for (const [method, nextMethod] of [['async updateCategory(', 'async listLocations('], ['async updateLocation(', 'async validateItem(']]) {
+  const start = repository.indexOf(method);
+  const end = repository.indexOf(nextMethod, start);
+  const body = repository.slice(start, end);
+  assert.ok(start >= 0 && end > start, `${method} must remain present`);
+  assert.ok(body.includes('await conn.beginTransaction()') && body.includes('FOR UPDATE') && body.includes('await conn.commit()'), `${method} must hold its row lock inside a transaction`);
+  assert.ok(body.includes('conn.release()') && body.includes('await conn.rollback()'), `${method} must clean up transaction resources on failure`);
+}
 assert.ok(repository.includes('async openingStock('), 'opening stock operation must exist');
 assert.ok(repository.includes('async transfer('), 'stock transfer operation must exist');
 assert.ok(repository.includes('async confirmCount('), 'stock count confirmation must exist');
