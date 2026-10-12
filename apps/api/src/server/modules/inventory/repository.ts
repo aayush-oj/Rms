@@ -30,6 +30,44 @@ export class InventoryRepository {
     return rows.map(r => ({ id: Number(r.id), name: String(r.name), symbol: String(r.symbol), dimension: String(r.dimension), conversionFactor: Number(r.conversion_factor) }));
   }
 
+  async createUnit(orgId:number,branchId:number,data:any) {
+    const conn=await this.pool().getConnection();
+    const symbol=String(data.symbol).trim();
+    const name=String(data.name).trim();
+    const baseUnitSymbol=String(data.baseUnitSymbol).trim();
+    const conversionFactor=Number(data.conversionFactor);
+    try {
+      await conn.beginTransaction();
+      await this.assertBranch(orgId,branchId,conn);
+      const [duplicates]=await conn.execute<RowDataPacket[]>(
+        'SELECT id FROM units_of_measure WHERE (organization_id IS NULL OR organization_id=?) AND LOWER(symbol)=LOWER(?) FOR UPDATE',
+        [orgId,symbol],
+      );
+      if(duplicates.length) throw new ConflictError('A unit with this symbol already exists for this organization','INVENTORY_UNIT_DUPLICATE');
+      const [base]=await conn.execute<RowDataPacket[]>(
+        'SELECT id FROM units_of_measure WHERE symbol=? AND dimension=? AND is_active=TRUE AND (organization_id IS NULL OR organization_id=?) ORDER BY organization_id IS NULL ASC LIMIT 1 FOR UPDATE',
+        [baseUnitSymbol,data.dimension,orgId],
+      );
+      if(!base.length) throw new BadRequestError('Base unit must be active and have the same dimension','INVALID_INVENTORY_BASE_UNIT');
+      const [result]=await conn.execute<ResultSetHeader>(
+        'INSERT INTO units_of_measure (organization_id,name,symbol,dimension,base_unit_symbol,conversion_factor,is_active) VALUES (?,?,?,?,?,?,?)',
+        [orgId,name,symbol,data.dimension,baseUnitSymbol,Math.round(conversionFactor*1000000)/1000000,data.isActive===false?0:1],
+      );
+      const [rows]=await conn.execute<RowDataPacket[]>(
+        'SELECT id,name,symbol,dimension,conversion_factor FROM units_of_measure WHERE id=? AND organization_id=?',
+        [result.insertId,orgId],
+      );
+      await conn.commit();
+      return {id:Number(rows[0].id),name:String(rows[0].name),symbol:String(rows[0].symbol),dimension:String(rows[0].dimension),conversionFactor:Number(rows[0].conversion_factor)};
+    } catch(e:any) {
+      await conn.rollback();
+      if(e?.errno===1062) throw new ConflictError('A unit with this symbol already exists for this organization','INVENTORY_UNIT_DUPLICATE');
+      throw e;
+    } finally {
+      conn.release();
+    }
+  }
+
   async validateUnit(conn: PoolConnection, orgId: number, unitId: number) {
     const [rows] = await conn.execute<RowDataPacket[]>(`SELECT id, symbol, dimension, is_active FROM units_of_measure WHERE id = ? AND is_active = TRUE AND (organization_id IS NULL OR organization_id = ?)`, [unitId, orgId]);
     if (!rows.length) throw new BadRequestError('Invalid or inactive unit of measure', 'INVALID_INVENTORY_UNIT');
