@@ -27,11 +27,14 @@ function restoreMissingServerSources() {
   }
   const restored = [];
   for (let i = 0; i < sourceMap.sources.length; i += 1) {
-    const source = String(sourceMap.sources[i] || '').replace(/\\\\/g, '/');
-    const match = source.match(/(?:^|\\/)server\\/(.+\\.(?:ts|tsx))$/);
+    const source = String(sourceMap.sources[i] || '').split(String.fromCharCode(92)).join('/');
+    const marker = source.lastIndexOf('/server/');
+    const relativeTail = source.startsWith('server/')
+      ? source.slice('server/'.length)
+      : marker >= 0 ? source.slice(marker + '/server/'.length) : '';
     const content = sourceMap.sourcesContent[i];
-    if (!match || typeof content !== 'string') continue;
-    const relative = path.posix.join('server', match[1]);
+    if (!relativeTail || (!relativeTail.endsWith('.ts') && !relativeTail.endsWith('.tsx')) || typeof content !== 'string') continue;
+    const relative = path.posix.join('server', relativeTail);
     const destination = path.join(root, 'apps', 'api', 'src', ...relative.split('/'));
     if (fs.existsSync(destination)) continue;
     fs.mkdirSync(path.dirname(destination), { recursive: true });
