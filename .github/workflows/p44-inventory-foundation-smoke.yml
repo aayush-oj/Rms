@@ -86,7 +86,7 @@ jobs:
           P43_DB_USER: rms
           P43_DB_PASSWORD: p43-ci-db-password
       - name: Install pinned production bundle and test dependencies
-        run: npm install --no-save --package-lock=false esbuild@0.25.12 express@4.21.2 cors@2.8.5 mysql2@3.14.5 socket.io@4.8.1 bcryptjs@2.4.3 jsonwebtoken@9.0.2 dotenv@16.6.1 zod@3.25.76 tsx typescript @types/node playwright
+        run: npm install --no-save --package-lock=false esbuild@0.25.12 express@4.21.2 cors@2.8.5 mysql2@3.14.5 socket.io@4.8.1 bcryptjs@2.4.3 jsonwebtoken@9.0.2 dotenv@16.6.1 zod@4.1.12 tsx typescript @types/node playwright
       - name: Build guarded production runtime candidate
         run: node scripts/build-runtime-candidate.mjs
       - name: Install Chromium for inventory UI verification
