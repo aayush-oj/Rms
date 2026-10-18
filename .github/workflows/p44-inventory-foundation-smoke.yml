@@ -5,6 +5,10 @@ on:
     paths:
       - 'apps/api/src/server/modules/inventory/**'
       - 'apps/api/src/server/modules/stock/**'
+      - 'apps/api/src/server.ts'
+      - 'apps/api/src/server/**'
+      - 'apps/api/src/server.ts'
+      - 'apps/api/src/server/**'
       - 'apps/api/src/server/routes/index.ts'
       - 'apps/api/src/server/db/migrations/017_inventory_foundation.ts'
       - 'tests/unit/inventory-foundation-smoke.cjs'
@@ -12,6 +16,10 @@ on:
       - 'tests/unit/inventory-ui-browser-smoke.cjs'
       - 'apps/web/public/inventory.html'
       - 'tests/unit/global-reports-runtime-smoke.cjs'
+      - 'scripts/build-runtime-candidate.mjs'
+      - 'runtime/**'
+      - 'scripts/build-runtime-candidate.mjs'
+      - 'runtime/**'
       - 'scripts/check-ts-syntax.cjs'
       - 'scripts/audit-phase-chain.cjs'
       - 'package.json'
@@ -86,8 +94,10 @@ jobs:
           P43_DB_NAME: restrox_test
           P43_DB_USER: rms
           P43_DB_PASSWORD: p43-ci-db-password
-      - name: Install isolated MySQL and browser test dependencies
-        run: npm install --no-save --package-lock=false tsx mysql2 typescript @types/node playwright
+      - name: Install pinned production bundle and test dependencies
+        run: npm install --no-save --package-lock=false esbuild@0.25.12 express@4.21.2 cors@2.8.5 mysql2@3.14.5 socket.io@4.8.1 bcryptjs@2.4.3 jsonwebtoken@9.0.2 dotenv@16.6.1 zod@3.25.76 tsx typescript @types/node playwright
+      - name: Build guarded production runtime candidate
+        run: node scripts/build-runtime-candidate.mjs
       - name: Install Chromium for inventory UI verification
         run: npx playwright install --with-deps chromium
       # Executes the repository itself against the migrated MySQL service, including forced mid-transfer rollback.
@@ -114,3 +124,22 @@ jobs:
           P43_DB_NAME: restrox_test
           P43_DB_USER: rms
           P43_DB_PASSWORD: p43-ci-db-password
+
+      - name: Package verified cPanel runtime ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+          package_dir="release-packages/p44-cpanel"
+          mkdir -p "$package_dir"
+          cp runtime/app.js runtime/package.json runtime/.env.example runtime/DEPLOY_README.md "$package_dir/"
+          cp -a runtime/dist "$package_dir/dist"
+          printf '%s\n' "$GITHUB_SHA" > "$package_dir/RELEASE_SHA.txt"
+          printf 'Built by GitHub Actions\nCommit: %s\nNode: %s\n' "$GITHUB_SHA" "$(node --version)" > "$package_dir/BUILD_INFO.txt"
+          (cd "$package_dir" && zip -qr ../restrox-p44-cpanel-candidate.zip .)
+      - name: Upload verified cPanel runtime ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: restrox-p44-cpanel-${{ github.sha }}
+          path: release-packages/restrox-p44-cpanel-candidate.zip
+          if-no-files-found: error
+          retention-days: 14
