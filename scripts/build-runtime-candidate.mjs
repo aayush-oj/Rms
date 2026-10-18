@@ -1,11 +1,10 @@
 #!/usr/bin/env node
-'use strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 
-const fs = require('node:fs');
-const path = require('node:path');
-const { spawnSync } = require('node:child_process');
-
-const root = path.resolve(__dirname, '..');
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dist = path.join(root, 'runtime', 'dist');
 const entry = path.join(root, 'apps', 'api', 'src', 'server.ts');
 const ui = path.join(root, 'apps', 'web', 'public', 'inventory.html');
