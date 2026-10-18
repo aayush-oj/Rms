@@ -25,13 +25,6 @@ function restoreMissingServerSources() {
   if (!Array.isArray(sourceMap.sources) || !Array.isArray(sourceMap.sourcesContent)) {
     throw new Error('Preserved runtime source map does not contain embedded source content');
   }
-  const embeddedContents = sourceMap.sourcesContent.filter((content) => typeof content === 'string').length;
-  console.log(JSON.stringify({
-    sourceMapEntries: sourceMap.sources.length,
-    embeddedSourceContents: embeddedContents,
-    sourceExamples: sourceMap.sources.filter((source) => String(source).includes('server/')).slice(0, 8),
-    missingSourceCandidates: sourceMap.sources.filter((source) => /modules\\/index|migrations\\/types|domain\\/pricing/.test(String(source))),
-  }));
   const restored = [];
   for (let i = 0; i < sourceMap.sources.length; i += 1) {
     const source = String(sourceMap.sources[i] || '').split(String.fromCharCode(92)).join('/');
