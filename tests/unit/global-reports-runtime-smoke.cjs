@@ -67,6 +67,13 @@ async function main() {
     assert.equal(catalogResponse.status, 200, 'report catalog must be served');
     const catalog = await catalogResponse.json();
     assert.equal(catalog.length, 4, 'expected four report destinations');
+    if (process.env.P44_VERIFY_ACTIVE_INVENTORY === '1') {
+      const inventoryPage = await fetch(`${base}/inventory.html`, { signal: AbortSignal.timeout(3000) });
+      assert.equal(inventoryPage.status, 200, 'active runtime must serve inventory workspace');
+      assert.ok((await inventoryPage.text()).includes('<title>Inventory | RestroX</title>'), 'inventory workspace title must be present');
+      const inventoryApi = await fetch(`${base}/api/v1/inventory/units`, { signal: AbortSignal.timeout(3000) });
+      assert.equal(inventoryApi.status, 401, 'inventory API must be mounted and reject unauthenticated access');
+    }
     console.log(`P43 runtime HTTP smoke PASS (port ${port}; /en/reports, /en/reports/, catalog ${catalog.length} items)`);
     completed = true;
   } finally {
