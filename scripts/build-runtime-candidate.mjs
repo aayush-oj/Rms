@@ -54,15 +54,17 @@ for (const name of laterMigrationNames) {
   let offset = -1;
   while ((offset = preservedBundle.indexOf(name, offset + 1)) >= 0 && offsets.length < 4) offsets.push(offset);
   for (const position of offsets) {
-    const excerpt = preservedBundle.slice(Math.max(0, position - 140), Math.min(preservedBundle.length, position + name.length + 220)).replace(/\\s+/g, ' ');
+    const excerpt = preservedBundle.slice(Math.max(0, position - 140), Math.min(preservedBundle.length, position + name.length + 220)).split(/\\s+/).join(' ');
     console.log(`Runtime migration evidence [${name}]: ${excerpt}`);
   }
   const startMarker = `// server/db/migrations/${name}.ts`;
   const start = preservedBundle.indexOf(startMarker);
-  const end = start >= 0 ? preservedBundle.indexOf('\\n// server/db/migrations/', start + startMarker.length) : -1;
+  const end = start >= 0 ? preservedBundle.indexOf('// server/db/migrations/', start + startMarker.length) : -1;
   if (start >= 0) {
     const block = preservedBundle.slice(start, end >= 0 ? end : Math.min(preservedBundle.length, start + 12000));
-    console.log(`BEGIN_RECOVERED_MIGRATION ${name}\\n${block}\\nEND_RECOVERED_MIGRATION ${name}`);
+    console.log('BEGIN_RECOVERED_MIGRATION ' + name);
+    console.log(block);
+    console.log('END_RECOVERED_MIGRATION ' + name);
   }
 }
 const restoredSources = restoreMissingServerSources();
