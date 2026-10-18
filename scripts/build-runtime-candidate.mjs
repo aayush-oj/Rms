@@ -18,7 +18,32 @@ function run(command, args) {
 if (!fs.existsSync(entry)) throw new Error('Missing API entry point');
 if (!fs.existsSync(ui)) throw new Error('Missing inventory workspace');
 
+function restoreMissingServerSources() {
+  const mapPath = path.join(dist, 'server.cjs.map');
+  if (!fs.existsSync(mapPath)) throw new Error('Cannot safely rebuild without the preserved runtime source map');
+  const sourceMap = JSON.parse(fs.readFileSync(mapPath, 'utf8'));
+  if (!Array.isArray(sourceMap.sources) || !Array.isArray(sourceMap.sourcesContent)) {
+    throw new Error('Preserved runtime source map does not contain embedded source content');
+  }
+  const restored = [];
+  for (let i = 0; i < sourceMap.sources.length; i += 1) {
+    const source = String(sourceMap.sources[i] || '').replace(/\\\\/g, '/');
+    const match = source.match(/(?:^|\\/)server\\/(.+\\.(?:ts|tsx))$/);
+    const content = sourceMap.sourcesContent[i];
+    if (!match || typeof content !== 'string') continue;
+    const relative = path.posix.join('server', match[1]);
+    const destination = path.join(root, 'apps', 'api', 'src', ...relative.split('/'));
+    if (fs.existsSync(destination)) continue;
+    fs.mkdirSync(path.dirname(destination), { recursive: true });
+    fs.writeFileSync(destination, content, { encoding: 'utf8', flag: 'wx' });
+    restored.push(path.relative(root, destination));
+  }
+  return restored;
+}
+
 fs.mkdirSync(dist, { recursive: true });
+const restoredSources = restoreMissingServerSources();
+console.log(`Restored ${restoredSources.length} missing API source files from the preserved bundle source map.`);
 run(path.join(root, 'node_modules', 'esbuild', 'bin', 'esbuild'), [
   entry,
   '--bundle',
