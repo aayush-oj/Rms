@@ -19,8 +19,7 @@ if (!fs.existsSync(entry)) throw new Error('Missing API entry point');
 if (!fs.existsSync(ui)) throw new Error('Missing inventory workspace');
 
 fs.mkdirSync(dist, { recursive: true });
-run(process.execPath, [
-  path.join(root, 'node_modules', 'esbuild', 'bin', 'esbuild'),
+run(path.join(root, 'node_modules', 'esbuild', 'bin', 'esbuild'), [
   entry,
   '--bundle',
   '--platform=node',
