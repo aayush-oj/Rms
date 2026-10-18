@@ -3,42 +3,33 @@ on:
   push:
     branches: [main]
     paths:
-      - 'apps/api/src/server/modules/inventory/**'
-      - 'apps/api/src/server/modules/stock/**'
       - 'apps/api/src/server.ts'
       - 'apps/api/src/server/**'
-      - 'apps/api/src/server.ts'
-      - 'apps/api/src/server/**'
-      - 'apps/api/src/server/routes/index.ts'
-      - 'apps/api/src/server/db/migrations/017_inventory_foundation.ts'
+      - 'apps/web/public/inventory.html'
       - 'tests/unit/inventory-foundation-smoke.cjs'
       - 'tests/unit/inventory-ui-smoke.cjs'
       - 'tests/unit/inventory-ui-browser-smoke.cjs'
-      - 'apps/web/public/inventory.html'
       - 'tests/unit/global-reports-runtime-smoke.cjs'
       - 'scripts/build-runtime-candidate.mjs'
-      - 'runtime/**'
-      - 'scripts/build-runtime-candidate.mjs'
-      - 'runtime/**'
       - 'scripts/check-ts-syntax.cjs'
       - 'scripts/audit-phase-chain.cjs'
       - 'package.json'
+      - 'runtime/**'
       - '.github/workflows/p44-inventory-foundation-smoke.yml'
   pull_request:
     paths:
-      - 'tests/unit/inventory-ui-browser-smoke.cjs'
+      - 'apps/api/src/server.ts'
+      - 'apps/api/src/server/**'
       - 'apps/web/public/inventory.html'
-      - 'tests/unit/inventory-ui-smoke.cjs'
-      - 'apps/api/src/server/routes/index.ts'
-      - 'apps/api/src/server/db/migrations/017_inventory_foundation.ts'
-      - 'apps/api/src/server/modules/inventory/**'
-      - 'apps/api/src/server/modules/stock/**'
-      - 'apps/api/src/server/db/migrations/017_inventory_foundation.ts'
       - 'tests/unit/inventory-foundation-smoke.cjs'
+      - 'tests/unit/inventory-ui-smoke.cjs'
+      - 'tests/unit/inventory-ui-browser-smoke.cjs'
       - 'tests/unit/global-reports-runtime-smoke.cjs'
+      - 'scripts/build-runtime-candidate.mjs'
       - 'scripts/check-ts-syntax.cjs'
       - 'scripts/audit-phase-chain.cjs'
       - 'package.json'
+      - 'runtime/**'
       - '.github/workflows/p44-inventory-foundation-smoke.yml'
   workflow_dispatch:
 permissions:
@@ -85,7 +76,7 @@ jobs:
             npm run check:ts-syntax
             echo "::endgroup::"
           done
-      - name: Start production runtime against clean MySQL and apply migrations (pass 1)
+      - name: Start existing production runtime against clean MySQL (baseline)
         run: npm run test:global-reports:runtime
         env:
           P43_SMOKE_PORT: 4317
@@ -100,9 +91,6 @@ jobs:
         run: node scripts/build-runtime-candidate.mjs
       - name: Install Chromium for inventory UI verification
         run: npx playwright install --with-deps chromium
-      # Executes the repository itself against the migrated MySQL service, including forced mid-transfer rollback.
-      # Keep the fixture test coupled to the same full migration path used by production startup.
-      # The fixture also verifies branch-level isolation within a tenant.
       - name: Verify inventory UI in a real browser
         run: npm run test:inventory-ui:browser
       - name: Strictly type-check inventory repository and domain contracts
@@ -115,7 +103,7 @@ jobs:
           P44_DB_NAME: restrox_test
           P44_DB_USER: rms
           P44_DB_PASSWORD: p43-ci-db-password
-      - name: Start production runtime against migrated MySQL (pass 2)
+      - name: Start rebuilt production runtime and verify inventory routes (pass 2)
         run: npm run test:global-reports:runtime
         env:
           P43_SMOKE_PORT: 4318
@@ -124,7 +112,7 @@ jobs:
           P43_DB_NAME: restrox_test
           P43_DB_USER: rms
           P43_DB_PASSWORD: p43-ci-db-password
-
+          P44_VERIFY_ACTIVE_INVENTORY: '1'
       - name: Package verified cPanel runtime ZIP
         shell: bash
         run: |
