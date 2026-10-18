@@ -45,28 +45,6 @@ function restoreMissingServerSources() {
 }
 
 fs.mkdirSync(dist, { recursive: true });
-const preservedBundlePath = path.join(dist, 'server.cjs');
-const preservedBundle = fs.readFileSync(preservedBundlePath, 'utf8');
-const laterMigrationNames = [...new Set(preservedBundle.match(/0(?:6[5-9]|70)_[a-z0-9_]+/g) || [])].sort();
-console.log(`Preserved runtime migrations beyond source baseline: ${laterMigrationNames.join(', ') || 'none detected'}`);
-for (const name of laterMigrationNames) {
-  const offsets = [];
-  let offset = -1;
-  while ((offset = preservedBundle.indexOf(name, offset + 1)) >= 0 && offsets.length < 4) offsets.push(offset);
-  for (const position of offsets) {
-    const excerpt = preservedBundle.slice(Math.max(0, position - 140), Math.min(preservedBundle.length, position + name.length + 220)).split(/\\s+/).join(' ');
-    console.log(`Runtime migration evidence [${name}]: ${excerpt}`);
-  }
-  const startMarker = `// server/db/migrations/${name}.ts`;
-  const start = preservedBundle.indexOf(startMarker);
-  const end = start >= 0 ? preservedBundle.indexOf('// server/db/migrations/', start + startMarker.length) : -1;
-  if (start >= 0) {
-    const block = preservedBundle.slice(start, end >= 0 ? end : Math.min(preservedBundle.length, start + 12000));
-    console.log('BEGIN_RECOVERED_MIGRATION ' + name);
-    console.log(block);
-    console.log('END_RECOVERED_MIGRATION ' + name);
-  }
-}
 const restoredSources = restoreMissingServerSources();
 console.log(`Restored ${restoredSources.length} missing API source files from the preserved bundle source map.`);
 run(path.join(root, 'node_modules', 'esbuild', 'bin', 'esbuild'), [
@@ -96,8 +74,8 @@ const migrationNumbers = inputs
   .filter(Boolean)
   .map((m) => Number(m[1]))
   .sort((a, b) => a - b);
-if (migrationNumbers.length !== 64 || migrationNumbers.some((n, i) => n !== i + 1)) {
-  throw new Error(`Expected source migrations 001–064 exactly; found ${migrationNumbers.length}`);
+if (migrationNumbers.length !== 70 || migrationNumbers.some((n, i) => n !== i + 1)) {
+  throw new Error(`Expected source migrations 001–070 exactly; found ${migrationNumbers.length}`);
 }
 const bundle = path.join(dist, 'server.cjs');
 if (fs.statSync(bundle).size < 1_000_000) {

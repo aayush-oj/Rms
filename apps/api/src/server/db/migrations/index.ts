@@ -63,6 +63,12 @@ import { migration061BranchCoordinates } from './061_branch_coordinates';
 import { migration062PlatformBusinessMetricsIndex } from './062_platform_business_metrics_index';
 import { migration063PlatformAdminCredentials } from './063_platform_admin_credentials';
 import { migration064PlatformAdminPasswordDefault } from './064_platform_admin_password_default';
+import { migration065PrinterDomainModel } from './065_printer_domain_model';
+import { migration066DurablePrintJobs } from './066_durable_print_jobs';
+import { migration067PrintAgentFoundation } from './067_print_agent_foundation';
+import { migration068PrintingManualPermissions } from './068_printing_manual_permissions';
+import { migration069PrintAgentPairingTokens } from './069_print_agent_pairing_tokens';
+import { migration070PrintJobRetryFailover } from './070_print_job_retry_failover';
 
 export * from './types';
 export * from './runner';
@@ -196,6 +202,12 @@ try {
   migrationRunner.registerMigration(migration062PlatformBusinessMetricsIndex);
   migrationRunner.registerMigration(migration063PlatformAdminCredentials);
   migrationRunner.registerMigration(migration064PlatformAdminPasswordDefault);
+  migrationRunner.registerMigration(migration065PrinterDomainModel);
+  migrationRunner.registerMigration(migration066DurablePrintJobs);
+  migrationRunner.registerMigration(migration067PrintAgentFoundation);
+  migrationRunner.registerMigration(migration068PrintingManualPermissions);
+  migrationRunner.registerMigration(migration069PrintAgentPairingTokens);
+  migrationRunner.registerMigration(migration070PrintJobRetryFailover);
 } catch {
   // Already registered or initialized
 }

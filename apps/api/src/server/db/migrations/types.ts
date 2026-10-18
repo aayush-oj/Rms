@@ -3,6 +3,7 @@ import type { PoolConnection } from 'mysql2/promise';
 export interface MigrationDefinition {
   name: string;
   up: (connection: PoolConnection) => Promise<void>;
+  down?: (connection: PoolConnection) => Promise<void>;
 }
 
 export interface AppliedMigrationRecord {

@@ -187,7 +187,7 @@ before rollback and never delete migration-history rows.
 
 Use the **P44 Inventory foundation smoke** GitHub Actions workflow on the commit
 intended for release. The workflow preserves a baseline runtime smoke, builds a
-candidate from the checked-in API source, verifies migrations 001–064 and the
+candidate from the checked-in API source, verifies migrations 001–070 and the
 inventory router, runs the live-MySQL and browser checks, then starts the rebuilt
 runtime and checks that `/inventory.html` is served and
 `/api/v1/inventory/units` is mounted behind authentication.
