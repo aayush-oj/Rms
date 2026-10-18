@@ -30,6 +30,7 @@ function restoreMissingServerSources() {
     sourceMapEntries: sourceMap.sources.length,
     embeddedSourceContents: embeddedContents,
     sourceExamples: sourceMap.sources.filter((source) => String(source).includes('server/')).slice(0, 8),
+    missingSourceCandidates: sourceMap.sources.filter((source) => /modules\\/index|migrations\\/types|domain\\/pricing/.test(String(source))),
   }));
   const restored = [];
   for (let i = 0; i < sourceMap.sources.length; i += 1) {
