@@ -183,12 +183,21 @@ Keep the previous application package and database backup for rollback. Rolling
 back application files does not undo migrations; assess database compatibility
 before rollback and never delete migration-history rows.
 
-## Build locally from the complete checkout
+## Build and download a verified release
 
-Run `node scripts/package-cpanel.mjs` after pulling the verified branch and `npm ci`.
-It builds and checks public assets, then writes separate cpanel/ and
-printer-connector/ folders under release-packages/<commit-sha>/ with checksums.
-It refuses tracked changes or missing assets. No production secrets are copied.
-Upload only the CONTENTS of cpanel/ to the Node app root; preserve production .env,
-uploads and host-managed node_modules symlink. Startup file app.js, Node 22+.
+Use the **P44 Inventory foundation smoke** GitHub Actions workflow on the commit
+intended for release. The workflow preserves a baseline runtime smoke, builds a
+candidate from the checked-in API source, verifies migrations 001–064 and the
+inventory router, runs the live-MySQL and browser checks, then starts the rebuilt
+runtime and checks that `/inventory.html` is served and
+`/api/v1/inventory/units` is mounted behind authentication.
 
+Only after every gate passes does the workflow publish the
+`restrox-p44-cpanel-<commit-sha>` ZIP artifact. Do not deploy a candidate from a
+failed or incomplete workflow run.
+
+The ZIP contains `app.js`, `package.json`, `.env.example`,
+`RELEASE_SHA.txt`, `BUILD_INFO.txt`, and the complete `dist/` directory.
+Upload only the ZIP contents to the Node application root. Preserve the protected
+production environment, database, uploads and host-managed `node_modules`
+symlink. Startup file: `app.js`; Node 22+.
