@@ -1,0 +1,11 @@
+{
+  "name": "restrox-runtime",
+  "private": true,
+  "version": "1.0.0",
+  "type": "commonjs",
+  "main": "app.js",
+  "engines": {
+    "node": ">=22"
+  },
+  "description": "Self-contained RestroX cPanel runtime; production dependencies are bundled in dist/server.cjs."
+}
