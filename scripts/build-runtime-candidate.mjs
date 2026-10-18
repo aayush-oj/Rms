@@ -45,6 +45,19 @@ function restoreMissingServerSources() {
 }
 
 fs.mkdirSync(dist, { recursive: true });
+const preservedBundlePath = path.join(dist, 'server.cjs');
+const preservedBundle = fs.readFileSync(preservedBundlePath, 'utf8');
+const laterMigrationNames = [...new Set(preservedBundle.match(/0(?:6[5-9]|70)_[a-z0-9_]+/g) || [])].sort();
+console.log(`Preserved runtime migrations beyond source baseline: ${laterMigrationNames.join(', ') || 'none detected'}`);
+for (const name of laterMigrationNames) {
+  const offsets = [];
+  let offset = -1;
+  while ((offset = preservedBundle.indexOf(name, offset + 1)) >= 0 && offsets.length < 4) offsets.push(offset);
+  for (const position of offsets) {
+    const excerpt = preservedBundle.slice(Math.max(0, position - 140), Math.min(preservedBundle.length, position + name.length + 220)).replace(/\\s+/g, ' ');
+    console.log(`Runtime migration evidence [${name}]: ${excerpt}`);
+  }
+}
 const restoredSources = restoreMissingServerSources();
 console.log(`Restored ${restoredSources.length} missing API source files from the preserved bundle source map.`);
 run(path.join(root, 'node_modules', 'esbuild', 'bin', 'esbuild'), [
