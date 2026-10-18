@@ -57,6 +57,13 @@ for (const name of laterMigrationNames) {
     const excerpt = preservedBundle.slice(Math.max(0, position - 140), Math.min(preservedBundle.length, position + name.length + 220)).replace(/\\s+/g, ' ');
     console.log(`Runtime migration evidence [${name}]: ${excerpt}`);
   }
+  const startMarker = `// server/db/migrations/${name}.ts`;
+  const start = preservedBundle.indexOf(startMarker);
+  const end = start >= 0 ? preservedBundle.indexOf('\\n// server/db/migrations/', start + startMarker.length) : -1;
+  if (start >= 0) {
+    const block = preservedBundle.slice(start, end >= 0 ? end : Math.min(preservedBundle.length, start + 12000));
+    console.log(`BEGIN_RECOVERED_MIGRATION ${name}\\n${block}\\nEND_RECOVERED_MIGRATION ${name}`);
+  }
 }
 const restoredSources = restoreMissingServerSources();
 console.log(`Restored ${restoredSources.length} missing API source files from the preserved bundle source map.`);
