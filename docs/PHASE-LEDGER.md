@@ -4,7 +4,7 @@ This is the canonical phase index derived from `docs/analysis/master-plan.json`.
 
 ## Current state
 
-- **Current implementation phase:** P43 — Global reports.
+- **Current implementation phase:** P45 — Consumption, recipes & costing.
 - **P43 status:** In progress. Static checks, TypeScript syntax, two production-mode starts against clean MySQL, and browser/accessibility checks passed in [CI run #15](https://github.com/aayush-oj/Rms/actions/runs/37936407643); the structural P00–P43 phase-chain audit and repeated P43 checks passed in [CI run #16](https://github.com/aayush-oj/Rms/actions/runs/37960236434), and the latest targeted CI run [#20](https://github.com/aayush-oj/Rms/actions/runs/38203419300) also passed on commit `c7845bb`. Full P01–P43 regression and screenshot-level visual parity checks remain open.
 - **P01–P42:** The recovered historical chain marks them validated with overall status `VALIDATED_WITH_SOURCE_GAPS_EXPLICIT`; that history is not a substitute for a fresh full regression run.
 - **P49:** Historical checkpoint only, with mocked-database and production/runtime gaps. It is not proof that P43–P49 are accepted as a continuous production-ready build.
@@ -62,7 +62,7 @@ See [Phase 0 baseline audit](phases/phase-00-baseline-audit.md) and [Phase 0–4
 | P42 | Finance reports suite | Implement the 50+ finance report routes with shared report engine and query limits. | Historical recovery chain marks validated; source gaps explicit; fresh full regression not certified |
 | P43 | Global reports | Implement `/en/reports` and any evidence-backed global report navigation/summary. | IN PROGRESS — static/production runtime checks passed twice; browser/accessibility and full P01–P43 regression open |
 | P44 | Inventory base & stock item/group | Implement stock items, groups, units, suppliers-facing item links and opening stock. | In progress — inventory repository, tenant/branch scoping and contract CI implemented; live MySQL workflows, full P01–P44 regression twice and screenshot parity remain unverified; P43 acceptance is still open |
-| P45 | Consumption, recipes & costing | Implement menu stock consumption and recipe/BOM cost logic. | Not started — blocked on P44 |
+| P45 | Consumption, recipes & costing | Implement menu stock consumption and recipe/BOM cost logic. | In progress — authenticated recipe API aliases and responsive recipe/costing workspace added; targeted CI and live recipe transaction/browser gates pending |
 | P46 | Stock history, adjustments, transfer & counts | Implement movement history, adjustment, stock transfer, counts. | Not started — blocked on P45 |
 | P47 | Batch production & BOM | Implement batch production workflow with BOM, byproducts, overhead/loss/salvage and stock movements. | Not started — blocked on P46 |
 | P48 | Purchasing, suppliers & purchase bills | Implement supplier, purchasing, purchase bill/receipt/return lifecycle where reference evidence requires it. | Partial historical reconstruction only; not accepted as complete; new work not started |
@@ -90,6 +90,13 @@ See [Phase 0 baseline audit](phases/phase-00-baseline-audit.md) and [Phase 0–4
 - Source/runtime artifacts, explicit editable server handlers, public/runtime static aliases, report catalog, smoke test, and CI workflow are recorded in [P43 phase report](phases/phase-43-global-reports.md).
 - The static route/assets and TypeScript syntax checks passed; two production-mode runtime starts on clean MySQL returned HTTP 200 for the canonical route and catalog, and browser/accessibility checks passed, including catalog-load failure handling. Full P01–P43 regression checks remain open.
 - P43 must not be marked complete until the actual route and catalog are exercised in a running app, accessibility/browser checks pass, and full-start plus P01–P43 regression verification passes twice.
+
+## P45 implementation record
+
+- Scope and rollback boundary are documented in [P45 phase report](phases/phase-45-consumption-recipes-costing.md).
+- The existing recipe domain is now mounted at `/api/v1/recipes` and `/api/v1/inventory/recipes`; the runtime candidate includes a recipe workspace and recipe-router inclusion guard.
+- P45 keeps the authoritative POS order stock boundary unchanged. Recipe-based sale consumption is not enabled until live transactional and reconciliation evidence exists.
+- Targeted recipe contract/runtime checks are wired into the P44 regression workflow. P45 remains in progress until current CI, live MySQL recipe workflow, browser/accessibility and twice-repeated regression gates are verified.
 
 ## Required lifecycle for each phase
 
