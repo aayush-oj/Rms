@@ -23,11 +23,11 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 <label for="search">Search recipes</label><input id="search" type="search" placeholder="Recipe or menu item">
 <div id="recipe-list" class="recipe-list" aria-live="polite"><p class="muted">Loading recipes…</p></div>
 <h3>Create recipe</h3><form id="create-form">
-<label for="menu-item">Menu item ID</label><input id="menu-item" type="number" min="1" step="1" required>
+<label for="menu-item">Menu item</label><select id="menu-item" required><option value="">Loading menu items…</option></select>
 <p class="muted">Use an existing menu item ID from Menu Management.</p>
 <label for="recipe-name">Recipe name</label><input id="recipe-name" maxlength="180" required>
 <label for="recipe-description">Description</label><textarea id="recipe-description" maxlength="5000"></textarea>
-<div class="row"><div><label for="yield-quantity">Yield quantity</label><input id="yield-quantity" type="number" min="0.000001" step="any" value="1" required></div><div><label for="yield-unit">Yield unit ID</label><input id="yield-unit" type="number" min="1" step="1" required></div></div>
+<div class="row"><div><label for="yield-quantity">Yield quantity</label><input id="yield-quantity" type="number" min="0.000001" step="any" value="1" required></div><div><label for="yield-unit">Yield unit</label><select id="yield-unit" required><option value="">Loading count units…</option></select></div></div>
 <p class="muted">Yield unit must be a count/portion-compatible unit.</p><button type="submit">Create draft</button>
 </form></section>
 <section aria-labelledby="detail-title"><h2 id="detail-title">Recipe details</h2><div id="notice" class="notice" role="status">Choose a recipe or create a draft.</div>
@@ -39,7 +39,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 const $=id=>document.getElementById(id);
 let recipes=[],selected=null;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const money=n=>new Intl.NumberFormat(undefined,{style:'currency',currency:'USD',maximumFractionDigits:4}).format(Number(n)||0);
+const money=n=>new Intl.NumberFormat(undefined,{minimumFractionDigits:2,maximumFractionDigits:4}).format(Number(n)||0);
 async function api(path,options={}) {
  const response=await fetch('/api/v1'+path,{credentials:'same-origin',headers:{'Content-Type':'application/json',...(options.headers||{})},...options});
  let body={};try{body=await response.json()}catch{}
@@ -47,6 +47,32 @@ async function api(path,options={}) {
  return body.data;
 }
 function notify(message,error=false){$('notice').textContent=message;$('notice').classList.toggle('error',error)}
+let menuItems=[],inventoryItems=[],locations=[],units=[];
+function fillSelect(id,items,placeholder,value,label){
+ const el=$(id);if(!el)return;
+ const previous=el.value;
+ el.innerHTML='<option value="">'+esc(placeholder)+'</option>'+items.map(item=>'<option value="'+esc(value(item))+'">'+esc(label(item))+'</option>').join('');
+ if(previous&&items.some(item=>String(value(item))===previous))el.value=previous;
+}
+function populateIngredientUnits(){
+ const item=inventoryItems.find(i=>i.id===Number($('ingredient-item')?.value));
+ const unit=units.find(u=>item&&u.id===item.unitId);
+ const compatible=unit?units.filter(u=>u.dimension===unit.dimension):[];
+ fillSelect('ingredient-unit',compatible,unit?'Choose a compatible unit':'Select an inventory item first',u=>u.id,u=>u.name+' ('+u.symbol+')');
+}
+function populateReferenceSelects(){
+ fillSelect('menu-item',menuItems,'Select menu item',i=>i.id,i=>i.name+(i.categoryName?' — '+i.categoryName:''));
+ fillSelect('yield-unit',units.filter(u=>u.dimension==='COUNT'),'Select count/portion unit',u=>u.id,u=>u.name+' ('+u.symbol+')');
+ fillSelect('ingredient-item',inventoryItems.filter(i=>i.isActive!==false),'Select inventory item',i=>i.id,i=>i.name+' ('+i.unitSymbol+')');
+ fillSelect('ingredient-location',locations.filter(l=>l.isActive!==false),'Select stock location',l=>l.id,l=>l.name);
+ populateIngredientUnits();
+}
+async function loadReferenceData(){
+ const results=await Promise.allSettled([api('/menu/items'),api('/inventory/items'),api('/inventory/locations'),api('/inventory/units')]);
+ menuItems=results[0].status==='fulfilled'?results[0].value:[];inventoryItems=results[1].status==='fulfilled'?results[1].value:[];locations=results[2].status==='fulfilled'?results[2].value:[];units=results[3].status==='fulfilled'?results[3].value:[];
+ populateReferenceSelects();
+ if(results.some(r=>r.status==='rejected'))notify('Some reference lists could not be loaded. Check menu and inventory permissions, then refresh.',true);
+}
 function renderList(){
  const query=$('search').value.trim().toLowerCase();
  const visible=recipes.filter(r=>(r.name+' '+r.menuItemName).toLowerCase().includes(query));
@@ -65,14 +91,22 @@ function renderDetail(r){
  const draft=versions.find(v=>v.status==='DRAFT');
  if(draft){
  html+='<h3>Draft ingredients (v'+draft.versionNumber+')</h3>';
- html+=draft.ingredients.length?'<div class="table-wrap"><table><thead><tr><th>Ingredient</th><th>Qty</th><th>Unit</th><th>Line cost</th></tr></thead><tbody>'+draft.ingredients.map(i=>'<tr><td>'+esc(i.inventoryItemName)+'</td><td>'+esc(i.quantity)+'</td><td>'+esc(i.unitSymbol)+'</td><td>'+money(i.currentLineCost)+'</td></tr>').join('')+'</tbody></table></div>':'<div class="empty">Add at least one ingredient before activating.</div>';
- html+='<form id="ingredient-form"><div class="row"><div><label for="ingredient-item">Inventory item ID</label><input id="ingredient-item" type="number" min="1" required></div><div><label for="ingredient-location">Stock location ID</label><input id="ingredient-location" type="number" min="1" required></div></div><div class="row"><div><label for="ingredient-quantity">Quantity</label><input id="ingredient-quantity" type="number" min="0.000001" step="any" required></div><div><label for="ingredient-unit">Recipe unit ID</label><input id="ingredient-unit" type="number" min="1" required></div></div><div class="actions"><button type="submit">Add ingredient</button><button type="button" class="secondary" id="new-version">New version</button></div></form>';
+ html+=draft.ingredients.length?'<div class="table-wrap"><table><thead><tr><th>Ingredient</th><th>Qty</th><th>Unit</th><th>Line cost</th><th>Actions</th></tr></thead><tbody>'+draft.ingredients.map(i=>'<tr><td>'+esc(i.inventoryItemName)+'</td><td><label class="muted" for="draft-qty-'+i.id+'">Quantity</label><input id="draft-qty-'+i.id+'" data-draft-qty="'+i.id+'" type="number" min="0.000001" step="any" value="'+esc(i.quantity)+'" required></td><td>'+esc(i.unitSymbol)+'</td><td>'+money(i.currentLineCost)+'</td><td><div class="actions"><button type="button" class="secondary update-ingredient" data-ingredient="'+i.id+'">Update</button><button type="button" class="secondary delete-ingredient" data-ingredient="'+i.id+'">Remove</button></div></td></tr>').join('')+'</tbody></table></div>':'<div class="empty">Add at least one ingredient before activating.</div>';
+ html+='<form id="ingredient-form"><div class="row"><div><label for="ingredient-item">Inventory item</label><select id="ingredient-item" required><option value="">Loading inventory items…</option></select></div><div><label for="ingredient-location">Stock location</label><select id="ingredient-location" required><option value="">Loading locations…</option></select></div></div><div class="row"><div><label for="ingredient-quantity">Quantity</label><input id="ingredient-quantity" type="number" min="0.000001" step="any" required></div><div><label for="ingredient-unit">Recipe unit</label><select id="ingredient-unit" required><option value="">Select an inventory item first</option></select></div></div><div class="actions"><button type="submit">Add ingredient</button></div></form>';
  }
+ if(!draft&&r.status!=='ARCHIVED'&&r.activeVersionId){const active=versions.find(v=>v.id===r.activeVersionId);html+='<h3>Create next version</h3><form id="new-version-form"><div class="row"><div><label for="new-version-yield">Yield quantity</label><input id="new-version-yield" type="number" min="0.000001" step="any" value="'+esc(active?.yieldQuantity||1)+'" required></div><div><label for="new-version-unit">Yield unit</label><select id="new-version-unit" required><option value="">Loading count units…</option></select></div></div><label for="new-version-notes">Version notes</label><textarea id="new-version-notes" maxlength="5000"></textarea><button type="submit">Create draft version</button></form>';}
  html+='<p class="muted">Costing uses current inventory unit costs; order-time stock consumption remains governed by the active POS stock engine.</p>';
  $('detail').innerHTML=html;
+ fillSelect('ingredient-item',inventoryItems.filter(i=>i.isActive!==false),'Select inventory item',i=>i.id,i=>i.name+' ('+i.unitSymbol+')');
+ fillSelect('ingredient-location',locations.filter(l=>l.isActive!==false),'Select stock location',l=>l.id,l=>l.name);
+ fillSelect('new-version-unit',units.filter(u=>u.dimension==='COUNT'),'Select count/portion unit',u=>u.id,u=>u.name+' ('+u.symbol+')');
+ const activeVersion=versions.find(v=>v.id===r.activeVersionId);if(activeVersion&&$('new-version-unit'))$('new-version-unit').value=String(activeVersion.yieldUnitId);
+ populateIngredientUnits();
  $('detail').querySelectorAll('.activate').forEach(b=>b.addEventListener('click',async()=>{try{await api('/recipes/'+r.id+'/versions/'+b.dataset.version+'/activate',{method:'POST',body:'{}'});notify('Recipe version activated.');await loadDetail(r.id);await loadRecipes()}catch(e){notify(e.message,true)}}));
- const form=$('ingredient-form');if(form)form.addEventListener('submit',async e=>{e.preventDefault();const data={inventoryItemId:Number($('ingredient-item').value),locationId:Number($('ingredient-location').value),quantity:Number($('ingredient-quantity').value),unitId:Number($('ingredient-unit').value)};try{await api('/recipes/'+r.id+'/versions/'+draft.id+'/ingredients',{method:'POST',body:JSON.stringify(data)});notify('Ingredient added.');await loadDetail(r.id)}catch(err){notify(err.message,true)}});
- const nv=$('new-version');if(nv)nv.addEventListener('click',async()=>{const yieldQuantity=Number(prompt('Yield quantity',String(draft.yieldQuantity)));if(!Number.isFinite(yieldQuantity)||yieldQuantity<=0)return;const yieldUnitId=Number(prompt('Yield unit ID',String(draft.yieldUnitId)));if(!Number.isInteger(yieldUnitId)||yieldUnitId<=0)return;try{await api('/recipes/'+r.id+'/versions',{method:'POST',body:JSON.stringify({yieldQuantity,yieldUnitId})});notify('Draft version created.');await loadDetail(r.id)}catch(err){notify(err.message,true)}});
+ const itemSelect=$('ingredient-item');if(itemSelect)itemSelect.addEventListener('change',populateIngredientUnits);const form=$('ingredient-form');if(form)form.addEventListener('submit',async e=>{e.preventDefault();const data={inventoryItemId:Number($('ingredient-item').value),locationId:Number($('ingredient-location').value),quantity:Number($('ingredient-quantity').value),unitId:Number($('ingredient-unit').value)};try{await api('/recipes/'+r.id+'/versions/'+draft.id+'/ingredients',{method:'POST',body:JSON.stringify(data)});notify('Ingredient added.');await loadDetail(r.id)}catch(err){notify(err.message,true)}});
+ const versionForm=$('new-version-form');if(versionForm)versionForm.addEventListener('submit',async e=>{e.preventDefault();const data={yieldQuantity:Number($('new-version-yield').value),yieldUnitId:Number($('new-version-unit').value),notes:$('new-version-notes').value.trim()||null};try{await api('/recipes/'+r.id+'/versions',{method:'POST',body:JSON.stringify(data)});notify('Draft version created.');await loadDetail(r.id)}catch(err){notify(err.message,true)}});
+ $('detail').querySelectorAll('.update-ingredient').forEach(b=>b.addEventListener('click',async()=>{const ingredientId=Number(b.dataset.ingredient);const quantity=Number($('draft-qty-'+ingredientId).value);try{await api('/recipes/'+r.id+'/versions/'+draft.id+'/ingredients/'+ingredientId,{method:'PATCH',body:JSON.stringify({quantity})});notify('Ingredient updated.');await loadDetail(r.id)}catch(err){notify(err.message,true)}}));
+ $('detail').querySelectorAll('.delete-ingredient').forEach(b=>b.addEventListener('click',async()=>{const ingredientId=Number(b.dataset.ingredient);if(!confirm('Remove this ingredient from the draft recipe?'))return;try{await api('/recipes/'+r.id+'/versions/'+draft.id+'/ingredients/'+ingredientId,{method:'DELETE'});notify('Ingredient removed.');await loadDetail(r.id)}catch(err){notify(err.message,true)}}));
 }
 async function loadRecipes(){
  try{recipes=await api('/recipes');renderList();if(selected){const fresh=recipes.find(r=>r.id===selected.id);if(fresh)await loadDetail(fresh.id);else renderDetail(null)}}catch(e){$('recipe-list').innerHTML='<div class="empty">'+esc(e.message)+'</div>';notify(e.message,true)}
@@ -80,7 +114,7 @@ async function loadRecipes(){
 async function loadDetail(id){try{renderDetail(await api('/recipes/'+id));notify('Recipe loaded.')}catch(e){notify(e.message,true)}}
 $('search').addEventListener('input',renderList);
 $('create-form').addEventListener('submit',async e=>{e.preventDefault();const data={menuItemId:Number($('menu-item').value),name:$('recipe-name').value.trim(),description:$('recipe-description').value.trim()||null,yieldQuantity:Number($('yield-quantity').value),yieldUnitId:Number($('yield-unit').value)};try{const r=await api('/recipes',{method:'POST',body:JSON.stringify(data)});$('create-form').reset();$('yield-quantity').value='1';await loadRecipes();await loadDetail(r.id);notify('Draft recipe created. Add ingredients before activating.')}catch(err){notify(err.message,true)}});
-loadRecipes();
+loadReferenceData().then(loadRecipes);
 })();
 </script>
 </body></html>

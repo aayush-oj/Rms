@@ -96,7 +96,7 @@ See [Phase 0 baseline audit](phases/phase-00-baseline-audit.md) and [Phase 0–4
 - Scope and rollback boundary are documented in [P45 phase report](phases/phase-45-consumption-recipes-costing.md).
 - The existing recipe domain is now mounted at `/api/v1/recipes` and `/api/v1/inventory/recipes`; the runtime candidate includes a recipe workspace and recipe-router inclusion guard.
 - P45 keeps the authoritative POS order stock boundary unchanged. Recipe-based sale consumption is not enabled until live transactional and reconciliation evidence exists.
-- Targeted recipe contract/runtime checks are wired into the P44 regression workflow. P45 remains in progress until current CI, live MySQL recipe workflow, browser/accessibility and twice-repeated regression gates are verified.
+- [Main-branch P45 regression CI](https://github.com/aayush-oj/Rms/actions/runs/39208484404) passed: P00–P44 static suite repeated twice, candidate build, runtime second start, browser checks, strict inventory type-check, and isolated MySQL recipe transactions/costing/tenant isolation. [P43 regression](https://github.com/aayush-oj/Rms/actions/runs/39208484349) also passed. P45 remains in progress pending full P01–P45 product regression twice, full keyboard/responsive/error-state review, and reference screenshot parity; the required `ALL_AI_SCREENSHOTS.zip` archive is missing from the current workspace.
 
 ## Required lifecycle for each phase
 

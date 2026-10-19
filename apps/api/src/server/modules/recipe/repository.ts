@@ -133,7 +133,7 @@ export class RecipeRepository {
               btc.is_vat_registered, btc.vat_rate, btc.rounding_method
        FROM recipes r
        JOIN menu_items mi ON mi.id=r.menu_item_id AND mi.organization_id=r.organization_id
-       LEFT JOIN menu_categories mc ON mc.id=mi.category_id
+       LEFT JOIN menu_categories mc ON mc.id=mi.category_id AND mc.organization_id=r.organization_id
        LEFT JOIN branch_tax_configs btc ON btc.organization_id=r.organization_id AND btc.branch_id=r.branch_id
        WHERE r.id=? AND r.organization_id=? AND r.branch_id=?`,
       [id, organizationId, branchId]
@@ -195,8 +195,8 @@ export class RecipeRepository {
       if (!rows.length) throw new NotFoundError('Recipe not found', 'RECIPE_NOT_FOUND');
       const current = rows[0];
       await conn.execute(
-        'UPDATE recipes SET name=?,description=?,updated_at=NOW() WHERE id=?',
-        [data.name ?? current.name, data.description !== undefined ? data.description : current.description, id]
+        'UPDATE recipes SET name=?,description=?,updated_at=NOW() WHERE id=? AND organization_id=? AND branch_id=?',
+        [data.name ?? current.name, data.description !== undefined ? data.description : current.description, id, organizationId, branchId]
       );
       if (data.itemClassification) {
         await conn.execute(
@@ -215,8 +215,8 @@ export class RecipeRepository {
       await conn.beginTransaction();
       const [rows] = await conn.execute<RowDataPacket[]>('SELECT id FROM recipes WHERE id=? AND organization_id=? AND branch_id=? FOR UPDATE', [id, organizationId, branchId]);
       if (!rows.length) throw new NotFoundError('Recipe not found', 'RECIPE_NOT_FOUND');
-      await conn.execute(`UPDATE recipe_versions SET status='ARCHIVED' WHERE recipe_id=? AND status='ACTIVE'`, [id]);
-      await conn.execute(`UPDATE recipes SET status='ARCHIVED',active_version_id=NULL,updated_at=NOW() WHERE id=?`, [id]);
+      await conn.execute(`UPDATE recipe_versions SET status='ARCHIVED' WHERE recipe_id=? AND organization_id=? AND branch_id=? AND status='ACTIVE'`, [id, organizationId, branchId]);
+      await conn.execute(`UPDATE recipes SET status='ARCHIVED',active_version_id=NULL,updated_at=NOW() WHERE id=? AND organization_id=? AND branch_id=?`, [id, organizationId, branchId]);
       await conn.commit();
       return this.get(organizationId, branchId, id);
     } catch (e) { await conn.rollback(); throw e; } finally { conn.release(); }
@@ -265,7 +265,7 @@ export class RecipeRepository {
       if (!recipeRows.length) throw new NotFoundError('Recipe not found', 'RECIPE_NOT_FOUND');
       if (recipeRows[0].status === 'ARCHIVED') throw new ConflictError('Archived recipes cannot receive new versions', 'RECIPE_ARCHIVED');
       await this.assertYieldUnit(conn, organizationId, data.yieldUnitId);
-      const [numberRows] = await conn.execute<RowDataPacket[]>('SELECT COALESCE(MAX(version_number),0)+1 next_version FROM recipe_versions WHERE recipe_id=? FOR UPDATE', [recipeId]);
+      const [numberRows] = await conn.execute<RowDataPacket[]>('SELECT COALESCE(MAX(version_number),0)+1 next_version FROM recipe_versions WHERE recipe_id=? AND organization_id=? AND branch_id=? FOR UPDATE', [recipeId, organizationId, branchId]);
       const versionNumber = Number(numberRows[0].next_version);
       const [result] = await conn.execute<ResultSetHeader>(
         `INSERT INTO recipe_versions(recipe_id,organization_id,branch_id,version_number,status,yield_quantity,yield_unit_id,effective_from,notes,created_by)
@@ -277,8 +277,8 @@ export class RecipeRepository {
         await conn.execute(
           `INSERT INTO recipe_version_ingredients(recipe_version_id,organization_id,branch_id,inventory_item_id,location_id,quantity,unit_id)
            SELECT ?,organization_id,branch_id,inventory_item_id,location_id,quantity,unit_id
-           FROM recipe_version_ingredients WHERE recipe_version_id=?`,
-          [result.insertId, recipeRows[0].active_version_id]
+           FROM recipe_version_ingredients WHERE recipe_version_id=? AND organization_id=? AND branch_id=?`,
+          [result.insertId, recipeRows[0].active_version_id, organizationId, branchId]
         );
       }
       await conn.commit();
@@ -298,8 +298,8 @@ export class RecipeRepository {
       if (rows[0].status !== 'DRAFT') throw new ConflictError('Only draft recipe versions can be edited; create a new version instead', 'RECIPE_VERSION_IMMUTABLE');
       if (data.yieldUnitId !== undefined) await this.assertYieldUnit(conn, organizationId, data.yieldUnitId);
       await conn.execute(
-        `UPDATE recipe_versions SET yield_quantity=?,yield_unit_id=?,effective_from=?,notes=? WHERE id=?`,
-        [data.yieldQuantity ?? rows[0].yield_quantity, data.yieldUnitId ?? rows[0].yield_unit_id, data.effectiveFrom !== undefined ? data.effectiveFrom : rows[0].effective_from, data.notes !== undefined ? data.notes : rows[0].notes, versionId]
+        `UPDATE recipe_versions SET yield_quantity=?,yield_unit_id=?,effective_from=?,notes=? WHERE id=? AND recipe_id=? AND organization_id=? AND branch_id=?`,
+        [data.yieldQuantity ?? rows[0].yield_quantity, data.yieldUnitId ?? rows[0].yield_unit_id, data.effectiveFrom !== undefined ? data.effectiveFrom : rows[0].effective_from, data.notes !== undefined ? data.notes : rows[0].notes, versionId, recipeId, organizationId, branchId]
       );
       await conn.commit();
       return (await this.versions(organizationId, branchId, recipeId)).find(v => v.id === versionId);
@@ -342,13 +342,13 @@ export class RecipeRepository {
     try {
       await conn.beginTransaction();
       await this.draftVersion(conn, organizationId, branchId, recipeId, versionId);
-      const [rows] = await conn.execute<RowDataPacket[]>('SELECT * FROM recipe_version_ingredients WHERE id=? AND recipe_version_id=? FOR UPDATE', [ingredientId, versionId]);
+      const [rows] = await conn.execute<RowDataPacket[]>('SELECT * FROM recipe_version_ingredients WHERE id=? AND recipe_version_id=? AND organization_id=? AND branch_id=? FOR UPDATE', [ingredientId, versionId, organizationId, branchId]);
       if (!rows.length) throw new NotFoundError('Recipe ingredient not found', 'RECIPE_INGREDIENT_NOT_FOUND');
       const current = rows[0];
       const locationId = data.locationId ?? Number(current.location_id);
       const unitId = data.unitId ?? Number(current.unit_id);
       await this.validateIngredient(conn, organizationId, branchId, Number(current.inventory_item_id), locationId, unitId);
-      await conn.execute('UPDATE recipe_version_ingredients SET location_id=?,quantity=?,unit_id=?,updated_at=NOW() WHERE id=?', [locationId, data.quantity ?? current.quantity, unitId, ingredientId]);
+      await conn.execute('UPDATE recipe_version_ingredients SET location_id=?,quantity=?,unit_id=?,updated_at=NOW() WHERE id=? AND recipe_version_id=? AND organization_id=? AND branch_id=?', [locationId, data.quantity ?? current.quantity, unitId, ingredientId, versionId, organizationId, branchId]);
       await conn.commit();
       return (await this.versions(organizationId, branchId, recipeId)).find(v => v.id === versionId);
     } catch (e) { await conn.rollback(); throw e; } finally { conn.release(); }
@@ -376,14 +376,14 @@ export class RecipeRepository {
       const [versionRows] = await conn.execute<RowDataPacket[]>('SELECT * FROM recipe_versions WHERE id=? AND recipe_id=? AND organization_id=? AND branch_id=? FOR UPDATE', [versionId, recipeId, organizationId, branchId]);
       if (!versionRows.length) throw new NotFoundError('Recipe version not found', 'RECIPE_VERSION_NOT_FOUND');
       if (versionRows[0].status !== 'DRAFT') throw new ConflictError('Only a draft version can be activated', 'RECIPE_VERSION_NOT_DRAFT');
-      const [ingredientRows] = await conn.execute<RowDataPacket[]>('SELECT * FROM recipe_version_ingredients WHERE recipe_version_id=? FOR UPDATE', [versionId]);
+      const [ingredientRows] = await conn.execute<RowDataPacket[]>('SELECT * FROM recipe_version_ingredients WHERE recipe_version_id=? AND organization_id=? AND branch_id=? FOR UPDATE', [versionId, organizationId, branchId]);
       if (!ingredientRows.length) throw new BadRequestError('A recipe must contain at least one ingredient before activation', 'RECIPE_HAS_NO_INGREDIENTS');
       for (const ingredient of ingredientRows) {
         await this.validateIngredient(conn, organizationId, branchId, Number(ingredient.inventory_item_id), Number(ingredient.location_id), Number(ingredient.unit_id));
       }
-      await conn.execute(`UPDATE recipe_versions SET status='ARCHIVED' WHERE recipe_id=? AND status='ACTIVE'`, [recipeId]);
-      await conn.execute(`UPDATE recipe_versions SET status='ACTIVE',effective_from=COALESCE(effective_from,NOW()),activated_at=NOW() WHERE id=?`, [versionId]);
-      await conn.execute(`UPDATE recipes SET status='ACTIVE',active_version_id=?,updated_at=NOW() WHERE id=?`, [versionId, recipeId]);
+      await conn.execute(`UPDATE recipe_versions SET status='ARCHIVED' WHERE recipe_id=? AND organization_id=? AND branch_id=? AND status='ACTIVE'`, [recipeId, organizationId, branchId]);
+      await conn.execute(`UPDATE recipe_versions SET status='ACTIVE',effective_from=COALESCE(effective_from,NOW()),activated_at=NOW() WHERE id=? AND recipe_id=? AND organization_id=? AND branch_id=?`, [versionId, recipeId, organizationId, branchId]);
+      await conn.execute(`UPDATE recipes SET status='ACTIVE',active_version_id=?,updated_at=NOW() WHERE id=? AND organization_id=? AND branch_id=?`, [versionId, recipeId, organizationId, branchId]);
       await conn.commit();
       return this.get(organizationId, branchId, recipeId);
     } catch (e) { await conn.rollback(); throw e; } finally { conn.release(); }
@@ -430,7 +430,7 @@ export class RecipeRepository {
   async getDirectStockLink(organizationId: number, branchId: number, menuItemId: number) {
     const [rows] = await this.pool().execute<RowDataPacket[]>(
       `SELECT msl.*,ii.name inventory_item_name,il.name location_name,u.symbol unit_symbol
-       FROM menu_item_stock_links msl JOIN inventory_items ii ON ii.id=msl.inventory_item_id
+       FROM menu_item_stock_links msl JOIN inventory_items ii ON ii.id=msl.inventory_item_id AND ii.organization_id=msl.organization_id AND ii.branch_id=msl.branch_id
        JOIN inventory_locations il ON il.id=msl.location_id JOIN units_of_measure u ON u.id=msl.unit_id
        WHERE msl.organization_id=? AND msl.branch_id=? AND msl.menu_item_id=?`, [organizationId, branchId, menuItemId]
     );

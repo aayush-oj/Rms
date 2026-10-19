@@ -38,7 +38,8 @@ P43 remains **in progress**. GitHub Actions run [#15](https://github.com/aayush-
 - Added the responsive recipe workspace at `apps/web/public/recipes.html`, linked from the inventory workspace, and extended the production candidate builder to bundle-check the router and copy the page.
 - Added recipe formula/schema contract checks, browser workflow coverage and production-runtime authentication/asset checks to the repeated CI workflow.
 - The existing POS stock boundary is intentionally unchanged: sales still consume/reverse through the authoritative simple-stock ledger. Do not switch sales to recipe ingredient consumption until transactional MySQL and reconciliation tests prove it safe.
-- P45 remains in progress pending the current CI result, live MySQL recipe workflow/tenant-isolation tests, twice-repeated P01–P45 regression, and reference-screenshot parity review.
+- Main-branch CI is now green: [P45 regression](https://github.com/aayush-oj/Rms/actions/runs/39208484404) passed the repeated P00–P44 static suite, candidate build, runtime restart, real-browser inventory/recipe checks, strict inventory typing, and isolated MySQL inventory/recipe transaction plus tenant-isolation tests. [P43 smoke](https://github.com/aayush-oj/Rms/actions/runs/39208484349) also passed.
+- P45 remains in progress: full P01–P45 product regression twice, complete keyboard/responsive/error-state review, and screenshot parity remain open. The required `ALL_AI_SCREENSHOTS.zip` evidence archive is unavailable in this workspace. The separate database audit also retains the migration 065–070 checksum-provenance blocker; no production database was touched.
 
 See [P45 Phase Report](phases/phase-45-consumption-recipes-costing.md) and [Phase Ledger](PHASE-LEDGER.md).
 
