@@ -27,7 +27,6 @@ function gitBlobSha(content) {
 
 function expectedNames() {
   return Array.from({ length: LAST - FIRST + 1 }, (_, i) => {
-    const n = String(i + FIRST).padStart(3, '0');
     return i + FIRST;
   });
 }
