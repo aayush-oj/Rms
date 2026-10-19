@@ -1,4 +1,4 @@
-name: P44 Inventory foundation smoke
+name: P45 Recipes and inventory regression
 on:
   push:
     branches: [main]
@@ -140,17 +140,17 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          package_dir="release-packages/p44-cpanel"
+          package_dir="release-packages/p45-cpanel"
           mkdir -p "$package_dir"
           cp runtime/app.js runtime/package.json runtime/.env.example runtime/DEPLOY_README.md "$package_dir/"
           cp -a runtime/dist "$package_dir/dist"
           printf '%s\n' "$GITHUB_SHA" > "$package_dir/RELEASE_SHA.txt"
           printf 'Built by GitHub Actions\nCommit: %s\nNode: %s\n' "$GITHUB_SHA" "$(node --version)" > "$package_dir/BUILD_INFO.txt"
-          (cd "$package_dir" && zip -qr ../restrox-p44-cpanel-candidate.zip .)
+          (cd "$package_dir" && zip -qr ../restrox-p45-cpanel-candidate.zip .)
       - name: Upload verified cPanel runtime ZIP
         uses: actions/upload-artifact@v4
         with:
-          name: restrox-p44-cpanel-${{ github.sha }}
-          path: release-packages/restrox-p44-cpanel-candidate.zip
+          name: restrox-p45-cpanel-${{ github.sha }}
+          path: release-packages/restrox-p45-cpanel-candidate.zip
           if-no-files-found: error
           retention-days: 14
