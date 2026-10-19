@@ -74,10 +74,12 @@ const send = (route, data, status=200) => route.fulfill({ status, contentType: '
     await page.goto('http://127.0.0.1:' + address.port + '/recipes.html');
     await page.locator('#menu-item option[value="10"]').waitFor({ state: 'attached' });
     await page.locator('#yield-unit option[value="1"]').waitFor({ state: 'attached' });
+    await page.locator('#recipe-list [data-id="1"]').waitFor({ state: 'attached' });
     await page.getByLabel('Search recipes').fill('does-not-match');
     await page.getByText('No matching recipes.').waitFor();
     await page.getByLabel('Search recipes').fill('bread');
-    const recipeButton = page.getByRole('button', { name: /Bread recipe/ });
+    await page.locator('#recipe-list [data-id="1"]').waitFor({ state: 'attached' });
+    const recipeButton = page.locator('#recipe-list [data-id="1"]');
     await recipeButton.focus();
     await recipeButton.press('Enter');
     await page.locator('#ingredient-item option[value="7"]').waitFor({ state: 'attached' });
