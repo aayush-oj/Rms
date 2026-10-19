@@ -74,6 +74,15 @@ async function main() {
       const inventoryApi = await fetch(`${base}/api/v1/inventory/units`, { signal: AbortSignal.timeout(3000) });
       assert.equal(inventoryApi.status, 401, 'inventory API must be mounted and reject unauthenticated access');
     }
+    if (process.env.P45_VERIFY_ACTIVE_RECIPES === '1') {
+      const recipesPage = await fetch(`${base}/recipes.html`, { signal: AbortSignal.timeout(3000) });
+      assert.equal(recipesPage.status, 200, 'active runtime must serve recipe workspace');
+      assert.ok((await recipesPage.text()).includes('<title>Recipes & Costing | RestroX</title>'), 'recipe workspace title must be present');
+      const recipesApi = await fetch(`${base}/api/v1/recipes`, { signal: AbortSignal.timeout(3000) });
+      assert.equal(recipesApi.status, 401, 'recipe API must be mounted and reject unauthenticated access');
+      const inventoryRecipesApi = await fetch(`${base}/api/v1/inventory/recipes`, { signal: AbortSignal.timeout(3000) });
+      assert.equal(inventoryRecipesApi.status, 401, 'inventory-prefixed recipe API alias must reject unauthenticated access');
+    }
     console.log(`P43 runtime HTTP smoke PASS (port ${port}; /en/reports, /en/reports/, catalog ${catalog.length} items)`);
     completed = true;
   } finally {
