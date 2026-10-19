@@ -1,4 +1,10 @@
 import { migrationRunner } from './runner';
+import { migration065PrinterDomainModel } from './065_printer_domain_model';
+import { migration066DurablePrintJobs } from './066_durable_print_jobs';
+import { migration067PrintAgentFoundation } from './067_print_agent_foundation';
+import { migration068PrintingManualPermissions } from './068_printing_manual_permissions';
+import { migration069PrintAgentPairingTokens } from './069_print_agent_pairing_tokens';
+import { migration070PrintJobRetryFailover } from './070_print_job_retry_failover';
 import { migration001Phase2IdentityAndTenancy } from './001_phase2_identity_and_tenancy';
 import { migration002Phase3AdministrationAndMasterData } from './002_phase3_administration_and_master_data';
 import { migration003MenuCategories } from './003_menu_categories';
@@ -130,6 +136,12 @@ export * from './061_branch_coordinates';
 export * from './062_platform_business_metrics_index';
 export * from './063_platform_admin_credentials';
 export * from './064_platform_admin_password_default';
+export * from './065_printer_domain_model';
+export * from './066_durable_print_jobs';
+export * from './067_print_agent_foundation';
+export * from './068_printing_manual_permissions';
+export * from './069_print_agent_pairing_tokens';
+export * from './070_print_job_retry_failover';
 
 try {
   migrationRunner.registerMigration(migration001Phase2IdentityAndTenancy);
@@ -196,6 +208,12 @@ try {
   migrationRunner.registerMigration(migration062PlatformBusinessMetricsIndex);
   migrationRunner.registerMigration(migration063PlatformAdminCredentials);
   migrationRunner.registerMigration(migration064PlatformAdminPasswordDefault);
+  migrationRunner.registerMigration(migration065PrinterDomainModel);
+  migrationRunner.registerMigration(migration066DurablePrintJobs);
+  migrationRunner.registerMigration(migration067PrintAgentFoundation);
+  migrationRunner.registerMigration(migration068PrintingManualPermissions);
+  migrationRunner.registerMigration(migration069PrintAgentPairingTokens);
+  migrationRunner.registerMigration(migration070PrintJobRetryFailover);
 } catch {
   // Already registered or initialized
 }
