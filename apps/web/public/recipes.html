@@ -113,8 +113,8 @@ async function loadRecipes(){
 }
 async function loadDetail(id){try{renderDetail(await api('/recipes/'+id));notify('Recipe loaded.')}catch(e){notify(e.message,true)}}
 $('search').addEventListener('input',renderList);
-$('create-form').addEventListener('submit',async e=>{e.preventDefault();const data={menuItemId:Number($('menu-item').value),name:$('recipe-name').value.trim(),description:$('recipe-description').value.trim()||null,yieldQuantity:Number($('yield-quantity').value),yieldUnitId:Number($('yield-unit').value)};try{const r=await api('/recipes',{method:'POST',body:JSON.stringify(data)});$('create-form').reset();$('yield-quantity').value='1';await loadReferenceData().then(loadRecipes);await loadDetail(r.id);notify('Draft recipe created. Add ingredients before activating.')}catch(err){notify(err.message,true)}});
-loadRecipes();
+$('create-form').addEventListener('submit',async e=>{e.preventDefault();const data={menuItemId:Number($('menu-item').value),name:$('recipe-name').value.trim(),description:$('recipe-description').value.trim()||null,yieldQuantity:Number($('yield-quantity').value),yieldUnitId:Number($('yield-unit').value)};try{const r=await api('/recipes',{method:'POST',body:JSON.stringify(data)});$('create-form').reset();$('yield-quantity').value='1';await loadRecipes();await loadDetail(r.id);notify('Draft recipe created. Add ingredients before activating.')}catch(err){notify(err.message,true)}});
+loadReferenceData().then(loadRecipes);
 })();
 </script>
 </body></html>
