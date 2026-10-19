@@ -8,9 +8,11 @@ Expose the existing recipe/version/ingredient/costing domain through the authent
 
 - Mounted the existing recipe router at both `/api/v1/recipes` and the compatibility alias `/api/v1/inventory/recipes`.
 - Retained per-action `recipe:view`, `recipe:create`, `recipe:update`, `recipe:activate`, `recipe:archive`, and `recipe:view_cost` permission checks.
-- Added `apps/web/public/recipes.html`: responsive recipe list/search, draft creation, version listing/activation, draft ingredient editing, and current food-cost/gross-margin display.
+- Added `apps/web/public/recipes.html`: responsive recipe list/search, draft creation, version listing/activation, draft ingredient editing, and current food-cost/gross-margin display. Menu items, inventory items, stock locations, and units load from authenticated scoped APIs into selectors; ingredient-unit choices are filtered to the inventory item's dimension. Amounts are formatted without assuming USD.
 - Updated `scripts/build-runtime-candidate.mjs` to require the recipe router in the candidate bundle and copy the recipe workspace into `runtime/dist/recipes.html`.
-- Added `tests/unit/recipe-costing-smoke.cjs` and `npm run test:recipe-costing` for unit conversion, costing math, schema boundaries, route/permission wiring, tenant/branch scoping, and POS stock-boundary preservation.
+- Added `tests/unit/recipe-costing-smoke.cjs` and `npm run test:recipe-costing` for unit conversion, costing math, schema boundaries, route/permission wiring, tenant/branch scoping, explicit tenant/branch predicates on ingredient/version writes, and POS stock-boundary preservation.
+- Hardened recipe ingredient/version reads and writes with organization/branch predicates on mutation statements, and scoped the recipe category join to its organization.
+- Extended the isolated MySQL integration test to reject foreign-tenant menu items, mass units as recipe yield, cross-branch stock locations, and incompatible ingredient unit dimensions.
 - Extended runtime smoke verification to check the recipe workspace and ensure both API prefixes reject unauthenticated requests.
 - Extended the repeated P00–P45 static regression workflow with recipe contract tests.
 
