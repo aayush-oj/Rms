@@ -23,6 +23,8 @@ on:
       - 'apps/api/src/server.ts'
       - 'apps/api/src/server/**'
       - 'apps/web/public/inventory.html'
+      - 'apps/web/public/recipes.html'
+      - 'tests/unit/recipe-costing-smoke.cjs'
       - 'tests/unit/inventory-foundation-smoke.cjs'
       - 'tests/unit/inventory-ui-smoke.cjs'
       - 'tests/unit/inventory-ui-browser-smoke.cjs'
@@ -75,6 +77,7 @@ jobs:
             node tests/unit/inventory-ui-smoke.cjs
             npm run test:global-reports
             npm run test:finance-reports
+            npm run test:recipe-costing
             npm run check:ts-syntax
             echo "::endgroup::"
           done
