@@ -136,6 +136,12 @@ export * from './061_branch_coordinates';
 export * from './062_platform_business_metrics_index';
 export * from './063_platform_admin_credentials';
 export * from './064_platform_admin_password_default';
+export * from './065_printer_domain_model';
+export * from './066_durable_print_jobs';
+export * from './067_print_agent_foundation';
+export * from './068_printing_manual_permissions';
+export * from './069_print_agent_pairing_tokens';
+export * from './070_print_job_retry_failover';
 
 try {
   migrationRunner.registerMigration(migration001Phase2IdentityAndTenancy);
