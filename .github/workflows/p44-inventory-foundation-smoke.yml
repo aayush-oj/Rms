@@ -8,6 +8,7 @@ on:
       - 'apps/web/public/inventory.html'
       - 'apps/web/public/recipes.html'
       - 'tests/unit/recipe-costing-smoke.cjs'
+      - 'tests/unit/recipe-ui-browser-smoke.cjs'
       - 'tests/unit/inventory-foundation-smoke.cjs'
       - 'tests/unit/inventory-ui-smoke.cjs'
       - 'tests/unit/inventory-ui-browser-smoke.cjs'
@@ -25,6 +26,7 @@ on:
       - 'apps/web/public/inventory.html'
       - 'apps/web/public/recipes.html'
       - 'tests/unit/recipe-costing-smoke.cjs'
+      - 'tests/unit/recipe-ui-browser-smoke.cjs'
       - 'tests/unit/inventory-foundation-smoke.cjs'
       - 'tests/unit/inventory-ui-smoke.cjs'
       - 'tests/unit/inventory-ui-browser-smoke.cjs'
@@ -101,6 +103,8 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Verify inventory UI in a real browser
         run: npm run test:inventory-ui:browser
+      - name: Verify recipe workspace in a real browser
+        run: npm run test:recipe-ui:browser
       - name: Strictly type-check inventory repository and domain contracts
         run: npm run check:inventory-types
       - name: Verify real inventory repository transactions, ledger and tenant isolation
