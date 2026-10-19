@@ -86,6 +86,26 @@ async function main() {
     });
     const version = recipe.versions.find(v => v.status === 'DRAFT');
     assert.ok(version, 'creating a recipe must create a draft version');
+    await assert.rejects(
+      recipes.create(a.orgId, a.branchId, a.userId, { menuItemId: b.menuItemId, name: 'Cross Tenant Recipe', yieldQuantity: 1, yieldUnitId: countUnitId }),
+      error => error && error.errorCode === 'INVALID_RECIPE_MENU_ITEM',
+      'recipe creation must reject a menu item owned by another tenant',
+    );
+    await assert.rejects(
+      recipes.create(a.orgId, a.branchId, a.userId, { menuItemId: a.menuItemId, name: 'Invalid Yield Unit', yieldQuantity: 1, yieldUnitId: kgId }),
+      error => error && error.errorCode === 'INVALID_RECIPE_YIELD_UNIT',
+      'recipe yields must use a count-compatible unit',
+    );
+    await assert.rejects(
+      recipes.addIngredient(a.orgId, a.branchId, recipe.id, version.id, { inventoryItemId: item.id, locationId: otherBranchId, quantity: 100, unitId: gramId }),
+      error => error && error.errorCode === 'INVALID_RECIPE_LOCATION',
+      'recipe ingredients must reject locations from another branch',
+    );
+    await assert.rejects(
+      recipes.addIngredient(a.orgId, a.branchId, recipe.id, version.id, { inventoryItemId: item.id, locationId: location.id, quantity: 100, unitId: countUnitId }),
+      error => error && error.errorCode === 'INCOMPATIBLE_RECIPE_UNIT',
+      'recipe ingredients must reject incompatible unit dimensions',
+    );
     const withIngredient = await recipes.addIngredient(a.orgId, a.branchId, recipe.id, version.id, {
       inventoryItemId: item.id, locationId: location.id, quantity: 500, unitId: gramId,
     });
