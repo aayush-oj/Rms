@@ -20,14 +20,16 @@ Expose the existing recipe/version/ingredient/costing domain through the authent
 
 ## Verification / acceptance
 
-- [ ] Recipe contract test passes in CI.
-- [ ] Candidate build proves the recipe router is bundled and copies the recipe workspace.
-- [ ] Rebuilt production runtime serves `/recipes.html`; unauthenticated requests to both recipe API prefixes return HTTP 401.
-- [ ] Existing P00–P44 static regression and inventory/global-report/finance checks pass twice.
-- [ ] Full P01–P45 product regression passes twice.
-- [ ] Live MySQL recipe create/version/ingredient/activation/costing and tenant/branch isolation tests pass.
-- [ ] Browser keyboard, responsive layout, error-state and recipe editing tests pass.
-- [ ] Reference-screenshot visual parity is reviewed.
+Latest main-branch evidence: [P45 Recipes and inventory regression run](https://github.com/aayush-oj/Rms/actions/runs/39208484404) and [P43 Global Reports smoke run](https://github.com/aayush-oj/Rms/actions/runs/39208484349), both successful on commit `3631e9a00c4b3537aaf08fda7c3e4b84f64c9e28`. These checks used an isolated MySQL service; no production database was touched.
+
+- [x] Recipe contract tests pass in the main-branch CI run.
+- [x] Candidate build proves the recipe router is bundled and copies the recipe workspace.
+- [x] Rebuilt runtime serves `/recipes.html`; unauthenticated requests to both recipe API prefixes return HTTP 401.
+- [x] Existing P00–P44 static regression suite is repeated twice; inventory and global-report runtime/browser checks also pass in CI.
+- [x] Live MySQL recipe create/version/ingredient/activation/costing and tenant/branch isolation tests pass in the isolated CI database.
+- [ ] Full P01–P45 product regression passes twice; current workflow repeats P00–P44 static checks plus targeted P45 contracts, not the full product regression.
+- [ ] Browser keyboard, responsive layout, error-state and recipe editing tests receive complete acceptance review; current browser smoke verifies the recipe workspace but does not close the full visual/accessibility matrix.
+- [ ] Reference-screenshot visual parity is reviewed; the required `ALL_AI_SCREENSHOTS.zip` evidence archive is not available in the current workspace.
 
 ## Rollback
 
