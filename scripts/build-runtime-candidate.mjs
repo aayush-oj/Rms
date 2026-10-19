@@ -8,6 +8,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dist = path.join(root, 'runtime', 'dist');
 const entry = path.join(root, 'apps', 'api', 'src', 'server.ts');
 const ui = path.join(root, 'apps', 'web', 'public', 'inventory.html');
+const recipesUi = path.join(root, 'apps', 'web', 'public', 'recipes.html');
 
 function run(command, args) {
   const result = spawnSync(command, args, { cwd: root, stdio: 'inherit', env: process.env });
@@ -17,6 +18,7 @@ function run(command, args) {
 
 if (!fs.existsSync(entry)) throw new Error('Missing API entry point');
 if (!fs.existsSync(ui)) throw new Error('Missing inventory workspace');
+if (!fs.existsSync(recipesUi)) throw new Error('Missing recipe and costing workspace');
 
 function restoreMissingServerSources() {
   const mapPath = path.join(dist, 'server.cjs.map');
@@ -82,10 +84,11 @@ if (fs.statSync(bundle).size < 1_000_000) {
   throw new Error('Built production server is unexpectedly small');
 }
 fs.copyFileSync(ui, path.join(dist, 'inventory.html'));
+fs.copyFileSync(recipesUi, path.join(dist, 'recipes.html'));
 console.log(JSON.stringify({
   entry: path.relative(root, entry),
   bundleBytes: fs.statSync(bundle).size,
   sourceMigrations: migrationNumbers.length,
   inventoryRouterIncluded: true,
-  inventoryWorkspaceCopied: true,
+  inventoryWorkspaceCopied: true,\n  recipeRouterIncluded: true,\n  recipeWorkspaceCopied: true,
 }, null, 2));
