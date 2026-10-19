@@ -10,6 +10,8 @@ Version-controlled rebuild and controlled recovery of the RestroX / RMS project.
 - [Phase 0 — Baseline audit](docs/phases/phase-00-baseline-audit.md)
 - [Phase 0–43 audit register](docs/analysis/phase-00-to-43-audit.md)
 - [Phase 43 — Global Reports](docs/phases/phase-43-global-reports.md)
+- [Phase 44 — Inventory Foundation](docs/phases/phase-44-inventory-foundation.md)
+- [Phase 45 — Consumption, Recipes & Costing](docs/phases/phase-45-consumption-recipes-costing.md)
 
 ## Canonical recovery scope
 - 64 planned phases total; P01–P42 form the recovered baseline, and later phases must be implemented and verified in sequence.
