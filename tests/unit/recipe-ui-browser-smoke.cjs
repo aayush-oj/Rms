@@ -22,7 +22,7 @@ const send = (route, data, status=200) => route.fulfill({ status, contentType: '
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
   const pageErrors = [];
-  page.on('pageerror', e => pageErrors.push(e.message));
+  page.on('pageerror', e => { pageErrors.push(e.message); console.error('BROWSER PAGE ERROR:', e.stack || e.message); });
   await page.route('**/api/v1/**', async route => {
     const req = route.request();
     const url = new URL(req.url());
@@ -71,6 +71,7 @@ const send = (route, data, status=200) => route.fulfill({ status, contentType: '
     await page.getByLabel('Search recipes').fill('does-not-match');
     await page.getByText('No matching recipes.').waitFor();
     await page.getByLabel('Search recipes').fill('bread');
+    console.log('Recipe list after filter:', await page.locator('#recipe-list').innerText(), 'page errors:', pageErrors.join('; '));
     const recipeButton = page.getByRole('button', { name: /Bread recipe/ });
     await recipeButton.focus();
     await recipeButton.press('Enter');
