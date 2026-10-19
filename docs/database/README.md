@@ -26,7 +26,7 @@ The supported chain is 001–070. Migrations 065–070 add printer configuration
 | 054–064 | Platform-admin identity, organization entitlements/access, platform auditing, lifecycle automation, activation requests, branch coordinates, metrics indexes and platform-admin credential policy |
 | 065–070 | Printer domain, durable print queue, print-agent foundation, manual print permissions, pairing/rotation tokens, retry and failover metadata |
 
-This is a domain map, not a replacement for reviewing the DDL and foreign-key relationships in the migrations themselves.
+This is a domain map, not a replacement for reviewing the DDL and foreign-key relationships in the migrations themselves. The full 103-entity reference inventory is organized in [`schema-catalog.md`](schema-catalog.md).
 
 ## Build and verify without touching a live database
 
