@@ -41,12 +41,26 @@ const send = (route, data, status=200) => route.fulfill({ status, contentType: '
     }
     if (url.pathname === '/api/v1/recipes/1/versions/11/ingredients' && method === 'POST') {
       const body = req.postDataJSON();
-      recipe.versions[0].ingredients.push({ ...ingredient, inventoryItemId: body.inventoryItemId, locationId: body.locationId, quantity: body.quantity, unitId: body.unitId });
+      recipe.versions[0].ingredients.push({ ...ingredient, inventoryItemId: body.inventoryItemId, locationId: body.locationId, quantity: body.quantity, normalizedQuantity: body.quantity, currentLineCost: body.quantity * 4, unitId: body.unitId });
       return send(route, recipe.versions[0], 201);
     }
+    if (url.pathname === '/api/v1/recipes/1/versions/11/ingredients/1' && method === 'PATCH') {
+      const body = req.postDataJSON();
+      recipe.versions[0].ingredients[0].quantity = body.quantity;
+      recipe.versions[0].ingredients[0].normalizedQuantity = body.quantity;
+      recipe.versions[0].ingredients[0].currentLineCost = body.quantity * 4;
+      return send(route, recipe.versions[0]);
+    }
     if (url.pathname === '/api/v1/recipes/1/versions/11/activate' && method === 'POST') {
-      recipe = { ...recipe, status: 'ACTIVE', activeVersionId: 11, activeVersionNumber: 1, costing: { batchCost: 2, costPerPortion: 2, netSellingPrice: 8, foodCostPercent: 25, grossProfit: 6, grossMarginPercent: 75 }, versions: [{ ...recipe.versions[0], status: 'ACTIVE', ingredients: recipe.versions[0].ingredients }] };
+      recipe = { ...recipe, status: 'ACTIVE', activeVersionId: 11, activeVersionNumber: 1, costing: { batchCost: 3, costPerPortion: 3, netSellingPrice: 8, foodCostPercent: 37.5, grossProfit: 5, grossMarginPercent: 62.5 }, versions: [{ ...recipe.versions[0], status: 'ACTIVE', ingredients: recipe.versions[0].ingredients }] };
       return send(route, recipe);
+    }
+    if (url.pathname === '/api/v1/recipes/1/versions' && method === 'POST') {
+      const body = req.postDataJSON();
+      const active = recipe.versions.find(v => v.status === 'ACTIVE');
+      const draft = { ...active, id: 12, versionNumber: 2, status: 'DRAFT', yieldQuantity: body.yieldQuantity, yieldUnitId: body.yieldUnitId, notes: body.notes, ingredients: active.ingredients.map(i => ({ ...i, id: i.id + 10 })) };
+      recipe = { ...recipe, versions: [draft, active] };
+      return send(route, draft, 201);
     }
     return send(route, { message: 'Unexpected test API request: ' + method + ' ' + url.pathname }, 500);
   });
@@ -68,8 +82,16 @@ const send = (route, data, status=200) => route.fulfill({ status, contentType: '
     await page.getByLabel('Recipe unit').selectOption('3');
     await page.getByRole('button', { name: 'Add ingredient' }).click();
     await page.getByText('Flour', { exact: true }).waitFor();
+    await page.locator('#draft-qty-1').fill('0.75');
+    await page.getByRole('button', { name: 'Update' }).click();
+    await page.locator('#draft-qty-1').waitFor();
     await page.getByRole('button', { name: 'Activate' }).click();
-    await page.getByText('25.00%', { exact: true }).waitFor();
+    await page.getByText('37.50%', { exact: true }).waitFor();
+    await page.getByLabel('Next version yield quantity').fill('2');
+    await page.getByLabel('Next version yield unit').selectOption('1');
+    await page.getByLabel('Version notes').fill('Updated yield');
+    await page.getByRole('button', { name: 'Create draft version' }).click();
+    await page.getByText('Draft ingredients (v2)').waitFor();
     await page.getByLabel('Menu item').selectOption('20');
     await page.getByLabel('Recipe name').fill('Soup recipe');
     await page.getByLabel('Yield unit').selectOption('1');
