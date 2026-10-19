@@ -65,6 +65,8 @@ function populateReferenceSelects(){
  fillSelect('yield-unit',units.filter(u=>u.dimension==='COUNT'),'Select count/portion unit',u=>u.id,u=>u.name+' ('+u.symbol+')');
  fillSelect('ingredient-item',inventoryItems.filter(i=>i.isActive!==false),'Select inventory item',i=>i.id,i=>i.name+' ('+i.unitSymbol+')');
  fillSelect('ingredient-location',locations.filter(l=>l.isActive!==false),'Select stock location',l=>l.id,l=>l.name);
+ fillSelect('new-version-unit',units.filter(u=>u.dimension==='COUNT'),'Select count/portion unit',u=>u.id,u=>u.name+' ('+u.symbol+')');
+ const activeVersion=versions.find(v=>v.id===r.activeVersionId);if(activeVersion&&$('new-version-unit'))$('new-version-unit').value=String(activeVersion.yieldUnitId);
  populateIngredientUnits();
 }
 async function loadReferenceData(){
@@ -102,7 +104,9 @@ function renderDetail(r){
  populateIngredientUnits();
  $('detail').querySelectorAll('.activate').forEach(b=>b.addEventListener('click',async()=>{try{await api('/recipes/'+r.id+'/versions/'+b.dataset.version+'/activate',{method:'POST',body:'{}'});notify('Recipe version activated.');await loadDetail(r.id);await loadRecipes()}catch(e){notify(e.message,true)}}));
  const itemSelect=$('ingredient-item');if(itemSelect)itemSelect.addEventListener('change',populateIngredientUnits);const form=$('ingredient-form');if(form)form.addEventListener('submit',async e=>{e.preventDefault();const data={inventoryItemId:Number($('ingredient-item').value),locationId:Number($('ingredient-location').value),quantity:Number($('ingredient-quantity').value),unitId:Number($('ingredient-unit').value)};try{await api('/recipes/'+r.id+'/versions/'+draft.id+'/ingredients',{method:'POST',body:JSON.stringify(data)});notify('Ingredient added.');await loadDetail(r.id)}catch(err){notify(err.message,true)}});
- const nv=$('new-version');if(nv)nv.addEventListener('click',async()=>{const yieldQuantity=Number(prompt('Yield quantity',String(draft.yieldQuantity)));if(!Number.isFinite(yieldQuantity)||yieldQuantity<=0)return;const yieldUnitId=Number(prompt('Yield unit ID',String(draft.yieldUnitId)));if(!Number.isInteger(yieldUnitId)||yieldUnitId<=0)return;try{await api('/recipes/'+r.id+'/versions',{method:'POST',body:JSON.stringify({yieldQuantity,yieldUnitId})});notify('Draft version created.');await loadDetail(r.id)}catch(err){notify(err.message,true)}});
+ const versionForm=$('new-version-form');if(versionForm)versionForm.addEventListener('submit',async e=>{e.preventDefault();const data={yieldQuantity:Number($('new-version-yield').value),yieldUnitId:Number($('new-version-unit').value),notes:$('new-version-notes').value.trim()||null};try{await api('/recipes/'+r.id+'/versions',{method:'POST',body:JSON.stringify(data)});notify('Draft version created.');await loadDetail(r.id)}catch(err){notify(err.message,true)}});
+ $('detail').querySelectorAll('.update-ingredient').forEach(b=>b.addEventListener('click',async()=>{const ingredientId=Number(b.dataset.ingredient);const quantity=Number($('draft-qty-'+ingredientId).value);try{await api('/recipes/'+r.id+'/versions/'+draft.id+'/ingredients/'+ingredientId,{method:'PATCH',body:JSON.stringify({quantity})});notify('Ingredient updated.');await loadDetail(r.id)}catch(err){notify(err.message,true)}}));
+ $('detail').querySelectorAll('.delete-ingredient').forEach(b=>b.addEventListener('click',async()=>{const ingredientId=Number(b.dataset.ingredient);if(!confirm('Remove this ingredient from the draft recipe?'))return;try{await api('/recipes/'+r.id+'/versions/'+draft.id+'/ingredients/'+ingredientId,{method:'DELETE'});notify('Ingredient removed.');await loadDetail(r.id)}catch(err){notify(err.message,true)}}));
 }
 async function loadRecipes(){
  try{recipes=await api('/recipes');renderList();if(selected){const fresh=recipes.find(r=>r.id===selected.id);if(fresh)await loadDetail(fresh.id);else renderDetail(null)}}catch(e){$('recipe-list').innerHTML='<div class="empty">'+esc(e.message)+'</div>';notify(e.message,true)}
