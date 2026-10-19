@@ -54,5 +54,10 @@ assert.ok(ui.includes('<title>Recipes & Costing | RestroX</title>'));
 assert.match(ui, /aria-live="polite"/);
 assert.match(ui, /versions/);
 assert.match(ui, /foodCostPercent/);
+assert.match(ui, /update-ingredient/);
+assert.match(ui, /delete-ingredient/);
+assert.match(ui, /new-version-form/);
+assert.match(ui, /api\('\/inventory\/items'\)/);
+assert.match(ui, /dimension===unit\.dimension/);
 
 console.log('P45 recipe costing smoke PASS (unit conversion, cost formula, validation, permission gates, tenant scope, UI and POS stock boundary)');
