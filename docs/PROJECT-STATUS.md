@@ -47,6 +47,6 @@ See [P45 Phase Report](phases/phase-45-consumption-recipes-costing.md) and [Phas
 1. Keep the passing static/runtime CI checks as regression gates for subsequent code changes.
 2. Run keyboard/accessibility and responsive browser checks, and verify child-route navigation in a browser.
 3. Revalidate P01 through P43 twice, fix regressions, and retain test logs/evidence.
-5. Update the phase ledger and status only to reflect verified results; proceed to P44 only after P43 acceptance.
+5. Update the phase ledger and status only to reflect verified results; retain the missing-evidence blocker and do not certify production readiness until the full regression and screenshot-parity gates are supplied and passed.
 
 See [Phase Ledger](PHASE-LEDGER.md), [Recovered Artifact Inventory](RECOVERED-ARTIFACT-INVENTORY.md), and [P43 Phase Report](phases/phase-43-global-reports.md).
