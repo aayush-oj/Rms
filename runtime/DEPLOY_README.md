@@ -7,6 +7,8 @@ The package is built on a Linux GitHub Actions runner and already contains:
 
 - `app.js`
 - `dist/index.html`
+- `dist/inventory.html` (inventory workspace)
+- `dist/recipes.html` (recipes and costing workspace)
 - `dist/server.cjs`
 - standalone `dist/server.cjs` with server runtime packages bundled inside
 - `.env.example`
