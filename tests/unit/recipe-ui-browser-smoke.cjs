@@ -59,6 +59,7 @@ const send = (route, data, status=200) => route.fulfill({ status, contentType: '
     await recipeButton.focus();
     await recipeButton.press('Enter');
     await page.getByLabel('Inventory item').selectOption('7');
+    assert.equal(await page.locator('#ingredient-unit option[value="1"]').count(), 0, 'ingredient unit options must exclude incompatible count units');
     await page.getByLabel('Stock location').selectOption('2');
     await page.getByLabel('Quantity', { exact: true }).fill('0.5');
     await page.getByLabel('Recipe unit').selectOption('3');
