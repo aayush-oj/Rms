@@ -84,7 +84,7 @@ const send = (route, data, status=200) => route.fulfill({ status, contentType: '
     await page.getByText('Flour', { exact: true }).waitFor();
     await page.locator('#draft-qty-1').fill('0.75');
     await page.getByRole('button', { name: 'Update' }).click();
-    await page.locator('#draft-qty-1').waitFor({ state: 'attached' });
+    await page.waitForFunction(() => document.querySelector('#draft-qty-1')?.value === '0.75');
     await page.getByRole('button', { name: 'Activate' }).click();
     await page.getByText('37.50%', { exact: true }).waitFor();
     await page.locator('#new-version-yield').fill('2');
