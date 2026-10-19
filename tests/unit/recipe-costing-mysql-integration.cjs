@@ -59,6 +59,7 @@ async function main() {
       [a.orgId, 'Secondary branch', 'P45-02'],
     );
     const otherBranchId = Number(branches.insertId);
+    const otherBranchLocation = await inventory.createLocation(a.orgId, otherBranchId, { name: 'P45 Other Branch Kitchen', code: 'P45-OTHER-KITCHEN', isActive: true });
 
     const [units] = await pool.execute(
       "SELECT id, symbol, dimension, conversion_factor FROM units_of_measure WHERE organization_id IS NULL AND is_active = TRUE AND symbol IN ('kg','g')",
@@ -97,7 +98,7 @@ async function main() {
       'recipe yields must use a count-compatible unit',
     );
     await assert.rejects(
-      recipes.addIngredient(a.orgId, a.branchId, recipe.id, version.id, { inventoryItemId: item.id, locationId: otherBranchId, quantity: 100, unitId: gramId }),
+      recipes.addIngredient(a.orgId, a.branchId, recipe.id, version.id, { inventoryItemId: item.id, locationId: otherBranchLocation.id, quantity: 100, unitId: gramId }),
       error => error && error.errorCode === 'INVALID_RECIPE_LOCATION',
       'recipe ingredients must reject locations from another branch',
     );
