@@ -1,6 +1,10 @@
 {
-  "sourceMapMigrations": "001-064",
-  "runtimeOnlyMigrations": [
+  "runtimeSourceMapMigrations": "001-064",
+  "activeSourceMigrations": "001-070",
+  "canonicalDatabaseMirrorMigrations": "001-070",
+  "status": "SOURCE_CHAIN_COMPLETE_CHECKSUM_PROVENANCE_BLOCKER",
+  "reason": "Migrations 065-070 exist in active API source and database mirror. Their established checksum manifest entries differ from current source Git blob SHAs. Values are preserved for migration-ledger compatibility; resolve against deployed _schema_migrations records or recover original immutable source before production migration.",
+  "recoveredMigrationsMissingFromRuntimeSourceMap": [
     "065_printer_domain_model.ts",
     "066_durable_print_jobs.ts",
     "067_print_agent_foundation.ts",
@@ -8,6 +12,36 @@
     "069_print_agent_pairing_tokens.ts",
     "070_print_job_retry_failover.ts"
   ],
-  "status": "RECOVERED_RUNTIME_PROVENANCE_ONLY",
-  "reason": "Active runtime is newer than server.cjs.map; compiled migration names are preserved without fabricated SQL source."
+  "checksumProvenanceExceptions": [
+    {
+      "migration": "065_printer_domain_model",
+      "manifestChecksum": "328bac28554ad514a1d8e11f555ef960c6be6997",
+      "currentSourceBlob": "628cab2b2a7bd228ed925b4f990fad71fc6b4afd"
+    },
+    {
+      "migration": "066_durable_print_jobs",
+      "manifestChecksum": "86734b408d033d275d45ccae450769ad5638c0c0",
+      "currentSourceBlob": "49a2fe17f03c79e4484616708a135d3498e976e0"
+    },
+    {
+      "migration": "067_print_agent_foundation",
+      "manifestChecksum": "1b508a4df9cd1481f526a0056a4dd74646a7741c",
+      "currentSourceBlob": "7db3c70a57e8a41e3fa9fdcdfc392f2376ed863a"
+    },
+    {
+      "migration": "068_printing_manual_permissions",
+      "manifestChecksum": "ec6b18fd36cd32c20ce1703b67112a09b0105824",
+      "currentSourceBlob": "75f17a4d8ccf26b673edfb9a248c9974c694c4b9"
+    },
+    {
+      "migration": "069_print_agent_pairing_tokens",
+      "manifestChecksum": "38c430acf05e4094e6a9b7383a74555e32c9f053",
+      "currentSourceBlob": "4ec60118efff55716312a7bea4611ee97e957b98"
+    },
+    {
+      "migration": "070_print_job_retry_failover",
+      "manifestChecksum": "ae602ac185604d6284d8424a72e58d6cd2917b73",
+      "currentSourceBlob": "6054932ff7f15b98031133a0e76488158b8d25f9"
+    }
+  ]
 }

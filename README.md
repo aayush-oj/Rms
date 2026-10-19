@@ -36,3 +36,8 @@ A historical syntax-only pass or a blocked validation run is not production-read
 
 ## Database and security authority
 The recovered P10 architecture specifies MySQL 8.0 and separate runtime, migration, read-only, and backup identities. Secrets must be injected outside source control. Reports must remain tenant/branch scoped and use the existing report/query contracts; the global report hub must not duplicate financial calculations.
+
+
+## Database build and migration integrity
+
+The MySQL 8.0 migration chain, schema architecture, source/mirror checks, and release gates are documented in [`docs/database/README.md`](docs/database/README.md). Run `npm run audit:database:migrations` to verify the 001–070 migration sequence, source/mirror equality, checksum manifest, and registry wiring without connecting to a database.

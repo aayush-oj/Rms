@@ -42,8 +42,8 @@ const sourceFiles=[];
 (function walk(dir){for(const entry of fs.readdirSync(dir,{withFileTypes:true})){const p=path.join(dir,entry.name);if(entry.isDirectory())walk(p);else if(/\.tsx?$/.test(entry.name))sourceFiles.push(p);}})(path.join(root,'apps/api/src'));
 assert.ok(sourceFiles.length>=285, 'recovered API source count unexpectedly low: '+sourceFiles.length);
 const migrations=fs.readdirSync(path.join(root,'database/migrations')).filter(f=>/^\d{3}_.*\.ts$/.test(f)).sort();
-assert.equal(migrations.length,64,'editable source-map migration count');
-assert.ok(migrations.every((m,i)=>Number(m.slice(0,3))===i+1),'editable migrations must be contiguous 001-064');
+assert.equal(migrations.length,70,'complete editable migration source count');
+assert.ok(migrations.every((m,i)=>Number(m.slice(0,3))===i+1),'editable migrations must be contiguous 001-070');
 const env=read('runtime/.env.example');
 for(const key of ['JWT_SECRET','PLATFORM_JWT_SECRET']) {
   const match=env.match(new RegExp('^'+key+'=(.*)$','m'));

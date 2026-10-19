@@ -89,7 +89,8 @@ async function main() {
     const withIngredient = await recipes.addIngredient(a.orgId, a.branchId, recipe.id, version.id, {
       inventoryItemId: item.id, locationId: location.id, quantity: 500, unitId: gramId,
     });
-    const ingredient = withIngredient.find(v => v.id === version.id).ingredients[0];
+    assert.equal(withIngredient.id, version.id, 'adding an ingredient must return the updated recipe version');
+    const ingredient = withIngredient.ingredients[0];
     assert.equal(Number(ingredient.normalizedQuantity), 0.5, '500 g must normalize to 0.5 kg');
     assert.equal(Number(ingredient.currentLineCost), 2, '0.5 kg at 4 per kg must cost 2');
     const active = await recipes.activateVersion(a.orgId, a.branchId, recipe.id, version.id);
