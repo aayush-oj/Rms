@@ -65,7 +65,7 @@ const mirrorChecksums = checksumEntries(mirrorChecksumPath);
 assert.equal(appChecksums.size, LAST, `API checksum manifest must have exactly ${LAST} unique entries`);
 assert.equal(mirrorChecksums.size, LAST, `database checksum manifest must have exactly ${LAST} unique entries`);
 assert.deepEqual([...mirrorChecksums], [...appChecksums], 'API and database checksum manifests must match');
-assert.deepEqual(Object.keys(LEGACY_CHECKSUM_PROVENANCE), appFiles.slice(-6).map(file => file.replace(/\\.ts$/, '')), 'checksum provenance exception list must cover exactly migrations 065-070');
+assert.deepEqual(Object.keys(LEGACY_CHECKSUM_PROVENANCE).map(stem => stem + '.ts'), appFiles.slice(-6), 'checksum provenance exception list must cover exactly migrations 065-070');
 
 const appRegistry = fs.readFileSync(appRegistryPath, 'utf8');
 const mirrorRegistry = fs.readFileSync(mirrorRegistryPath, 'utf8');
