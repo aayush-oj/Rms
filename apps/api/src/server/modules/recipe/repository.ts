@@ -265,7 +265,7 @@ export class RecipeRepository {
       if (!recipeRows.length) throw new NotFoundError('Recipe not found', 'RECIPE_NOT_FOUND');
       if (recipeRows[0].status === 'ARCHIVED') throw new ConflictError('Archived recipes cannot receive new versions', 'RECIPE_ARCHIVED');
       await this.assertYieldUnit(conn, organizationId, data.yieldUnitId);
-      const [numberRows] = await conn.execute<RowDataPacket[]>('SELECT COALESCE(MAX(version_number),0)+1 next_version FROM recipe_versions WHERE recipe_id=? FOR UPDATE', [recipeId]);
+      const [numberRows] = await conn.execute<RowDataPacket[]>('SELECT COALESCE(MAX(version_number),0)+1 next_version FROM recipe_versions WHERE recipe_id=? AND organization_id=? AND branch_id=? FOR UPDATE', [recipeId, organizationId, branchId]);
       const versionNumber = Number(numberRows[0].next_version);
       const [result] = await conn.execute<ResultSetHeader>(
         `INSERT INTO recipe_versions(recipe_id,organization_id,branch_id,version_number,status,yield_quantity,yield_unit_id,effective_from,notes,created_by)
@@ -298,8 +298,8 @@ export class RecipeRepository {
       if (rows[0].status !== 'DRAFT') throw new ConflictError('Only draft recipe versions can be edited; create a new version instead', 'RECIPE_VERSION_IMMUTABLE');
       if (data.yieldUnitId !== undefined) await this.assertYieldUnit(conn, organizationId, data.yieldUnitId);
       await conn.execute(
-        `UPDATE recipe_versions SET yield_quantity=?,yield_unit_id=?,effective_from=?,notes=? WHERE id=?`,
-        [data.yieldQuantity ?? rows[0].yield_quantity, data.yieldUnitId ?? rows[0].yield_unit_id, data.effectiveFrom !== undefined ? data.effectiveFrom : rows[0].effective_from, data.notes !== undefined ? data.notes : rows[0].notes, versionId]
+        `UPDATE recipe_versions SET yield_quantity=?,yield_unit_id=?,effective_from=?,notes=? WHERE id=? AND recipe_id=? AND organization_id=? AND branch_id=?`,
+        [data.yieldQuantity ?? rows[0].yield_quantity, data.yieldUnitId ?? rows[0].yield_unit_id, data.effectiveFrom !== undefined ? data.effectiveFrom : rows[0].effective_from, data.notes !== undefined ? data.notes : rows[0].notes, versionId, recipeId, organizationId, branchId]
       );
       await conn.commit();
       return (await this.versions(organizationId, branchId, recipeId)).find(v => v.id === versionId);
