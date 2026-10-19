@@ -8,6 +8,7 @@ const { chromium } = require('playwright');
 const root = path.resolve(__dirname, '../..');
 const html = fs.readFileSync(path.join(root, 'apps/web/public/recipes.html'), 'utf8');
 const ingredient = { id: 1, inventoryItemId: 7, inventoryItemName: 'Flour', locationId: 2, locationName: 'Kitchen', quantity: 0.5, unitId: 3, unitSymbol: 'kg', inventoryUnitId: 3, inventoryUnitSymbol: 'kg', normalizedQuantity: 0.5, currentUnitCost: 4, currentLineCost: 2 };
+let createdRecipe = null;
 let recipe = { id: 1, organizationId: 1, branchId: 1, menuItemId: 10, menuItemName: 'Bread', categoryName: 'Bakery', itemClassification: 'FOOD', sellingPrice: 8, name: 'Bread recipe', description: null, status: 'DRAFT', activeVersionId: null, activeVersionNumber: null, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z', costing: null, versions: [{ id: 11, versionNumber: 1, status: 'DRAFT', yieldQuantity: 1, yieldUnitId: 1, yieldUnitSymbol: 'portion', effectiveFrom: null, notes: null, createdAt: '2026-01-01T00:00:00.000Z', activatedAt: null, ingredients: [] }] };
 const server = http.createServer((req, res) => {
   if (req.url === '/recipes.html') { res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }); res.end(html); return; }
@@ -26,12 +27,13 @@ const send = (route, data, status=200) => route.fulfill({ status, contentType: '
     const req = route.request();
     const url = new URL(req.url());
     const method = req.method();
-    if (url.pathname === '/api/v1/recipes' && method === 'GET') return send(route, [recipe]);
+    if (url.pathname === '/api/v1/recipes' && method === 'GET') return send(route, [recipe, ...(createdRecipe ? [createdRecipe] : [])]);
     if (url.pathname === '/api/v1/recipes/1' && method === 'GET') return send(route, recipe);
+    if (url.pathname === '/api/v1/recipes/2' && method === 'GET' && createdRecipe) return send(route, createdRecipe);
     if (url.pathname === '/api/v1/recipes' && method === 'POST') {
       const body = req.postDataJSON();
-      recipe = { ...recipe, id: 2, name: body.name, menuItemId: body.menuItemId, menuItemName: 'Soup', versions: [{ ...recipe.versions[0], id: 22, ingredients: [] }] };
-      return send(route, recipe, 201);
+      createdRecipe = { ...recipe, id: 2, status: 'DRAFT', name: body.name, menuItemId: body.menuItemId, menuItemName: 'Soup', costing: null, versions: [{ ...recipe.versions[0], id: 22, status: 'DRAFT', ingredients: [] }] };
+      return send(route, createdRecipe, 201);
     }
     if (url.pathname === '/api/v1/recipes/1/versions/11/ingredients' && method === 'POST') {
       const body = req.postDataJSON();
