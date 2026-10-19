@@ -33,6 +33,7 @@
 - Replaced manual numeric entry for menu items, inventory items, locations and units with authenticated API-backed selectors.
 - Filtered ingredient units to the inventory item's measurement dimension and removed the unsupported hard-coded USD assumption from amount formatting.
 - Extended browser checks to exercise the selectors and verify incompatible unit dimensions are not offered.
+- Completed draft ingredient quantity updates/removal and an accessible next-version form; the browser workflow now covers quantity-driven costing refresh, activation, version creation and removal confirmation.
 
 ## Safety boundaries retained
 
@@ -43,7 +44,7 @@
 
 ## Remaining release gates
 
-1. Latest branch CI for the scope-hardening and selector changes must pass end to end, including isolated MySQL, browser, runtime restart and candidate packaging.
+1. Latest branch CI for the scope-hardening, editing and selector changes must pass end to end, including isolated MySQL, browser, runtime restart and candidate packaging.
 2. Full P01–P45 regression and full-start verification must pass twice. The existing workflow repeats the available P00–P44 static suite and targeted P45 contracts; it is not a substitute for the full product end-to-end matrix.
 3. Review keyboard behavior, responsive layout, loading/empty/error/permission states and recipe editing against actual browser evidence.
 4. Obtain the missing screenshot archive or restore the authoritative evidence source; then run screenshot parity review.
