@@ -73,4 +73,10 @@ export const migrationChecksums: Readonly<Record<string, string>> = Object.freez
   '062_platform_business_metrics_index': 'd9f5d5836b48ceb3e85e6b3d05dd7ae5948df604',
   '063_platform_admin_credentials': '63f904fad6cb9e786d1a3e0f7cd026097a02c8dc',
   '064_platform_admin_password_default': '6e60ac5ad890deadb8b42d06f7c0917bc3708912',
+  '065_printer_domain_model': '628cab2b2a7bd228ed925b4f990fad71fc6b4afd',
+  '066_durable_print_jobs': '49a2fe17f03c79e4484616708a135d3498e976e0',
+  '067_print_agent_foundation': '7db3c70a57e8a41e3fa9fdcdfc392f2376ed863a',
+  '068_printing_manual_permissions': '75f17a4d8ccf26b673edfb9a248c9974c694c4b9',
+  '069_print_agent_pairing_tokens': '4ec60118efff55716312a7bea4611ee97e957b98',
+  '070_print_job_retry_failover': '6054932ff7f15b98031133a0e76488158b8d25f9',
 });
