@@ -19,6 +19,7 @@
     "test:inventory-foundation:mysql": "node --import tsx tests/unit/inventory-foundation-mysql-integration.cjs",
     "check:inventory-types": "tsc --noEmit --strict --target ES2022 --module ESNext --moduleResolution Bundler --types node --esModuleInterop --skipLibCheck apps/api/src/server/modules/inventory/repository.ts apps/api/src/server/modules/inventory/types.ts",
     "test:inventory-ui": "node tests/unit/inventory-ui-smoke.cjs",
-    "test:inventory-ui:browser": "node tests/unit/inventory-ui-browser-smoke.cjs"
+    "test:inventory-ui:browser": "node tests/unit/inventory-ui-browser-smoke.cjs",
+    "test:recipe-costing": "node --import tsx tests/unit/recipe-costing-smoke.cjs"
   }
 }
