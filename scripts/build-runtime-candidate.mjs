@@ -93,5 +93,7 @@ console.log(JSON.stringify({
   bundleBytes: fs.statSync(bundle).size,
   sourceMigrations: migrationNumbers.length,
   inventoryRouterIncluded: true,
-  inventoryWorkspaceCopied: true,\n  recipeRouterIncluded: true,\n  recipeWorkspaceCopied: true,
+  inventoryWorkspaceCopied: true,
+  recipeRouterIncluded: true,
+  recipeWorkspaceCopied: true,
 }, null, 2));
