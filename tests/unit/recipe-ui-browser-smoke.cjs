@@ -66,15 +66,15 @@ const send = (route, data, status=200) => route.fulfill({ status, contentType: '
   });
   try {
     await page.goto('http://127.0.0.1:' + address.port + '/recipes.html');
-    await page.locator('#menu-item option[value="10"]').waitFor();
-    await page.locator('#yield-unit option[value="1"]').waitFor();
+    await page.locator('#menu-item option[value="10"]').waitFor({ state: 'attached' });
+    await page.locator('#yield-unit option[value="1"]').waitFor({ state: 'attached' });
     await page.getByLabel('Search recipes').fill('does-not-match');
     await page.getByText('No matching recipes.').waitFor();
     await page.getByLabel('Search recipes').fill('bread');
     const recipeButton = page.getByRole('button', { name: /Bread recipe/ });
     await recipeButton.focus();
     await recipeButton.press('Enter');
-    await page.locator('#ingredient-item option[value="7"]').waitFor();
+    await page.locator('#ingredient-item option[value="7"]').waitFor({ state: 'attached' });
     await page.getByLabel('Inventory item').selectOption('7');
     assert.equal(await page.locator('#ingredient-unit option[value="1"]').count(), 0, 'ingredient unit options must exclude incompatible count units');
     await page.getByLabel('Stock location').selectOption('2');
@@ -84,7 +84,7 @@ const send = (route, data, status=200) => route.fulfill({ status, contentType: '
     await page.getByText('Flour', { exact: true }).waitFor();
     await page.locator('#draft-qty-1').fill('0.75');
     await page.getByRole('button', { name: 'Update' }).click();
-    await page.locator('#draft-qty-1').waitFor();
+    await page.locator('#draft-qty-1').waitFor({ state: 'attached' });
     await page.getByRole('button', { name: 'Activate' }).click();
     await page.getByText('37.50%', { exact: true }).waitFor();
     await page.locator('#new-version-yield').fill('2');
