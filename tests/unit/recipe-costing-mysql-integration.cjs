@@ -44,7 +44,7 @@ async function tenant(name, handle) {
     'INSERT INTO menu_items (organization_id, category_id, name, sku, entered_price, is_available) VALUES (?, ?, ?, ?, ?, TRUE)',
     [orgId, menuCategoryId, name + ' Dish', handle + '-dish', 10],
   );
-  return { orgId, branchId, userId: Number(user.insertId), menuItemId: Number(menu.insertId) };
+  return { orgId, branchId, userId: Number(user.insertId), menuCategoryId, menuItemId: Number(menu.insertId) };
 }
 
 async function main() {
@@ -119,7 +119,7 @@ async function main() {
     );
     const secondMenu = await pool.execute(
       'INSERT INTO menu_items (organization_id, category_id, name, sku, entered_price, is_available) VALUES (?, ?, ?, ?, ?, TRUE)',
-      [a.orgId, (await pool.execute('SELECT id FROM menu_categories WHERE organization_id=? LIMIT 1', [a.orgId]))[0][0].id, 'P45 Empty Dish', 'P45-EMPTY-' + suffix, 5],
+      [a.orgId, a.menuCategoryId, 'P45 Empty Dish', 'P45-EMPTY-' + suffix, 5],
     );
     const emptyRecipe = await recipes.create(a.orgId, a.branchId, a.userId, { menuItemId: Number(secondMenu[0].insertId), name: 'P45 Empty Recipe', yieldQuantity: 1, yieldUnitId: countUnitId });
     const emptyVersion = emptyRecipe.versions.find(v => v.status === 'DRAFT');
