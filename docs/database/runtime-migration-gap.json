@@ -2,14 +2,14 @@
   "runtimeSourceMapMigrations": "001-064",
   "activeSourceMigrations": "001-070",
   "canonicalDatabaseMirrorMigrations": "001-070",
-  "runtimeOnlyMigrations": [
+  "status": "SOURCE_RECOVERED_RUNTIME_MAP_STILL_OLDER",
+  "reason": "Migrations 065-070 are present in the active API migration source tree and have been restored byte-for-byte to database/migrations, with checksum and registry entries. The preserved runtime source map still reflects an older compiled bundle and is not treated as authoritative migration source. Runtime rebuild and live MySQL verification remain separate release gates.",
+  "recoveredMigrationsMissingFromRuntimeSourceMap": [
     "065_printer_domain_model.ts",
     "066_durable_print_jobs.ts",
     "067_print_agent_foundation.ts",
     "068_printing_manual_permissions.ts",
     "069_print_agent_pairing_tokens.ts",
     "070_print_job_retry_failover.ts"
-  ],
-  "status": "SOURCE_RECOVERED_RUNTIME_MAP_STILL_OLDER",
-  "reason": "Migrations 065-070 are present in the active API migration source tree and have been restored byte-for-byte to database/migrations, with checksum and registry entries. The preserved runtime source map still reflects an older compiled bundle and is not treated as authoritative migration source. Runtime rebuild and live MySQL verification remain separate release gates."
+  ]
 }
