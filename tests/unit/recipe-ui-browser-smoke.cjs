@@ -87,8 +87,8 @@ const send = (route, data, status=200) => route.fulfill({ status, contentType: '
     await page.locator('#draft-qty-1').waitFor();
     await page.getByRole('button', { name: 'Activate' }).click();
     await page.getByText('37.50%', { exact: true }).waitFor();
-    await page.getByLabel('Next version yield quantity').fill('2');
-    await page.getByLabel('Next version yield unit').selectOption('1');
+    await page.locator('#new-version-yield').fill('2');
+    await page.locator('#new-version-unit').selectOption('1');
     await page.getByLabel('Version notes').fill('Updated yield');
     await page.getByRole('button', { name: 'Create draft version' }).click();
     await page.getByText('Draft ingredients (v2)').waitFor();
