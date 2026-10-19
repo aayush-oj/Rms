@@ -2,6 +2,8 @@
 
 ## Scope
 
+The predecessor and historical-phase dependency review is tracked in [P45 upstream audit and regression map](../analysis/p45-upstream-audit.md). It distinguishes historical phase claims from current targeted CI evidence and records the unresolved evidence/deployment gates.
+
 Expose the existing recipe/version/ingredient/costing domain through the authenticated API and provide a branch-scoped recipe workspace. Keep unit conversions dimension-safe, recipe versions immutable after activation, and costing based on current inventory unit costs and the existing menu price/tax calculation. Do not replace the established POS stock ledger or enable dormant recipe-based order consumption without its own verified migration path.
 
 ## Implementation
