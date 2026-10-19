@@ -1,0 +1,30 @@
+name: Database migration integrity
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/api/src/server/db/migrations/**'
+      - 'database/migrations/**'
+      - 'scripts/audit-database-migrations.cjs'
+      - 'package.json'
+      - '.github/workflows/database-migration-integrity.yml'
+  pull_request:
+    paths:
+      - 'apps/api/src/server/db/migrations/**'
+      - 'database/migrations/**'
+      - 'scripts/audit-database-migrations.cjs'
+      - 'package.json'
+      - '.github/workflows/database-migration-integrity.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-integrity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify migration sequence, source mirror, checksums and registry
+        run: npm run audit:database:migrations
