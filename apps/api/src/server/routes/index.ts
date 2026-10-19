@@ -11,6 +11,7 @@ import { platformActivationRequestsRouter } from '../modules/platformAdmin/activ
 import { platformAuditRouter } from '../modules/platformAdmin/platformAuditRouter';
 import { staffPermissionsRouter } from '../modules/staffPermissions/router';
 import { inventoryRouter } from '../modules/inventory';
+import { recipeRouter } from '../modules/recipe/router';
 import { complimentaryOrderRouter } from '../modules/complimentary/router';
 import { multiTableDiningRouter } from '../modules/multiTableDining/router';
 import {
@@ -63,6 +64,10 @@ apiV1Router.use('/shift-ops', shiftRouter);
 // legacy stock router after it so non-overlapping menu-link/dependency endpoints
 // continue to work while core item, balance, movement and count routes converge.
 apiV1Router.use('/inventory', inventoryRouter);
+// Recipe definitions and costing are enabled as a phase-owned capability. Both
+// prefixes are kept for compatibility with inventory-centric clients.
+apiV1Router.use('/recipes', recipeRouter);
+apiV1Router.use('/inventory/recipes', recipeRouter);
 apiV1Router.use('/inventory', stockRouter);
 // Keep the legacy stock surface available under an explicit alias for clients
 // migrating from the former /inventory stock-item contract.
