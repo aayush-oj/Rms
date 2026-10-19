@@ -23,6 +23,7 @@ const send = (route, data, status=200) => route.fulfill({ status, contentType: '
   const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
   const pageErrors = [];
   page.on('pageerror', e => { pageErrors.push(e.message); console.error('BROWSER PAGE ERROR:', e.stack || e.message); });
+  page.on('dialog', dialog => dialog.accept());
   await page.route('**/api/v1/**', async route => {
     const req = route.request();
     const url = new URL(req.url());
@@ -62,6 +63,11 @@ const send = (route, data, status=200) => route.fulfill({ status, contentType: '
       recipe = { ...recipe, versions: [draft, active] };
       return send(route, draft, 201);
     }
+    if (url.pathname === '/api/v1/recipes/1/versions/12/ingredients/11' && method === 'DELETE') {
+      const draft = recipe.versions.find(v => v.id === 12);
+      draft.ingredients = [];
+      return send(route, { deleted: true });
+    }
     return send(route, { message: 'Unexpected test API request: ' + method + ' ' + url.pathname }, 500);
   });
   try {
@@ -93,6 +99,8 @@ const send = (route, data, status=200) => route.fulfill({ status, contentType: '
     await page.getByLabel('Version notes').fill('Updated yield');
     await page.getByRole('button', { name: 'Create draft version' }).click();
     await page.getByText('Draft ingredients (v2)').waitFor();
+    await page.getByRole('button', { name: 'Remove' }).click();
+    await page.getByText('Add at least one ingredient before activating.').waitFor();
     await page.getByLabel('Menu item').selectOption('20');
     await page.getByLabel('Recipe name').fill('Soup recipe');
     await page.getByLabel('Yield unit').selectOption('1');
