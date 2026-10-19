@@ -21,6 +21,7 @@
     "test:inventory-ui": "node tests/unit/inventory-ui-smoke.cjs",
     "test:inventory-ui:browser": "node tests/unit/inventory-ui-browser-smoke.cjs",
     "test:recipe-costing": "node --import tsx tests/unit/recipe-costing-smoke.cjs",
-    "test:recipe-ui:browser": "node tests/unit/recipe-ui-browser-smoke.cjs"
+    "test:recipe-ui:browser": "node tests/unit/recipe-ui-browser-smoke.cjs",
+    "test:recipe-costing:mysql": "node --import tsx tests/unit/recipe-costing-mysql-integration.cjs"
   }
 }
