@@ -48,7 +48,12 @@ const send = (route, data, status=200) => route.fulfill({ status, contentType: '
   });
   try {
     await page.goto('http://127.0.0.1:' + address.port + '/recipes.html');
-    await page.getByRole('button', { name: /Bread recipe/ }).click();
+    await page.getByLabel('Search recipes').fill('does-not-match');
+    await page.getByText('No matching recipes.').waitFor();
+    await page.getByLabel('Search recipes').fill('bread');
+    const recipeButton = page.getByRole('button', { name: /Bread recipe/ });
+    await recipeButton.focus();
+    await recipeButton.press('Enter');
     await page.getByLabel('Inventory item ID').fill('7');
     await page.getByLabel('Stock location ID').fill('2');
     await page.getByLabel('Quantity', { exact: true }).fill('0.5');
@@ -65,7 +70,7 @@ const send = (route, data, status=200) => route.fulfill({ status, contentType: '
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
     assert.equal(overflow, false, 'recipe workspace must not overflow a narrow viewport');
     assert.deepEqual(pageErrors, [], 'recipe workspace must not raise JavaScript errors');
-    console.log('P45 recipe browser smoke PASS (list, ingredient edit, activation, draft creation, mobile layout, no page errors)');
+    console.log('P45 recipe browser smoke PASS (list, ingredient edit, activation, draft creation, keyboard navigation, search filtering, mobile layout, no page errors)');
   } finally {
     await browser.close();
     await new Promise(resolve => server.close(resolve));
