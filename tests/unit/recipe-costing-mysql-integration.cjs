@@ -19,6 +19,7 @@ const pool = mysql.createPool({
 });
 const { InventoryRepository } = require('../../apps/api/src/server/modules/inventory/repository.ts');
 const { RecipeRepository } = require('../../apps/api/src/server/modules/recipe/repository.ts');
+const { closeDatabasePool } = require('../../apps/api/src/server/db/pool.ts');
 const inventory = new InventoryRepository(() => pool);
 const recipes = new RecipeRepository();
 const suffix = String(process.pid).replace(/[^0-9]/g, '').slice(-6) || '456789';
@@ -136,6 +137,7 @@ async function main() {
     console.log('P45 MySQL recipe integration PASS (create/version/ingredient/activation/costing, unit conversion, immutability, direct-stock link, and tenant/branch isolation)');
   } finally {
     await pool.end();
+    await closeDatabasePool();
   }
 }
 main().catch(error => { console.error(error); process.exitCode = 1; });
