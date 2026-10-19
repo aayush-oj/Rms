@@ -68,6 +68,9 @@ const inputs = Object.keys(meta.inputs);
 if (!inputs.some((p) => /modules\/inventory\/router\.ts$/.test(p))) {
   throw new Error('Production bundle does not include the inventory router');
 }
+if (!inputs.some((p) => /modules\/recipe\/router\.ts$/.test(p))) {
+  throw new Error('Production bundle does not include the recipe router');
+}
 if (!inputs.some((p) => /routes\/index\.ts$/.test(p))) {
   throw new Error('Production bundle does not include the canonical API route registry');
 }
