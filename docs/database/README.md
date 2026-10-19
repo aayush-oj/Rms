@@ -11,7 +11,7 @@ RestroX uses **MySQL 8.0 with InnoDB and utf8mb4**. The executable schema is a v
 - Migration history is append-only. Never edit an applied migration to change production schema; add a new numbered migration.
 - Do not use `runtime/dist/server.cjs.map` as schema source. It is older than the active source migration tree.
 
-The supported chain is 001–070. Migrations 065–070 add printer configuration, durable print jobs, print-agent identity, printing permissions, pairing tokens, retry scheduling and printer failover. Their source was recovered from the active API migration tree and mirrored into `database/migrations/`; the older runtime source-map gap remains documented rather than filled with guessed SQL.
+The supported chain is 001–070. Migrations 065–070 add printer configuration, durable print jobs, print-agent identity, printing permissions, pairing tokens, retry scheduling and printer failover. Their source was recovered from the active API migration tree and mirrored into `database/migrations/`; the older runtime source-map gap remains documented rather than filled with guessed SQL. **A checksum-provenance exception remains for 065–070:** the established checksum manifest values do not match the current source-file Git blob hashes. Those manifest values were preserved to avoid silently changing hashes that may already exist in deployed `_schema_migrations` ledgers.
 
 ## Domain coverage by migration groups
 
@@ -52,6 +52,7 @@ The user-requested source/build analysis does not require running migrations aga
 ## Known release gates
 
 - The preserved runtime source map is older than source migrations 065–070; a fresh production candidate must be built from current source.
+- The established checksum manifest for migrations 065–070 differs from the current Git blob hashes. Do not rewrite those checksums or apply production migrations until the original source/deployed ledger is reconciled.
 - Full live MySQL 8.0 clean-install and upgrade tests remain required.
 - The P45 recipe/costing gates and complete P01–current regression gates remain separate from this static migration-chain audit.
 - Production readiness requires a tested backup/restore and a deployment smoke test against the exact release artifact.
