@@ -51,7 +51,7 @@ const send = (route, data, status=200) => route.fulfill({ status, contentType: '
     await page.getByRole('button', { name: /Bread recipe/ }).click();
     await page.getByLabel('Inventory item ID').fill('7');
     await page.getByLabel('Stock location ID').fill('2');
-    await page.getByLabel('Quantity').fill('0.5');
+    await page.getByLabel('Quantity', { exact: true }).fill('0.5');
     await page.getByLabel('Recipe unit ID').fill('3');
     await page.getByRole('button', { name: 'Add ingredient' }).click();
     await page.getByText('Flour', { exact: true }).waitFor();
