@@ -1,6 +1,6 @@
 # RestroX / RMS — Project Status
 
-Last reviewed: 2026-10-09
+Last reviewed: 2026-10-19
 
 ## Baseline audit (Phase 0 control step)
 
@@ -31,6 +31,16 @@ Committed implementation files:
 - Phase ledger, P00 audit and P43 phase report
 
 P43 remains **in progress**. GitHub Actions run [#15](https://github.com/aayush-oj/Rms/actions/runs/37936407643) passed static route/catalog consistency, TypeScript syntax, two production-mode starts against a clean MySQL 8 test database, and browser/accessibility smoke checks. Follow-up run [#16](https://github.com/aayush-oj/Rms/actions/runs/37960236434) also passed the new phase-chain structural audit and repeated the P43 checks. The full P01–P43 regression verification twice remains required. Do not treat static route files as proof that the deployed app works.
+
+## Phase 45 checkpoint — Consumption, recipes & costing
+
+- Mounted the existing authenticated recipe domain at `/api/v1/recipes` and `/api/v1/inventory/recipes`; the recipe router retains per-action permissions and the existing tenant/branch-scoped repository contract.
+- Added the responsive recipe workspace at `apps/web/public/recipes.html`, linked from the inventory workspace, and extended the production candidate builder to bundle-check the router and copy the page.
+- Added recipe formula/schema contract checks, browser workflow coverage and production-runtime authentication/asset checks to the repeated CI workflow.
+- The existing POS stock boundary is intentionally unchanged: sales still consume/reverse through the authoritative simple-stock ledger. Do not switch sales to recipe ingredient consumption until transactional MySQL and reconciliation tests prove it safe.
+- P45 remains in progress pending the current CI result, live MySQL recipe workflow/tenant-isolation tests, twice-repeated P01–P45 regression, and reference-screenshot parity review.
+
+See [P45 Phase Report](phases/phase-45-consumption-recipes-costing.md) and [Phase Ledger](PHASE-LEDGER.md).
 
 ## Required next steps
 
